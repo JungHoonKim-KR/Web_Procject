@@ -24,8 +24,8 @@
 
         <p>
             <button type="button" class="w-25 btn btn-primary" onclick="location.href='/post'">글 목록</button> &nbsp;
-            <button th:if="${myId}==${id}" type="submit" class="w-25 btn btn-primary" onclick="location.href='/update'">글 수정</button> &nbsp;
-            <button th:if="${myId}==${id}" type="button" class="w-25 btn btn-primary" onclick="location.href='/delete?'">글 삭제</button>
+            <button th:if="${myId}==${userId}" type="submit" class="w-25 btn btn-primary" onclick="location.href='/update'">글 수정</button> &nbsp;
+            <button th:if="${myId}==${userId}" type="button" class="w-25 btn btn-primary" onclick="location.href='/delete?'">글 삭제</button>
     </form>
 </div>
 

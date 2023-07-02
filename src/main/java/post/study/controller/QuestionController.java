@@ -16,6 +16,7 @@ import post.study.service.MemberService;
 import post.study.service.QuestionService;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class QuestionController {
         Page<Question> questionPage = questionService.getQuestionList(page);
         int realTotalPage = questionPage.getTotalPages();
         int totalPage = realTotalPage - 1; //0부터 시작하기 때문에
-
+        List<Question> content = questionPage.getContent();
         System.out.println("totalPage = " + totalPage);
 
         int displayPage = 5;
@@ -88,7 +89,6 @@ public class QuestionController {
         } else {
 
             questionService.save(member.getId(), questionDto);
-
             model.addAttribute("msg", "작성 완료");
             model.addAttribute("url", "/post");
         }
@@ -98,27 +98,34 @@ public class QuestionController {
 
     @GetMapping("/content")
     public String content(HttpSession session, Long id, Model model) {
-        Question question = questionService.findQuestion(id).get();
+        QuestionDto questionDto = questionService.findQuestion(id);
+
         session.setAttribute("questionId", id);
         Member member = (Member) session.getAttribute("member");
         session.setAttribute("myId", member.getId());
-        model.addAttribute("id", question.getMember().getId());
-        model.addAttribute("title", question.getTitle());
-        model.addAttribute("content", question.getContent());
+        model.addAttribute("id", questionDto.getId());
+        model.addAttribute("title", questionDto.getTitle());
+        model.addAttribute("content", questionDto.getContent());
+        model.addAttribute("userId",questionDto.getMember().getId());
         model.addAttribute("myId", session.getAttribute("myId"));
         return "post/content";
     }
 
     @GetMapping("/update")
-    public String update(QuestionDto questionDto, Model model) {
-        model.addAttribute("id", questionDto.getId());
+    public String update(Long id, Model model) {
+        QuestionDto questionDto = questionService.findQuestion(id);
+
+        model.addAttribute("id",questionDto.getId());
         model.addAttribute("title", questionDto.getTitle());
         model.addAttribute("content", questionDto.getContent());
         return "post/update";
     }
 
     @PostMapping("/update")
-    public String update2(QuestionDto questionDto, Model model) {
+    public String update2(Long id,String title, String content, Model model) {
+        QuestionDto questionDto = questionService.findQuestion(id);
+        questionDto.setTitle(title);
+        questionDto.setContent(content);
         questionService.update(questionDto);
         model.addAttribute("msg", "작성 완료");
         model.addAttribute("url", "/post");
@@ -127,7 +134,7 @@ public class QuestionController {
     }
 
     @GetMapping("/delete")
-    public String delete(HttpSession session, QuestionDto questionDto, Model model) {
+    public String delete(HttpSession session, Model model) {
         questionService.delete((Long) session.getAttribute("questionId"));
         model.addAttribute("msg", "글이 삭제되었습니다.");
         model.addAttribute("url", "/post");

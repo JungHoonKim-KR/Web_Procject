@@ -30,7 +30,7 @@ public class QuestionService {
      *
      * 조회
      */
-    public List<Question> findALl() {
+    public List<Question> findAll() {
         List<Question> questions = questionRepository.findAll();
         return questions;
     }
@@ -49,9 +49,10 @@ public class QuestionService {
         return question;
     }
 
-    public Optional<Question> findQuestion(Long id){
-        Optional<Question> question = questionRepository.findById(id);
-        return question;
+    public QuestionDto findQuestion(Long id){
+        Question question = questionRepository.findById(id).get();
+        QuestionDto questionDto = question.questionToDto(question);
+        return questionDto;
     }
 
     public Question update(QuestionDto question){

@@ -3,6 +3,7 @@ package post.study.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import post.study.dto.QuestionDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -35,5 +36,8 @@ public class Question {
         member.getQuestionList().add(this);
     }
 
+    public QuestionDto questionToDto(Question question){
 
+        return new QuestionDto(question);
+    }
 }
