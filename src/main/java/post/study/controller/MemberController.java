@@ -18,7 +18,10 @@ import java.util.List;
 public class MemberController {
     private final MemberService memberService;
 
-
+    @GetMapping("ootd")
+    public String ootd(){
+        return "ootd";
+    }
     @GetMapping("/")
     public String login() {
 ////        Member member = new Member();

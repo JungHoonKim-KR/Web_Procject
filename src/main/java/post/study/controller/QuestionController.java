@@ -23,6 +23,7 @@ import java.util.List;
 public class QuestionController {
     private final QuestionService questionService;
 
+
     @GetMapping("/post")
     public String post(HttpSession session, @RequestParam(required = false, defaultValue = "0", value = "page") int page, Model model) {
         Member member = (Member) session.getAttribute("member");
