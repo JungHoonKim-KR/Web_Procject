@@ -11,7 +11,7 @@
 <div class="container">
     <h2>글</h2>
     <br>
-    <form action="/update" method="get">
+    <form action="/question-update" method="get">
         <span><strong>제목</strong></span><br>
         <span th:text="${title}"></span>
         <input type="hidden" name="id" th:value="${id}">
@@ -23,9 +23,9 @@
         <input type="hidden" name="content" th:value="${content}">
 
         <p>
-            <button type="button" class="w-25 btn btn-primary" onclick="location.href='/post'">글 목록</button> &nbsp;
-            <button th:if="${myId}==${userId}" type="submit" class="w-25 btn btn-primary" onclick="location.href='/update'">글 수정</button> &nbsp;
-            <button th:if="${myId}==${userId}" type="button" class="w-25 btn btn-primary" onclick="location.href='/delete?'">글 삭제</button>
+            <button type="button" class="w-25 btn btn-primary" onclick="location.href='/question'">글 목록</button> &nbsp;
+            <button th:if="${myId}==${userId}" type="submit" class="w-25 btn btn-primary" onclick="location.href='/question-update'">글 수정</button> &nbsp;
+            <button th:if="${myId}==${userId}" type="button" class="w-25 btn btn-primary" onclick="location.href='/question-delete?'">글 삭제</button>
     </form>
 </div>
 

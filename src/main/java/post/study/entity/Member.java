@@ -18,6 +18,7 @@ public class Member {
     private String username;
     private String password;
     private int age;
+
     @OneToMany(mappedBy = "member")
     private List<Question> questionList=new ArrayList<>();
 

@@ -7,21 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import post.study.dto.MemberDto;
 import post.study.entity.Member;
-import post.study.repository.MemberRepository;
-import post.study.service.MemberService;
+import post.study.service.LoginAndJoinService;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class MemberController {
-    private final MemberService memberService;
+public class LoginAndJoinController {
+    private final LoginAndJoinService memberService;
 
-    @GetMapping("ootd")
-    public String ootd(){
-        return "ootd";
-    }
+
     @GetMapping("/")
     public String login() {
 ////        Member member = new Member();
@@ -33,7 +28,7 @@ public class MemberController {
         return "sign-in/login";
     }
 
-    @PostMapping("/judge")
+    @PostMapping("/question-judge")
     public String judge(HttpSession session, MemberDto memberDto, Model model) {
         Boolean aBoolean = memberService.loginValidateByemailId(memberDto, memberDto.getPassword());
         if (aBoolean.equals(false)) {
@@ -43,13 +38,13 @@ public class MemberController {
             Member findMember = memberService.findMember(memberDto.getEmailId());
             session.setAttribute("member",findMember);
             model.addAttribute("msg", "로그인 되었습니다.");
-            model.addAttribute("url", "/post");
+            model.addAttribute("url", "/question");
         }
 
         return "popup";
     }
 
-    @GetMapping("/join")
+    @GetMapping("/question-judge")
     public String join(){
         return"sign-in/join";
     }

@@ -36,13 +36,13 @@ public class QuestionService {
     }
 
 
-    public Question save(Long memberId, QuestionDto questionDto) {
+    public Question save(Long memberId, String title, String content) {
         Member member = memberRepository.findById(memberId).get();
         Question question = new Question();
         question.setMember(member);
         question.setUsername(member.getUsername());
-        question.setTitle(questionDto.getTitle());
-        question.setContent(questionDto.getContent());
+        question.setTitle(title);
+        question.setContent(content);
 
         questionRepository.save(question);
 

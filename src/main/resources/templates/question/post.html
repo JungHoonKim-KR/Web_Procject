@@ -29,7 +29,7 @@
         </ul>
     </nav>
 
-    <form action="/write" method="get">
+    <form action="/question-write" method="get">
         <table class="table">
             <tr>
                 <th>글번호</th>
@@ -40,7 +40,7 @@
 
             <tr th:each="q:${qList}">
                 <td th:text="${q.id}">1</td>
-                <td><a class="link-dark" th:text="${q.title}" th:href="@{content(id=${q.id})}"> </a></td>
+                <td><a class="link-dark" th:text="${q.title}" th:href="@{/question-content(id=${q.id})}"> </a></td>
                 <td th:text="${q.username}">나</td>
                 <td th:text="${#temporals.format(q.dateTime,'yyyy-MM-dd')}">2023.02.27</td>
 
@@ -58,23 +58,23 @@
     <nav aria-label="...">
         <ul class="pagination justify-content-center">
             <li class="page-item ">
-                <a th:href="@{/post(page=0)}"><span class="page-link">처음</span></a>
+                <a th:href="@{/question(page=0)}"><span class="page-link">처음</span></a>
 
             </li>
             <li class="page-item ">
-                <a th:if="${pageLine}>0" th:href="@{/post(page=${prePage})}"><span class="page-link">이전</span></a>
+                <a th:if="${pageLine}>0" th:href="@{/question(page=${prePage})}"><span class="page-link">이전</span></a>
             </li>
 
             <span class="page-item" th:id="currentPage+${page}" th:each="page: ${#numbers.sequence(startPage, endPage)}">
-                <a class="page-link" th:text="${page+1}" th:href="@{/post(page=${page})}"></a>
+                <a class="page-link" th:text="${page+1}" th:href="@{/question(page=${page})}"></a>
                 </span>
 
             <li class="page-item">
-                <a th:if="${pageLine}<${totalPageLine}" th:href="@{/post(page=${nextPage})}"><span
+                <a th:if="${pageLine}<${totalPageLine}" th:href="@{/question(page=${nextPage})}"><span
                         class="page-link">다음</span></a>
             </li>
             <li class="page-item">
-                <a th:href="@{/post(page=${totalPage})}"><span class="page-link">마지막</span></a>
+                <a th:href="@{/question(page=${totalPage})}"><span class="page-link">마지막</span></a>
             </li>
         </ul>
     </nav>
