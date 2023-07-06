@@ -14,5 +14,8 @@ public class Project {
     @Id
     @GeneratedValue
     private Long id;
-    //
+    private String projectName;
+    private String projectLeader;
+    private String scale;
+    private String topic;
 }

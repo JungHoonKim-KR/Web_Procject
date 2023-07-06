@@ -44,7 +44,7 @@ public class LoginAndJoinController {
         return "popup";
     }
 
-    @GetMapping("/question-judge")
+    @GetMapping("/join")
     public String join(){
         return"sign-in/join";
     }
