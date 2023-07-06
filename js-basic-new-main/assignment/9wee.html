@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload=function()
+        {
+            var btn1=document.getElementById("btn1");
+            var btn2=document.getElementById("btn2");
+            var btn3=document.getElementById("btn3");
+            var btn4=document.getElementById("btn4");
+            var btn5=document.getElementById("btn5");
+
+            var intext=document.querySelector("[name=intext]")
+            var out=document.querySelector("[name=out]")
+            btn1.onclick=function()
+            {
+                let newLi=document.createElement("li")
+                let name=document.createTextNode(intext.value)
+                newLi.appendChild(name)
+
+                out.appendChild(newLi)
+                intext.value=""
+            }
+
+            btn2.onclick=function(){
+                let newLi=document.createElement("li")
+                let name=document.createTextNode(intext.value)
+                newLi.appendChild(name)
+
+                out.insertBefore(newLi,out.childNodes[0])
+                intext.value=""
+            }
+
+            btn3.onclick=function()
+            {
+                let li=document.querySelectorAll("li")
+                for(let i=0;i<li.length;i++)
+                {
+                    out.removeChild(li[i])
+                }
+            }
+
+            btn4.onclick=function()
+            {
+                let out=document.querySelector("[name=out]")
+                out.removeChild(out.childNodes[0])
+            }
+            btn5.onclick=function()
+            {
+                let out=document.querySelector("[name=out]")
+                out.removeChild(out.childNodes[out.childNodes.length-1])
+            }
+        }
+    </script>
+</head>
+<body>
+    <div name="input">
+        <input name="intext" >
+        <button id="btn1" >추가</button>
+         <button id="btn2">삽입</button>
+         <button id="btn3">초기화</button>
+          <button id="btn4" >첫번째삭제</button>
+          <button id="btn5" >마지막삭제</button>
+        </div>
+        <div name="out">
+        </div>
+</body>
+
+
+</html>

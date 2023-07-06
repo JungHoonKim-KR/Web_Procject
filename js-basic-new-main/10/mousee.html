@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
+    
+    <script>
+        $(document).ready(function(){
+            $("h1").css("color","blue")
+
+          var handler=function(e){
+            $("<h1></h1>").text($(this).text()).one("click",handler).appendTo("body")
+        }
+        $("h1").one("click",handler)
+        })
+    </script>
+</head>
+<body>
+    <h1>header</h1>
+</body>
+</html>

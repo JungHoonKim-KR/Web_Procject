@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+            /*
+            $("#btn1").on("click",function()
+            {
+                $("h1").fadeTo("slow",0.5);
+            });
+       
+            $("#btn2").on("click",function(){
+                $("h1").fadeTo("slow",0.1);
+            });
+            $("#btn3").on("click",function(){
+                $("h1").fadeTo("slow",1);
+             
+            })
+        */
+            $(".box").click(function(){
+               
+                $(this).animate({
+                    left:$(this).offset().left+10,
+                },500)
+
+            })
+        });
+    </script>
+    <style>
+        .box{
+            width:100px;
+            height:100px;
+            background-color:red;
+            position:absolute; /*부모기준 자리잡는거 static이 디폴트*/
+            left:10px;
+            top:10px;
+        }
+    </style>
+</head>
+<body>
+  <button id="btn1">fadeOut</button>
+  <button id="btn2">fadeIn</button>
+  <button id="btn3">fadeToggle</button>
+  <h1>내용</h1>
+  <div class="box">
+
+    </div>
+</body>
+
+
+</html>

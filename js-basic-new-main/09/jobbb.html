@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
+  </head>
+  <body>
+    <!-- <script>
+      $(document).ready(function () {
+        $("img").each(function (index, item) {
+          $(this).attr(
+            "src",
+            "http://placehold.it/" + (index + 1) * 100 + "x100"
+          );
+        });
+
+        $("img").each(function (index, item) {
+          $(this).removeClass("myimg");
+          $(this).addClass("test");
+        });
+
+        $(".test").attr("border", "2");
+      });
+    </script>
+    <img class="myimg" />
+    <img class="myimg" />
+    <img class="myimg" /> -->
+    <!-- <script>
+      $(document).ready(function () {
+        $("<h1></h1").text("안녕하세요").attr("id", "test1").appendTo("body");
+        $("#test1").css({
+          backgroundColor: "red",
+          color: "white",
+        });
+        $("<div></div>").attr("class", "target").insertAfter("#test1");
+        $("<h1></h1>").text("appendTo").appendTo(".target");
+        $(".target").css("border", "2px solid ");
+        $("<h1></h1>").text("prependTo").prependTo(".target");
+      });
+    </script> -->
+
+    <script>
+      $(function () {
+      
+     
+        $("#menu li").not(":first").css("backgroundColor", "yellow");
+        $("#menu li:eq(1)").find("strong").css("font-size", "22px");
+        $("#menu").closest("div").css("border", "5px double green");
+        $("li").filter(".st1").css("background-color", "skyblue");
+        $("li").contents().css("border", "1px solid red");
+        $("#menu")
+          .children("li:eq(1)")
+          .css("border", "10px dashed blue")
+          .end()
+          .css("border", "5px double black");
+      });
+    </script>
+
+    <h1>탐색 선택자</h1>
+    <div id="'wrap">
+      <div id="inner_wrap">
+        <ul id="menu">
+          <li class="st1">내용1</li>
+          <li>
+            <span>내용<strong>2</strong></span>
+          </li>
+          <li class="st1"><a href="#">내용3</a></li>
+          <li class="st1">내용4</li>
+          <li>내용5</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

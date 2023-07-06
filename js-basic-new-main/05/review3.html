@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script>
+      window.onload = function () {
+        var btn1 = document.getElementById("btn1");
+        var btn2 = document.getElementById("btn2");
+        var btn3 = document.getElementById("btn3");
+        var btn4 = document.getElementById("btn4");
+        function Person(name, number) {
+          this.name = name;
+          this.number = number;
+        }
+        var people = [];
+        btn1.onclick = function () {
+          var name = document.getElementById("name").value;
+          var num = document.getElementById("num").value;
+          people.push(new Person(name, num));
+        };
+
+        btn2.onclick = function () {
+          document.querySelector("#name").value = null;
+          document.querySelector("#num").value = null;
+          document.f1.name.focus();
+        };
+        btn3.onclick = function () {
+          document.querySelector("#name").innerHTML = null;
+          people.forEach((item, index) => {
+            document.querySelector("#result").innerHTML +=
+              "이름 " +
+              people[index].name +
+              " 전번 : " +
+              people[index].number +
+              "<p>";
+          });
+        };
+        btn4.onclick = function () {
+          document.querySelector("#result").innerHTML = null;
+        };
+      };
+    </script>
+  </head>
+  <body>
+    <form action="#" method="post" name="f1" onsubmit="return false">
+      <label for="t1">이름</label>
+      <input type="text" id="name" />
+      <br />
+      <label for="t2">연락처</label>
+      <input type="text" id="num" />
+      <br />
+
+      <button id="btn1">회원가입</button>
+      <button id="btn2">가입취소</button>
+    </form>
+    <br />
+    <button id="btn3">출력</button>
+    <button id="btn4">지우기</button>
+
+    <div id="result"></div>
+  </body>
+</html>

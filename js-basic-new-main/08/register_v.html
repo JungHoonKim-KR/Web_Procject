@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>DOM - Create & Add Node</title>
+    <link rel="stylesheet" href="css/nameList.css" />
+  </head>
+  <body>
+    <div id="container">
+      <h1>참가 신청</h1>
+      <form action="">
+        <input type="text" id="userName" placeholder="이름" required autocomplete="off"
+        />
+        <button onclick="newRegister();return false;">신청</button>
+        <button class="del">삭제</button>
+      </form>
+      <hr />
+      <div id="nameList"></div>
+    </div>
+    <script>
+      function newRegister() {
+       var nameList=document.querySelector("#nameList");
+       var userName=document.querySelector("#userName");
+       nameList.insertBefore(newP,nameList.childNodes[0]);
+       userName.value=""
+
+       var removeBttn=document.querySelectorAll(".del");
+
+       for(var i=0;i<removeBttn.length;i++)
+       {
+        removeBttn[i].addEventListener("click",function(){
+        if(this.parentNode.parentNode)
+        {
+            
+        }    
+        })
+       }
+      }
+
+
+    </script>
+    <!-- <script src="js/register-result.js"></script> -->
+  </body>
+</html>

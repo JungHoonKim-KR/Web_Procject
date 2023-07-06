@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let array1 = [10, 22, 34, 50, 30];
+      let array2 = [1, 1, 0, 0, 1];
+      let array3 = new Array();
+      array1.forEach((item, index) => {
+        array3.push(array1[index] * array2[index]);
+      });
+      console.log(array3);
+
+      let array4 = array1.map((item, index) => {
+        return item + array2[index];
+      });
+      console.log(array4);
+
+      let array5 = array1.filter((item, index) => {
+        return item >= 30;
+      });
+      console.log(array5);
+
+      let s = 10;
+      {
+        console.log(s);
+        let s = 2;
+      }
+    </script>
+  </body>
+</html>

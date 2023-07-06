@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D-Day for love</title>
+    <link href="css/d-day.css" rel="stylesheet" />
+
+    <script>
+      window.onload = function () {
+        var btn = document.getElementById("btn");
+        btn.onclick = function () {
+          var first = document.getElementById("first").value;
+          var after = document.getElementById("after").value;
+
+          var now = new Date();
+          var first_day = new Date(first);
+
+          var tonow = now.getTime();
+          var tofirst = first_day.getTime();
+          var passedTime = tonow - tofirst;
+          var passedday = Math.round(passedTime / (1000 * 60 * 60 * 24));
+
+          document.querySelector("#accent").innerHTML = passedday + "일";
+
+          calc(100);
+          calc(200);
+          calc(365);
+          s_calc(after);
+
+          function calc(days) {
+            var after_date = tofirst + days * (1000 * 60 * 60 * 24);
+            var date = new Date(after_date);
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            document.querySelector("#date" + days).innerHTML =
+              year + "년" + month + "월" + day + "일";
+          }
+          function s_calc(days) {
+            var after_date = tofirst + days * (1000 * 60 * 60 * 24);
+            var date = new Date(after_date);
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+
+            document.querySelector("#changed_date").innerHTML = after + "일";
+            document.querySelector("#date500").innerHTML =
+              year + "년" + month + "월" + day + "일";
+          }
+        };
+      };
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="day1">
+        <h3>우리 만난지</h3>
+        <p id="accent" class="accent">
+          <span style="font-size: 0.6em; font-style: italic">며칠?</span>
+        </p>
+      </div>
+      첫날 : <input type="text" id="first" />
+      <br />
+      몇일 뒤 : <input type="text" id="after" />
+      <button id="btn">계산</button>
+
+      <div class="bar">기념일 계산</div>
+      <div class="day2">
+        <ul>
+          <li class="item-title">100일</li>
+          <li class="item-date" id="date100"></li>
+        </ul>
+        <ul>
+          <li class="item-title">200일</li>
+          <li class="item-date" id="date200"></li>
+        </ul>
+        <ul>
+          <li class="item-title">1년</li>
+          <li class="item-date" id="date365"></li>
+        </ul>
+        <ul>
+          <li class="item-title" id="changed_date"></li>
+          <li class="item-date" id="date500"></li>
+        </ul>
+      </div>
+    </div>
+
+    <script src="js/dday-result.js"></script>
+  </body>
+</html>

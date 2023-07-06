@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/age.css" />
+  </head>
+  <body>
+    <label for ="first">첫번째 수</label>
+    <input type="text" id ="first_num"><br>
+    <label for ="second">두번째 수</label>
+    <input type="text" id ="second_num"><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="btn" onclick="calc()">+</button>
+    <button class="btn" onclick="calc()">-</button>
+    <button class="btn" onclick="calc()">*</button>
+    <button class="btn" onclick="calc()">/</button>
+    <button class="btn" onclick="calc()">%</button>
+    <p>
+        <div id="result"></div>
+    </p>
+    <script>
+        function calc() {
+            var name=document.getElementsClassName("btn")[0];
+            console.log(name);
+        }
+        /*
+        function add(){
+            var f=document.getElementById("first_num").value;
+            var s=document.getElementById("second_num").value;
+            document.querySelector("#result").innerHTML="두수의 합은"+(Number(f)+Number(s))+"입니다";
+            console.log(typeof(Number(f)));
+        }
+        function sub(){
+            var f=document.getElementById("first_num").value;
+            var s=document.getElementById("second_num").value;
+            document.querySelector("#result").innerHTML=`두수의 차은 ${f-s}입니다.`;
+        }
+        function mul(){
+            var f=document.getElementById("first_num").value;
+            var s=document.getElementById("second_num").value;
+            document.querySelector("#result").innerHTML=`두수의 곱은 ${f*s}입니다.`;
+        }
+        function div(){
+            var f=document.getElementById("first_num").value;
+            var s=document.getElementById("second_num").value;
+            document.querySelector("#result").innerHTML=`두수의 몫 ${f/s}입니다.`;
+        }
+        function mod(){
+            var f=document.getElementById("first_num").value;
+            var s=document.getElementById("second_num").value;
+            document.querySelector("#result").innerHTML=`두수의 나머지는 ${f%s}입니다.`;
+        }*/
+    </script>
+  </body>
+</html>

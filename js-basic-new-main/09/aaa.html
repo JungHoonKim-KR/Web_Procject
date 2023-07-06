@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
+
+    <!-- <script>
+        $(document).ready(function()
+        {
+            $("img").each(function(index,element){
+                $(this).attr("src","http://placehold.it/"+(index+1)*100+"x100")
+            })
+     
+   
+        $("img").removeClass("myimg")
+        $("img").addClass("test")
+
+        $(".test").attr("border","2")
+    });
+    </script> -->
+    <!-- <script>
+        $(document).ready(function(){
+            var s=$("img").parent().prop('tagName');
+            console.log($("img").parent().prop("tagName"));
+            
+        })
+      
+    </script> -->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+          }
+          body {
+            margin: 20px;
+          }
+          #wrap {
+            background-color: #ccc;
+            padding: 10px;
+          }
+          p {
+            background-color: #999;
+          }
+    </style>
+
+    <script type="text/javascript">
+        $(function()
+        {
+            $("h1").css("color","blue");
+
+            var handler=function()
+            {
+                $("<h1></h1>").text($(this).text()).on("click",handler).appendTo("body");
+                $(this).off()
+            }
+           $("h1").on('click',handler)
+        })
+   
+    </script>
+</head>
+<body>
+    
+   <h1>Header</h1>
+</body>
+
+</html>

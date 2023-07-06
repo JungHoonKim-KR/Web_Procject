@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!--<script src="../jquery-3.7.0.min.js"></script>
+    <script src="../jquery-migrate-3.4.1.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
+  </head>
+
+  <body>
+    <script>
+      $(document).ready(function () {
+        var $headers = $("h1");
+        for (var i = 0; i < $headers.length; i++) {
+          if (i % 2 == 1) {
+            var domElement = $headers.get(i);
+            $(domElement).css("backgroundColor", "red");
+          }
+        }
+      });
+
+      $(document).ready(function () {
+        $("h2").each(function (index, element) {
+          if (index % 2 == 1) {
+            $(this).css("backgroundColor", "skyblue");
+          }
+        });
+      });
+
+      $(document).ready(function () {
+        for (var i = 0; i < 256; i++) {
+          $("<div></div>")
+            .css({
+              height: 2,
+              background: "rgb(" + i + "," + i + "," + i + ")",
+            })
+            .appendTo("body");
+        }
+      });
+    </script>
+    <h1>headerA</h1>
+    <h1>headerB</h1>
+    <h1>headerC</h1>
+    <h1>headerD</h1>
+    <h2>headerE</h2>
+    <h2>headerF</h2>
+    <h2>headerG</h2>
+    <h2>headerH</h2>
+    <!--<script>
+      $(function () {
+        $("#2nd").nextAll().css("backgroundColor", "skyblue");
+      });
+    </script>
+
+    <div>
+      <ul id="list1">
+        <li>리스트1</li>
+        <li id="2nd">리스트2</li>
+        <li>리스트3</li>
+        <ul>
+          <li>list3-1</li>
+        </ul>
+        <li>리스트4</li>
+      </ul>
+    </div>
+-->
+  </body>
+</html>

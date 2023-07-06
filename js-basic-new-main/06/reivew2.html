@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D-Day for love</title>
+    <link href="css/d-day.css" rel="stylesheet" />
+
+    <script>
+      window.onload = function () {
+        let btn1 = document.getElementById("btn1");
+        btn1.onclick = function () {
+          var first = document.getElementById("first").value;
+          var after = document.getElementById("after").value;
+
+          var now = new Date();
+          var first_day = new Date(first);
+
+          let today = now.getTime();
+          let tofirst = first_day.getTime();
+          let date_time = today - tofirst;
+          let date = Math.round(date_time / (1000 * 60 * 60 * 24));
+
+          document.querySelector("#accent").innerHTML = date + "일";
+
+          calc(100);
+          calc(200);
+          calc(365);
+          sub_calc(after);
+
+          function sub_calc(days) {
+            let future = tofirst + days * (1000 * 60 * 60 * 24); // days뒤에 시간을 유닉스타임으로
+            let someday = new Date(future);
+            let year = someday.getFullYear();
+            let month = someday.getMonth() + 1;
+            let day = someday.getDate();
+            document.querySelector("#changed_date").innerHTML = days + "일";
+
+            document.querySelector("#date500").innerHTML =
+              year + "년 " + month + "월 " + day + "일";
+          }
+
+          function calc(days) {
+            let future = tofirst + days * (1000 * 60 * 60 * 24); // days뒤에 시간을 유닉스타임으로
+            let someday = new Date(future);
+            let year = someday.getFullYear();
+            let month = someday.getMonth() + 1;
+            let day = someday.getDate();
+
+            document.querySelector("#date" + days).innerHTML =
+              year + "년 " + month + "월 " + day + "일";
+          }
+        };
+      };
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="day1">
+        <h3>우리 만난지</h3>
+        <p id="accent" class="accent">
+          <span style="font-size: 0.6em; font-style: italic">며칠?</span>
+        </p>
+      </div>
+      처음 만난 날 : <input type="text" id="first" /> <br />
+      며칠 후 ? :
+      <input type="text" id="after" />
+      <br />
+      <button id="btn1">계산</button>
+
+      <div class="bar">기념일 계산</div>
+      <div class="day2">
+        <ul>
+          <li class="item-title">100일</li>
+          <li class="item-date" id="date100"></li>
+        </ul>
+        <ul>
+          <li class="item-title">200일</li>
+          <li class="item-date" id="date200"></li>
+        </ul>
+        <ul>
+          <li class="item-title">1년</li>
+          <li class="item-date" id="date365"></li>
+        </ul>
+        <ul>
+          <li class="item-title" id="changed_date">500일</li>
+          <li class="item-date" id="date500"></li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

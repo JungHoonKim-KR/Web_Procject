@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="result"></div>
+    <script>
+      var num_arr = [];
+      var str_arr = [];
+      var arr = [];
+      let name;
+      while (1) {
+        name = prompt("값 입력해주세요 :");
+        console.log(name);
+        if (name == null) {
+          alert("입력종료");
+          break;
+        } else {
+          arr.push(name);
+          alert("하나더");
+        }
+      }
+
+      arr.forEach((item, index) => {
+        if (!isNaN(item) == true) {
+          num_arr.push(item);
+        } else {
+          str_arr.push(item);
+        }
+      });
+
+      num_arr.sort(function compare(a, b) {
+        if (!(isNaN(a) && isNaN(b))) return b - a;
+      });
+      str_arr.sort();
+
+      document.querySelector("#result").innerHTML =
+        "[" + num_arr + "]" + "<p>" + "[" + str_arr + "]";
+    </script>
+  </body>
+</html>

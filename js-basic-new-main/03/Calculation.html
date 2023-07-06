@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>계산기 만들기</title>
+	<link rel="stylesheet" href="css/calc.css">
+</head>
+<body>
+    <div id="contents">
+        <h2>2주차 과제(bargain을 참고하여 계산기 만들기)</h2>
+        <br>
+        <ul>
+            <li>
+                <label for="f_number">첫번째 수</label>  <input type="text" id="first"><br>
+            </li>
+            <li>
+                <label for="s_number">두번째 수</label>  <input type="text" id="second"><br>
+            </li>
+                &nbsp &nbsp &nbsp &nbsp
+                <button onclick="add()">+</button>
+                <button onclick="sub()">-</button>
+                <button onclick="mul()">*</button>
+                <button onclick="div()">/</button>
+                <button onclick="mod()">%</button>
+                <button onclick="C()">clr</button><br>
+        
+        </ul>
+        <h3><div id="showResult"></div></h3>
+    </div> 
+    
+    <script>
+        function add(){
+            var first = document.querySelector('#first').value;
+            var second = document.querySelector('#second').value;
+            document.querySelector('#showResult').innerHTML="두 수의 합은 "+(Number(first)+Number(second)+" 입니다");
+        }
+        function sub(){
+            var first = document.querySelector('#first').value;
+            var second = document.querySelector('#second').value;
+            document.querySelector('#showResult').innerHTML="두 수의 차는 "+ (Number(first)-Number(second)+" 입니다");
+        }
+        function mul(){
+            var first = document.querySelector('#first').value;
+            var second = document.querySelector('#second').value;
+            document.querySelector('#showResult').innerHTML="두 수의 곱은 "+(Number(first)*Number(second)+" 입니다");
+        }
+        function div(){
+            var first = document.querySelector('#first').value;
+            var second = document.querySelector('#second').value;
+            document.querySelector('#showResult').innerHTML="몫 은"+(Number(first)/Number(second)+" 입니다");
+        }
+        function mod(){
+            var first = document.querySelector('#first').value;
+            var second = document.querySelector('#second').value;
+            document.querySelector('#showResult').innerHTML="나머지는 "+(Number(first)%Number(second)+" 입니다");
+        }
+        function C(){
+            document.querySelector('#first').value=null
+            document.querySelector('#second').value=null
+            document.querySelector('#showResult').innerHTML=null;
+
+        }
+    </script>
+</body>
+</html>

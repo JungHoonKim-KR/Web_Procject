@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script>
+      var people = [];
+      function submit_chk(myForm) {
+        var person = {
+          name: document.f1.user_name.value,
+          tel: document.f1.user_tel.value,
+        };
+        let check_tel = person.tel;
+        let check_num = "010";
+
+        if (person.tel.length != 11 || check_num != check_tel.slice(0, 3)) {
+          alert("전화번호가 본인 휴대폰 번호가 맞는지 확인해주세요");
+
+          document.querySelector("#user_name").value = null;
+          document.querySelector("#user_tel").value = null;
+          document.f1.user_name.focus();
+          return false;
+        }
+
+        people.push(person);
+        console.log(person);
+        console.log(people);
+
+        return false;
+      }
+      function reset_chk(myForm) {
+        document.f1.user_name.focus();
+      }
+
+      function show() {
+        document.querySelector("#showpeople").innerHTML = null;
+        people.forEach((item, index) => {
+          console.log(
+            "이름 : " +
+              people[index].name +
+              ", 전화 번호 : " +
+              people[index].tel
+          );
+          document.querySelector("#showpeople").innerHTML +=
+            "이름 : " +
+            people[index].name +
+            ", 전화 번호 : " +
+            people[index].tel.replace(/^(\d{3})(\d{4})(\d{4})$/, `$1-$2-$3`) +
+            "<br>";
+        });
+      }
+
+      function remove() {
+        document.querySelector("#showpeople").innerHTML = null;
+      }
+    </script>
+  </head>
+
+  <body onload="document.f1.user_name.focus();">
+    <form
+      action="#"
+      method="POST"
+      name="f1"
+      onsubmit="return submit_chk(this);"
+      onreset="return reset_chk(this);"
+    >
+      <fieldset>
+        <legend>회원 가입</legend>
+        <p>
+          <label for="user_name">이름</label>
+          <input type="text" name="user_name" id="user_name" />
+        </p>
+        <p>
+          <label for="user_name">연락처</label>
+          <input type="text" name="user_tel" id="user_tel" />
+          &nbsp;&nbsp;
+          <span style="font-size: 0.7em; color: gray">
+            본인 휴대폰 번호를 입력해주세요</span
+          >
+        </p>
+        <p>
+          <input type="submit" value="회원가입" />
+          <input type="reset" value="가입취소" />
+        </p>
+      </fieldset>
+    </form>
+    <button id="show" onclick="show()">출력</button>
+    <button id="remove" onclick="remove()">지우기</button>
+
+    <h3>현재 가입된 회원</h3>
+    <div id="showpeople"></div>
+  </body>
+</html>

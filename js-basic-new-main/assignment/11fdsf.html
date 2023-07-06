@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
+   
+    <script>
+        $(function()
+        {
+            $("<button></button>").text("dd").css({width:"20",height:"300"}).appendTo("body");
+        })
+    </script>
+</head>
+<body>
+   <div id="wrap"> </div>
+
+    <iframe src="http://www.google.com/" frameborder="0" width="300px" height="300px"></iframe>
+    <script type="text/javascript">
+        $("iframe").load(function(){
+            $("#wrap").append("<h1>로딩완료</h1>")
+        })
+
+        $(document).ready(function(){
+            $("#wrap").append("<p>레디완료</p>")
+        })
+    </script>
+</body>
+</html>

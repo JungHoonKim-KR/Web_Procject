@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+      let book = {
+        title: "javascript",
+        page: 500,
+        info: function () {
+          console.log(this.title + "책의 분량은 " + this.page + " 쪽입니다.");
+        },
+      };
+      
+
+      console.log(book.title);
+      book.info();
+      */
+      /*
+      function Book(title, page) {
+        (this.title = title), (this.page = page || 0);
+
+        Book.prototype.info = function () {
+          console.log(this.title + "책의 분량은 " + this.page + " 쪽입니다.");
+        };
+      }
+      let book1 = new Book("java", 200);
+      let book2 = new Book("C");
+      let book3 = Book("C#");
+
+      book1.info();
+      book2.info();
+      console.log(title, page);
+      */
+      /*
+      console.log(book.toString());
+      console.dir(book);
+      */
+
+      /*
+      let num = 123;
+      Number.prototype.method = function () {
+        console.log("method");
+      };
+
+      num.method();
+      */
+      let s;
+      while (true) {
+        s = prompt("이메일을 입력하시오");
+        let reg1 = /@/;
+        let reg2 = /\./;
+
+        let a, b;
+        if (reg1.test(s) && reg2.test(s)) {
+          a = s.indexOf("@");
+          console.log(a);
+          b = s.indexOf("\.");
+          console.log(b);
+          if (a < b) {
+            break;
+          } else {
+            alert("@ 이가 x 앞으로 나와야합니다.\n 다시 입력해주세요");
+          }
+        } else {
+          alert("다시 입력해주세요");
+        }
+      }
+      console.log("입력된 이메일 " + s);
+      console.log("끝났습니다.");
+    </script>
+  </body>
+</html>

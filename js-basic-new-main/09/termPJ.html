@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
+
+    <style>
+      #btn_group button {
+        border: 2px solid #deb887;
+        background-color: rgba(0, 0, 0, 0);
+        color: brown;
+        /*바깥공백 안쪽공백 맞추기*/
+        padding: 20px;
+        margin: 20px;
+        margin-top: 50px;
+        /*버튼 끝에 각 없애기*/
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        width: 150px;
+        height: 150px;
+      }
+      /*버튼 클릭시 생동감있게 색바꿔줌*/
+      #btn_group button:hover {
+        color: white;
+        background-color: #deb887;
+      }
+    </style>
+
+    <script>
+      $(document).ready(function () {
+        var members = [];
+        var teachers = [];
+        var id_checker = false;
+        var pw_checker = false;
+
+        //학원 강사 생성자 및 생성
+        function Teacher(name, country, subject, gender, phone,textbook) {
+          this.name = name;
+          this.country = country;
+          this.subject = subject;
+          this.gender = gender;
+          this.phone = phone;
+          this.textbook = textbook;
+        }
+        let teacher = new Teacher("Ronnie","USA","Grammar","male","01028129123","Basic grammar");
+        teachers.push(teacher);
+        teacher = new Teacher("Cbum","Canada","Conversation","male","01082431488","Basic conversation");
+        teachers.push(teacher);
+        teacher = new Teacher("Rachel","UK","Conversation","female","01037459461","Surviving_In_America I");
+        teachers.push(teacher);
+        teacher = new Teacher("Tom","USA","Conversation","male","01012657489","Surviving_In_America II");
+        teachers.push(teacher);
+
+        function Member(id, pw, phone, name) {
+          //회원가입 시 발생할 이벤트 정의
+          this.id = id;
+          this.pw = pw;
+          this.phone = phone;
+          this.name = name;
+          this.course = "없음";
+          this.course_teacher = "없음";
+          this.subject="없음"
+          this.applied_course = "없음"
+          this.registered_course=false;
+          this.info = function () {
+            console.log("회원 id " + this.id + " , pw :" + this.pw);
+          };
+        }
+        //관리자 아이디,비번 등록
+        let admin = new Member("admin123","aaaa1234!","01028129123","관리자"
+        );
+        members.push(admin);
+        let student = new Member("qwesdad","ewqsda!12","01012451234","이수빈"
+        );
+        student.course = "Surviving_In_America I";
+        student.course_teacher = "Cbum";
+        student.subject="conversation";
+        student.registered_course=true;
+        members.push(student);
+        student = new Member("minsoo", "aabbcc1234!", "01012341515", "김민수");
+        student.course = "Surviving_In_America II";
+        student.course_teacher = "Rachel";
+        student.registered_course=true;
+        student.subject="conversation";
+        members.push(student);
+        student = new Member("minseok", "aaffff33!", "01078156846", "이민석");
+        student.course = "Basic grammar";
+        student.course_teacher = "Ronnie";
+        student.subject="grammar";
+        student.registered_course=true;
+        members.push(student);
+
+        // 로그인 창에서 회원가입 눌렸을때 이벤트 발생
+        function go_signup() {
+          $("#Academy").css("display","none");
+          document.getElementById("sign_id").value="";
+          document.getElementById("sign_pw").value="";
+          document.getElementById("sign_name").value="";
+          document.getElementById("sign_phone").value=""
+          document.getElementsByName("id_comment")[0].innerHTML =""
+          document.getElementsByName("id_comment")[1].innerHTML =""
+          document.getElementsByName("pw_comment")[0].innerHTML = "";
+          document.getElementsByName("pw_comment")[1].innerHTML =""
+          document.getElementById("sign_id").removeAttribute("disabled");
+          document.getElementById("sign_pw").removeAttribute("disabled");
+
+          var signup_container =document.getElementById("signup_container").style.display;
+          if (signup_container.trim() == "none") {
+            document.querySelector("#signup_container").style.display =
+              " block";
+              document.getElementById("sign_id").value="";
+              document.getElementById("sign_pw").value="";
+              document.getElementById("sign_name").value="";
+              document.getElementById("sign_phone").value=""
+              document.getElementsByName("id_comment")[1].innerHTML =""
+              document.getElementsByName("pw_comment")[1].innerHTML = "";
+              
+          } else {
+            document.querySelector("#signup_container").style.display = " none";
+          }
+        }
+
+        //회원가입 버튼 눌렀을 시 발생할 이벤트
+        function signup() {
+          var user_name = document.getElementById("sign_name").value;
+          var user_phone = document.getElementById("sign_phone").value;
+          var user_id = document.getElementById("sign_id").value;
+          var user_pw = document.getElementById("sign_pw").value;
+          
+          //폰번호 010시작후 8자리
+          var reg_phone = /^(010)\d{8}$/;
+          if (reg_phone.test(user_phone)) {
+            if (id_checker && pw_checker) {
+              alert(user_name + " 님 회원가입 축하드립니다!");
+              id_checker = false;
+              pw_checker = false;
+              let member = new Member(user_id, user_pw, user_phone, user_name);
+              members.push(member);
+              document.getElementById("sign_name").value = null;
+              document.getElementById("sign_phone").value = null;
+              document.getElementById("sign_id").value = null;
+              document.getElementById("sign_pw").value = null;
+              document.getElementById("sign_id").setAttribute("disabled","false");
+              document.getElementById("sign_pw").setAttribute("disabled","false");
+              document.getElementsByName("id_comment")[0].innerHTML = "";
+              document.getElementsByName("id_comment")[1].innerHTML = "";
+              document.getElementsByName("pw_comment")[0].innerHTML = "";
+              document.getElementsByName("pw_comment")[1].innerHTML = "";
+              document.getElementById("signup_container").style.display =
+                "none";
+                document.getElementById("Academy").style.display =
+                "block";
+            } else if (id_checker == false && pw_checker == true) {
+
+              alert("아이디 중복체크 확인 부탁드립니다.");
+              user_id = "";
+            } else if (id_checker == true && pw_checker == false) {
+              alert("비밀번호 확인 부탁드립니다.");
+              user_pw = "";
+            }
+          } else {
+            alert("입력하신 정보가 맞는지 다시한번 확인부탁드립니다.");
+          }
+        }
+
+        function go_back()
+        {
+          document.getElementById("sign_id").value="";
+          document.getElementById("sign_pw").value="";
+          document.getElementById("sign_name").value="";
+          document.getElementById("sign_phone").value=""
+          document.getElementsByName("id_comment")[0].innerHTML =""
+          document.getElementsByName("id_comment")[1].innerHTML =""
+          document.getElementsByName("pw_comment")[0].innerHTML = "";
+          document.getElementsByName("pw_comment")[1].innerHTML =""
+          document.getElementById("sign_id").removeAttribute("disabled");
+          document.getElementById("sign_pw").removeAttribute("disabled");
+          $("#Academy").css("display","block");
+          $("#admin_mode").css("display","none");
+          $("#guest_mode").css("display","none");
+          $("#signup_container").css("display","none");
+          
+        }
+
+        function id_check() {
+          var user_id = document.getElementById("sign_id").value;
+          let reg_id = /^[a-zA-Z0-9]{6,10}$/; //영어와 숫자로 6~10자리
+
+
+          document.getElementsByName("id_comment")[0].innerHTML = "";
+          document.getElementsByName("id_comment")[1].innerHTML = "";
+          if (!reg_id.test(user_id)) {
+            document.getElementsByName("id_comment")[0].innerHTML =
+              "아이디가 규칙에 맞지 않습니다.";
+            document.getElementById("sign_id").value = "";
+          } else {
+            members.forEach(function (member, index) {
+              if (member.id == user_id) {
+                document.getElementsByName("id_comment")[0].innerHTML = "";
+                id_checker=false;
+                return false;
+              } else {
+                document.getElementsByName("id_comment")[1].innerHTML = "";
+                id_checker = true;
+              }
+            });
+            if(id_checker==true)
+            {
+              document.getElementsByName("id_comment")[1].innerHTML =
+              "사용가능한 아이디입니다.";
+              document.getElementById("sign_id").setAttribute("disabled","true");
+
+            }else{
+              document.getElementsByName("id_comment")[0].innerHTML =
+                  "사용중인 아이디가 존재합니다.";
+            }
+          }
+        }
+        function pw_check() {
+          var user_pw = document.getElementById("sign_pw").value;
+          //숫자1개이상, 영문자1개이상, 특수문자(!@#$^)중하나이상이들어간8~12자리문자열길이
+          let reg_pw = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[!@~]).{8,12}$/gi;
+          document.getElementsByName("pw_comment")[0].innerHTML = "";
+          document.getElementsByName("pw_comment")[1].innerHTML = "";
+          if (!reg_pw.test(user_pw)) {
+            document.getElementsByName("pw_comment")[0].innerHTML =
+              "비밀번호가 규칙에 맞지 않습니다.";
+            document.getElementById("sign_pw").value = "";
+          } else {
+                document.getElementsByName("pw_comment")[1].innerHTML = "";
+                document.getElementsByName("pw_comment")[1].innerHTML =
+                  "사용가능한 비밀번호 입니다.";
+                document.getElementById("sign_pw").setAttribute("disabled","true");
+                pw_checker = true;
+              
+          }
+        }
+
+        var present_user=null;
+        //로그인 버튼 클릭시 발생하는 이벤트
+        function login() {
+          var user_id = document.getElementById("user_id").value;
+          var user_pw = document.getElementById("user_pw").value;
+          var member_id_check = false;
+          var member_pw_check = false;
+          var admin_check = false;
+          members.forEach(function (member, index) {
+            if (user_id == member.id) {
+              if (user_pw == member.pw) {
+                if (user_id == "admin123") {
+                  admin_check = true;
+                }
+                member_id_check = true;
+                member_pw_check = true;
+                present_user = member;
+              }
+            }
+          });
+          if (member_id_check && member_pw_check) {
+            if (admin_check) 
+            {
+              alert("관리자모드로 로그인 되었습니다.");
+              $("#Academy").css("display","none");
+              $("#admin_mode").css("display","block");
+              $("#guest_mode").css("display","none");
+            }
+            else 
+            {
+              alert(present_user.name+"님 로그인되었습니다.");
+              $("#Academy").css("display","none");
+              $("#admin_mode").css("display","none");
+              $("#guest_mode").css("display","block");
+            }
+           
+          } else {
+            alert("입력하신 정보를 다시 확인해주세요");
+          }
+          document.getElementById("user_id").value = null;
+          document.getElementById("user_pw").value = null;
+        }
+
+
+        function admin_logout()
+        {
+          $("#Academy").css("display","block");
+          $("#admin_mode").css("display","none");
+          $("#guest_mode").css("display","none");
+          $("#information_container").css("display","none");
+          $("#guest_information_container").css("display","none");
+          alert("로그아웃 되셨습니다.");
+        }
+        
+        function guest_logout()
+        {
+          $("#Academy").css("display","block");
+          $("#admin_mode").css("display","none");
+          $("#guest_mode").css("display","none");
+          $("#information_container").css("display","none");
+          $("#guest_information_container").css("display","none");
+          alert("로그아웃 되셨습니다.");
+        }
+
+        function check_student() {
+          document.querySelector("#information").innerHTML =
+            "<p>" + "회원 정보보기 ";
+
+          $("#information_container").css("display","block");
+          $("<table></table>").attr("border", "1").attr("id", "table").appendTo("#information");
+          $("<tr></tr>").attr("id", "tr").appendTo("#table");
+          $("<th></th>").attr("width", "100px").attr("id", "name1").text("이름").appendTo("#tr");
+          $("<th></th>").attr("width", "100px").attr("id", "id1").text("아이디").appendTo("#tr");
+          $("<th></th>").attr("width", "150px").attr("id", "pw1").text("비밀번호").appendTo("#tr");
+          $("<th></th>").attr("width", "150px").attr("id", "phone1").text("전화번호").appendTo("#tr");
+          $("<th></th>").attr("width", "200px").attr("id", "phone1").text("수강과목").appendTo("#tr");
+          var tr_counter = 0;
+          members.forEach(function (member, index) {
+            // 0번째는 관리지 이기 때문
+            if (index != 0) {
+              $("<tr></tr>").attr("id", tr_counter).appendTo("#table");
+              $("<td></td>").text(member.name).appendTo("#" + tr_counter);
+              $("<td></td>").text(member.id).appendTo("#" + tr_counter);
+              $("<td></td>").text(member.pw).appendTo("#" + tr_counter);
+              $("<td></td>").text(member.phone).appendTo("#" + tr_counter);
+              $("<td></td>").css("text-align","center").text(member.course).appendTo("#" + tr_counter);
+              tr_counter++;
+            }
+          });
+
+          document.getElementById("information").style.display = "block";
+        }
+        //name, country, subject, gender, phone
+        function check_teacher() {
+          document.querySelector("#information").innerHTML =
+            "<p>" + "강사 정보보기 ";
+          $("#information_container").css("display","block");
+          //반복해서 눌릴때처리할 코드
+          $("<table></table>").attr("border", "1").attr("id", "table1").appendTo("#information");
+          $("<tr></tr>").attr("id", "tr1").appendTo("#table1");
+          $("<th></th>").attr("width", "100px").attr("id", "name2").text("이름").appendTo("#tr1");
+          $("<th></th>").attr("width", "100px").attr("id", "country").text("국적").appendTo("#tr1");
+          $("<th></th>").attr("width", "150px").attr("id", "subject").text("과목").appendTo("#tr1");
+          $("<th></th>").attr("width", "100px").attr("id", "gender").text("성").appendTo("#tr1");
+          $("<th></th>").attr("width", "170px").attr("id", "phone2").text("전화번호").appendTo("#tr1");
+
+          var tr_counter1 = 10;
+          teachers.forEach(function (teacher, index) {
+            $("<tr></tr>").attr("id", tr_counter1).appendTo("#table1");
+            $("<td></td>").css("text-align","center").text(teacher.name).appendTo("#" + tr_counter1);
+            $("<td></td>").css("text-align","center").text(teacher.country).appendTo("#" + tr_counter1);
+            $("<td></td>").css("text-align","center").text(teacher.subject).appendTo("#" + tr_counter1);
+            $("<td></td>").css("text-align","center").text(teacher.gender).appendTo("#" + tr_counter1);
+            $("<td></td>").css("text-align","center").text(teacher.phone).appendTo("#" + tr_counter1);
+            tr_counter1++;
+          });
+
+          document.getElementById("information").style.display = "block";
+        }
+
+        function check_professor()
+        {
+          document.querySelector("#guest_information").innerHTML ="<p>" + "강사 정보보기 ";
+
+            $("#guest_information_container").css("display","block");
+        $("<table></table>").attr("border", "1").attr("id", "table2").appendTo("#guest_information");
+        $("<tr></tr>").attr("id", "tr2").appendTo("#table2");
+        $("<th></th>").attr("width", "100px").attr("id", "name2").text("이름").appendTo("#tr2");
+        $("<th></th>").attr("width", "100px").attr("id", "country").text("국적").appendTo("#tr2");
+        $("<th></th>").attr("width", "150px").attr("id", "subject").text("과목").appendTo("#tr2");
+        
+        var tr_counter2=20;
+        
+        teachers.forEach(function (teacher, index) {
+          $("<tr></tr>").attr("id", tr_counter2).on("click",see_img).on("mouseover",mousein).on("mouseout",mouseout).appendTo("#table2");
+          $("<td></td>").css("text-align","center").text(teacher.name).appendTo("#" + tr_counter2);
+          $("<td></td>").css("text-align","center").text(teacher.country).appendTo("#" + tr_counter2);
+          $("<td></td>").css("text-align","center").text(teacher.subject).appendTo("#" + tr_counter2);
+
+          
+          tr_counter2++;
+        });
+        $("<img></img>").attr("id","pic").attr("style","display:none").attr("style","float:right").css({'width': '250px', 'height': '170px'}).insertBefore("#table2");
+          document.getElementById("guest_information").style.display = "block";
+        }
+
+        function mousein(){
+          $(this).css("backgroundColor","#deb887");
+          $(this).css("color","white");
+        }
+        function mouseout(){
+          $(this).css("backgroundColor","ivory");
+          $(this).css("color","black");
+        }
+        function see_img(){
+          var professor_name=this.children[0].innerText;
+          $("#pic").attr("src","images/"+professor_name+".jpg").attr("alt","사진을 불러오지못했습니다.").attr("style","float:right").css({'width': '250px', 'height': '170px'});
+        }
+
+        function applying_course()
+        {
+          document.querySelector("#guest_information").innerHTML =
+          "<p>" + "수강 신청하기 ";
+
+          $("#guest_information_container").css("display","block");
+          $("<table></table>").attr("border", "1").attr("id", "table3").appendTo("#guest_information");
+          $("<tr></tr>").attr("id", "tr3").appendTo("#table3");
+          $("<th></th>").attr("width", "100px").attr("id", "name3").text("이름").appendTo("#tr3");
+          $("<th></th>").attr("width", "100px").attr("id", "country").text("국적").appendTo("#tr3");
+          $("<th></th>").attr("width", "150px").attr("id", "subject").text("과목").appendTo("#tr3");
+          $("<th></th>").attr("width", "200px").attr("id", "textbook").text("교재").appendTo("#tr3");
+          $("<th></th>").attr("width", "60px").attr("id", "applying").text("신청").appendTo("#tr3");
+        
+          var tr_counter3=30;
+          var course_num=0;
+        teachers.forEach(function (teacher, index) {
+          $("<tr></tr>").attr("id", tr_counter3).appendTo("#table3");
+
+          $("<td></td>").css("text-align","center").text(teacher.name).appendTo("#" + tr_counter3);
+          $("<td></td>").css("text-align","center").text(teacher.country).appendTo("#" + tr_counter3);
+          $("<td></td>").css("text-align","center").text(teacher.subject).appendTo("#" + tr_counter3);
+          $("<td></td>").css("text-align","center").text(teacher.textbook).appendTo("#" + tr_counter3);
+          $("<button></button>").css("text-align","center").text("신청").attr("id",course_num).on("click",apply).appendTo("#" + tr_counter3);
+          
+          course_num++;
+          tr_counter3++;
+          });
+          document.getElementById("guest_information").style.display = "block";
+        }
+
+        //수강신청 성공시 수강한학생의 정보를 담을수있는 공간
+        var applied_members=[]
+
+        function apply()
+        {
+          if(present_user==null)
+            alert("로그인 먼저 부탁드립니다.");
+        
+          if(present_user.course=="수강신청 확인중")
+            alert("현재 수강신청 확인중입니다.");
+          else if(present_user.course!="없음")
+            alert("현재 다른강의를 수강중입니다.")
+          else {
+            var course_num= $(this).attr("id");
+            if(course_num==0)
+            {
+              alert("Ronnie : Basic grammar 신청완료");
+              present_user.applied_course="Basic grammar";
+            }
+            else if(course_num==1)
+            {
+              alert("Cbum : Basic conversation 신청완료");
+              present_user.applied_course="Basic conversation";
+            }
+            else if(course_num==2)
+            {
+              alert("Rachel : Surviving_In_America I 신청완료");
+              present_user.applied_course="Surviving_In_America I";
+            }
+            else if(course_num==3)
+            {
+              alert("Tom : Surviving_In_America II 신청완료");
+              present_user.applied_course="Surviving_In_America II";
+            }
+            
+              present_user.course="수강신청 확인중";
+              //수강신청한 학생의 정보보관
+              applied_members.push(present_user);
+          }   
+        }
+
+        function admin_check_applying()
+        {
+          var tr_counter4=40;
+          var td_counter=0;
+          document.querySelector("#information").innerHTML =
+          "<p>" + "수강생 신청현황 ";
+
+          $("#information_container").css("display","block");
+          $("<table></table>").attr("border", "1").attr("id", "table4").css("margin-left","15px").appendTo("#information");
+          $("<tr></tr>").attr("id", "tr4").appendTo("#table4");
+          $("<th></th>").attr("width", "100px").attr("id", "name4").text("이름").appendTo("#tr4");
+          $("<th></th>").attr("width", "150px").attr("id", "textbook").text("전화번호").appendTo("#tr4");
+          $("<th></th>").attr("width", "200px").attr("id", "applyied_course").text("신청과목").appendTo("#tr4");
+          $("<th></th>").attr("width", "80x").attr("id", "checking_applying").text("확인").appendTo("#tr4");
+          $("<th></th>").attr("width", "80x").attr("id", "discard_applying").text("거절").appendTo("#tr4");
+          applied_members.forEach(function(member,index){
+            if(member.course=="수강신청 확인중")
+            {
+              $("<tr></tr>").attr("id", tr_counter4).appendTo("#table4");
+              $("<td></td>").text(member.name).appendTo("#" + tr_counter4);
+              $("<td></td>").text(member.phone).appendTo("#" + tr_counter4);
+  
+              //신청한과목 수정
+              $("<td></td>").text(member.applied_course).appendTo("#" + tr_counter4);
+              $("<td></td>").attr("id",td_counter).appendTo("#" + tr_counter4);
+              $("<button></button>").text("확인").on("click",accept).appendTo("#" + td_counter);
+              td_counter++;
+              $("<td></td>").attr("id",td_counter).appendTo("#" + tr_counter4);
+              $("<button></button>").text("거절").on("click",discard).appendTo("#" + td_counter);
+              td_counter++;
+              tr_counter4++;
+            }
+            
+          });
+          document.getElementById("information").style.display = "block";
+        }
+
+        function accept()
+        {
+          var applied_member=$(this).closest("tr").find('td:first-child').text()
+          var applied_course=$(this).closest("tr").find('td:nth-child(3)').text();
+          $(this).closest("tr").remove();
+          members.forEach(function(member,index){
+            if(member.name==applied_member)
+            {
+              member.registered_course=true;
+              member.course= applied_course;
+              teachers.forEach(function(teacher,index){
+                if(applied_course==teacher.textbook)
+                {
+                  member.course_teacher=teacher.name;
+                  member.subject=teacher.subject;
+                  present_user.course_teacher=teacher.name;
+                  present_user.subject=teacher.subject;
+                  alert("관리자 권한으로 수강신청 승인하였습니다.");
+                }
+              })
+            }
+          });
+        } 
+     
+        function discard()
+        {
+          var applied_member=$(this).closest("tr").find('td:first-child').text()
+          $(this).closest("tr").remove();
+          members.forEach(function(member,index){
+            
+            if(member.name==applied_member)
+            {
+              member.registered_course=false;
+              member.course="없음";
+              member.subject="없음";
+              present_user.course_teacher="없음"
+              alert("관리자 권한으로 수강신청 거부 완료하였습니다.");
+            }
+          });
+        }
+
+        function registered_student()
+        {
+          var tr_counter5=50;
+          var td_counter1=0;
+          document.querySelector("#information").innerHTML =
+          "<p>" + "수강중인 수강생 ";
+
+          $("#information_container").css("display","block");
+          $("<table></table>").attr("border", "1").attr("id", "table5").css("margin-left","15px").appendTo("#information");
+          $("<tr></tr>").attr("id", "tr5").appendTo("#table5");
+          $("<th></th>").attr("width", "70px").attr("id", "name5").text("이름").appendTo("#tr5");
+          $("<th></th>").attr("width", "120px").attr("id", "phone").text("전화번호").appendTo("#tr5");
+          $("<th></th>").attr("width", "120px").attr("id", "subject5").text("과목").appendTo("#tr5");
+          $("<th></th>").attr("width", "200px").attr("id", "applyied_course").text("교재").appendTo("#tr5");
+          $("<th></th>").attr("width", "70x").attr("id", "remove_member").text("수강취소").appendTo("#tr5");
+         
+            members.forEach(function(member,index){
+              if(!(member.course=="없음"||member.course=="수강신청 확인중")){
+                $("<tr></tr>").attr("id", tr_counter5).appendTo("#table5");
+                $("<td></td>").css("text-align","center").text(member.name).appendTo("#" + tr_counter5);
+                $("<td></td>").css("text-align","center").text(member.phone).appendTo("#" + tr_counter5);
+                $("<td></td>").css("text-align","center").text(member.subject).appendTo("#" + tr_counter5);
+                $("<td></td>").css("text-align","center").text(member.course).appendTo("#" + tr_counter5);
+                $("<td></td>").css("text-align","center").attr("id",td_counter1).appendTo("#" + tr_counter5);
+                $("<button></button>").css("width","80").text("취소").on("click",remove_stu).appendTo("#" + td_counter1);
+                
+              }
+            td_counter1++;
+            tr_counter5++;
+          });
+          document.getElementById("information").style.display = "block";
+        }
+        function remove_stu()
+        {
+          var remove_stu=$(this).closest("tr").find('td:first-child').text()
+          $(this).closest("tr").remove();
+          members.forEach(function(member,index){
+            
+            if(member.name==remove_stu)
+            {
+              member.registered_course=false;
+              member.course="없음";
+              alert(member.name+"학생 수강 취소되었습니다.")
+            }
+          });
+        }
+
+        function my_information()
+        {
+          var tr_counter6=60;
+       
+          $("#guest_information_container").css("display","block");
+          document.querySelector("#guest_information").innerHTML =
+          "<p>" + "내정보 ";
+
+          $("<table></table>").attr("border", "1").attr("id", "table6").css("margin-left","15px").appendTo("#guest_information");
+          $("<tr></tr>").attr("id", "tr6").appendTo("#table6");
+          $("<th></th>").attr("width", "100px").attr("id", "name6").text("이름").appendTo("#tr6");
+          $("<th></th>").attr("width", "100px").attr("id", "id5").text("아이디").appendTo("#tr6");
+          $("<th></th>").attr("width", "150px").attr("id", "pw5").text("비밀번호").appendTo("#tr6");
+          $("<th></th>").attr("width", "150px").attr("id", "phone5").text("전화번호").appendTo("#tr6");
+          $("<th></th>").attr("width", "200px").attr("id", "course1").text("수강과목").appendTo("#tr6");
+          
+          $("<tr></tr>").attr("id", tr_counter6).appendTo("#table6");
+
+          $("<td></td>").css("text-align","center").text(present_user.name).appendTo("#" + tr_counter6);
+          $("<td></td>").css("text-align","center").text(present_user.id).appendTo("#" + tr_counter6);
+          $("<td></td>").css("text-align","center").text(present_user.pw).appendTo("#" + tr_counter6);
+          $("<td></td>").css("text-align","center").text(present_user.phone).appendTo("#" + tr_counter6);
+          $("<td></td>").css("text-align","center").text(present_user.course).appendTo("#" + tr_counter6);
+          $("<p></p>").attr("id","p1").insertAfter("#table6");
+          $("<button></button>").text("회원탈퇴").attr("id","discharge").on("click",discharged).css("float","right").appendTo("#p1");
+          tr_counter6++;
+        
+          document.getElementById("guest_information").style.display = "block";
+        }
+
+        function discharged()
+        {
+          var member_in=0;
+          members.forEach(function(member,index)
+          {
+            if(member.id==present_user.id)
+            {
+              member_in=index;
+              console.log(member_in)
+            }
+          })
+          console.log(members)
+          members.splice(member_in,1);
+          alert("회원 탈퇴 되었습니다.")
+          $("#Academy").css("display","block");
+          $("#admin_mode").css("display","none");
+          $("#guest_mode").css("display","none");
+          $("#signup_container").css("display","none");
+        }
+
+        function check_course()
+        {
+        
+          if(present_user.course=="없음")
+          {
+            alert("현재 수강중인 과목이 없습니다.");
+          }else if (present_user.course=="수강신청 확인중")
+          {
+            alert("현재 신청한 과목이 승인되지 않았습니다.");
+          }else {
+
+            var tr_counter7=70;
+            var td_counter2=20;
+            document.querySelector("#guest_information").innerHTML =
+            "<p>" + "수강 내역보기";
+
+            $("#guest_information_container").css("display","block");
+            $("<table></table>").attr("border", "1").attr("id", "table7").css("margin-left","15px").appendTo("#guest_information");
+            $("<tr></tr>").attr("id", "tr7").appendTo("#table7");
+            $("<th></th>").attr("width", "100px").attr("id", "name7").text("강사").appendTo("#tr7");
+            $("<th></th>").attr("width", "100px").attr("id", "id6").text("국적").appendTo("#tr7");
+            $("<th></th>").attr("width", "150px").attr("id", "course2").text("과목").appendTo("#tr7");
+            $("<th></th>").attr("width", "170x").attr("id", "textbook2").text("교재").appendTo("#tr7");
+            $("<th></th>").attr("width", "70x").attr("id", "cancle_course3").text("수강취소").appendTo("#tr7");
+            $("<tr></tr>").attr("id", tr_counter7).appendTo("#table7");
+  
+            var temp_teacher;
+            teachers.forEach(function(teacher,index)
+            {
+             
+              if(present_user.course_teacher==teacher.name)
+              {
+               temp_teacher=teacher;
+              }
+            })
+            $("<td></td>").css("text-align","center").text(present_user.course_teacher).appendTo("#" + tr_counter7);
+            $("<td></td>").css("text-align","center").text(temp_teacher.country).appendTo("#" + tr_counter7);
+            $("<td></td>").css("text-align","center").text(temp_teacher.subject).appendTo("#" + tr_counter7);
+            $("<td></td>").css("text-align","center").text(temp_teacher.textbook).appendTo("#" + tr_counter7);
+            $("<td></td>").css("text-align","center").attr("id",td_counter2).appendTo("#" + tr_counter7);
+            $("<button></button>").text("수강취소").on("click",remove_cour).appendTo("#" + td_counter2);
+            document.getElementById("guest_information").style.display = "block";
+  
+            tr_counter7++;
+            td_counter2++;
+          }
+         
+        }
+
+        function remove_cour()
+        {
+          $(this).closest("tr").remove();
+          present_user.course="없음";
+          present_user.registered_course=false;
+          alert("수강 취소되었습니다.");
+        }
+
+        $("#admin_logout").on("click", admin_logout);
+        $("#quest_logout").on("click", guest_logout);
+        $("#check_course").on("click", check_course);
+        $("#my_information").on("click",my_information);
+        $("#check_register").on("click",registered_student);
+        $('#check_appyling').on("click", admin_check_applying);
+        $("#applying_course").on("click", applying_course);        
+        $("#check_professor").on("click", check_professor);
+        $("#check_students").on("click", check_student);
+        $("#check_teachers").on("click", check_teacher);
+        $("#go_back").on("click", go_back);
+        $("#id_check").on("click", id_check);
+        $("#pw_check").on("click", pw_check);
+        $("#go_signup").on("click", go_signup);
+        $("#submit").on("click", signup);
+        $("#login").on("click", login);
+      });
+    </script>
+  </head>
+
+  <body style="background-color: #deb887">
+    <div id="Academy">
+      <fieldset class="container" style="width: 780px;height: 200px;float: left;background-color: ivory;text-align: center;">
+        <legend>
+          <strong><span style="font-size: 1.4em">Ronnie's English academy</span></strong>
+        </legend>
+
+        <p>
+          <br />
+          <label for="user_id">아이디 : </label> &nbsp;&nbsp;
+          <input type="text" name="user_id" id="user_id" />
+        </p>
+        <p>
+          <label for="user_pw">비밀번호 : </label> &nbsp;&nbsp;
+          <input type="password" name="user_pw" id="user_pw" />&nbsp;&nbsp;
+        </p>
+        <p>
+          <br />
+          <button id="go_signup">회원가입</button>
+          <button id="login">로그인</button>
+        </p>
+      </fieldset>
+    </div>
+
+    <div id="signup_container" style="display: none">
+      <fieldset style="width: 500px;height: 200px;background-color: ivory;">
+        <legend><strong>회원가입</strong></legend>
+        <label for="sign_name">이름</label><br />
+        <input type="text" id="sign_name" /><br />
+        아이디 &nbsp;&nbsp;
+        <span style="font-size: 0.7em; color: gray">(영어 또는 숫자로 6~10자리)</span
+        ><br />
+        <input type="text" name="sign_id" id="sign_id" />
+        &nbsp;&nbsp;&nbsp;&nbsp;<button id="id_check">아이디 확인</button>
+        <span name="id_comment" style="color: red; font-size: 0.8em"></span>
+        <span name="id_comment" style="color: green; font-size: 0.8em"></span>
+        <br />
+        비밀번호 &nbsp;&nbsp;
+        <span style="font-size: 0.7em; color: gray">(숫자1개이상,영문자1개이상,특수문자(!@#$^)중하나이상,8~12자리문자)</span><br />
+        <input type="password" name="sign_pw" id="sign_pw" />
+        &nbsp;&nbsp;&nbsp;&nbsp;<button id="pw_check">비밀번호 확인</button>
+        <span name="pw_comment" style="color: red; font-size: 0.8em"></span>
+        <span name="pw_comment" style="color: green; font-size: 0.8em"></span>
+        <br />
+        <label for="sign_phone">전화번호</label><br />
+        <input type="text" name="sign_phone" id="sign_phone" />
+      
+        <button id="submit" style="float: right">회원 가입</button>
+        <button id="go_back" style="float: right">뒤로</button>
+      </fieldset>
+    </div>
+
+    <div id="admin_mode" style="display:none">
+      <fieldset style="width: 800px;height: 600px;float: left;background-color: ivory;text-align: center;">
+        <legend>
+          <strong><span style="font-size: 1.3em">관리자 모드</span></strong>
+        </legend>
+        <div id="btn_group">
+          <button id="check_students"><strong>회원 정보보기</strong></button>
+          <button id="check_teachers"><strong>강사 정보보기</strong></button>
+          <button id="check_appyling"><strong>수강생 신청현황</strong></button>
+          <button id="check_register"><strong>등록된 수강생</strong></button>
+        </div>
+        
+      
+   
+    <div id="information_container" style="display:none">
+      <fieldset style="width: 700px;height: 250px;margin-left:100px;margin-right:100px;background-color: ivory;margin-top: 10px;">
+        <legend><strong>Administer Information</strong></legend>
+        <span id="information" style="display: none"></span>
+      </fieldset>
+    </div>
+    <p> <button id="admin_logout">로그아웃</button></p>
+   
+  </fieldset>
+    </div>
+
+    <div id="guest_mode" style="display:none">
+      <fieldset style="width: 800px;height: 600px;float: left;background-color: ivory;margin-bottom: 50px;text-align: center;">
+        <legend>
+          <strong><span style="font-size: 1.3em">일반 모드</span></strong>
+        </legend>
+
+        <div id="btn_group">
+          <button id="check_professor"><strong>강사 정보보기</strong></button>
+          <button id="applying_course"><strong>수강 신청하기</strong></button>
+          <button id="check_course"><strong>수강 내역보기</strong></button>
+          <button id="my_information"><strong>내정보</strong></button>
+        </div>
+       
+    
+
+      <div id="guest_information_container" style="display:none">
+        <fieldset style="width: 700px;height: 250px;margin-left:100px;margin-right:100px;background-color: ivory;margin-top: 10px;">
+          <legend><strong>Guest Information</strong></legend>
+          <span id="guest_information" style="display: none"></span>
+        </fieldset>
+      </div>
+    
+    <p>
+      <button id="quest_logout">로그아웃</button>
+    </p></fieldset>
+    
+    </div>
+
+    <span style="font-size: 0.5em ;display:none">사진 출처 :cbum:https://www.stack3d.com/2021/02/jacked-factory-cbum-phone-line.html, ronnie :https://www.huffingtonpost.kr/news/articleView.html?idxno=86326,Rachel :https://extmovie.com/movietalk/44432046, Tom: https://namu.wiki/w/%ED%86%B0%20%ED%81%AC%EB%A3%A8%EC%A6%88</span></span>
+  </body>
+</html>

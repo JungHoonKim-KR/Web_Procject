@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+        var f2 = function () {
+        console.log("1");
+      };
+      function f2() {
+        console.log("2");
+      }
+
+      f2();
+      (function () {
+        console.log(this);
+      })();
+
+      (() => {
+        console.log(this);
+      })(); //노드나 리엑트개발할때는 this 에서 차이가있음 익명함수랑 화살표차이에
+     */
+      setTimeout(() => {
+        console.log("2초가 지났습니다.");
+      }, 2000);
+
+      let id = setInterval(() => {
+        //호출이아니라 리터럴임
+        console.log("2초마다 호출됩니다.");
+      }, 2000);
+
+      setTimeout(() => {
+        clearInterval(id);
+      }, 3000);
+    </script>
+  </body>
+</html>

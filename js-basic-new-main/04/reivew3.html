@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="event"></div>
+    <script>
+        var n;
+        n=prompt("정수입력 0~10");
+
+        let a=setInterval(function(){
+            document.querySelector("#event").innerHTML=n;
+            n-=1;
+        },1000);
+
+        setTimeout(function(){
+            clearInterval(a);
+        },1000*n+1000)
+        
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var e;
+      while (1) {
+        e = prompt("이메일 입력");
+        var reg1 = /@/;
+        var reg2 = /\./;
+        if (reg1.test(e) && reg2.test(e)) {
+          if (e.indexOf("@") < e.indexOf("\.")) {
+            break;
+          } else alert("다시입력");
+        } else {
+          alert("다시입력");
+        }
+      }
+
+      console.log(e);
+    </script>
+  </body>
+</html>

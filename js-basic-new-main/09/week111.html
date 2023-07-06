@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
+  </head>
+  <!-- <script>
+    $(document).ready(function () {
+      $("img").each(function (index, item) {
+        $(this).attr(
+          "src",
+          "http://placehold.it/" + (index + 1) * 100 + "x100"
+        );
+      });
+      var s = $("#im").prop("tagName");
+      console.log(s);
+    });
+  </script> -->
+  <body>
+    <!-- <img id="im" />
+    <img />
+    <img /> -->
+    <div id="0">
+      <script>
+        $(function () {
+       
+          $("#menu li:nth-child(3n)").css("color", "red");
+        
+        });
+      </script>
+
+      <h1>인접 관계 <span>선택자</span></h1>
+      <ul id="menu">
+        <li>내용1</li>
+        <li>내용2</li>
+        <li>내용3</li>
+        <ul>
+          <li>내용3-1</li>
+          <li>내용3-2</li>
+          <li>내용3-3</li>
+          <li>내용3-4</li>
+        </ul>
+        <li>내용4</li>
+        <li>내용5</li>
+        <li>내용6</li>
+      </ul>
+    </div>
+
+    <div id="1">
+      <script type="text/javascript">
+        $(function () {
+          $("p:visible").css("border", "2px solid red");
+          $("p:hidden").css("color", "red");
+          $("p:hidden").css("display", "block");
+        });
+      </script>
+
+      <h1>탐색 선택자</h1>
+      <p>내용1</p>
+      <p style="display: none">내용2</p>
+    </div>
+
+    <script>
+      $(function () {
+        $(":text").css("border", "1px dashed #f00");
+        $(":checked").attr("checked", false);
+        $(":selected").attr("selected", false);
+      });
+    </script>
+    <div id="2">
+      <h1>탐색 선택자</h1>
+      <p>
+        <label>이름</label>
+        <input type="text" />
+      </p>
+      <p>
+        <input type="checkbox" checked="checked" />
+        <label for="accept">사용자 동의</label>
+      </p>
+      <p>
+        <select>
+          <option>네이버</option>
+          <option selected="selected">네이트</option>
+        </select>
+      </p>
+    </div>
+
+    <div id="wrap">
+      <iframe
+        src="https://nirsa.tistory.com/32"
+        frameborder="0"
+        width="300"
+        height="200"
+      >
+      </iframe>
+      <script>
+        $("iframe").load(function () {
+          $("#wrap").append("<p>로딩완료</p>");
+        });
+        $("document").ready(function () {
+          $("#wrap").append("<p>레디완료</p>");
+        });
+      </script>
+    </div>
+  </body>
+</html>

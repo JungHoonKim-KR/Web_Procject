@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script>
+      window.onload = function () {
+        function Person(name, num) {
+          this.name = name;
+          this.number = num;
+        }
+
+        let people = [];
+        var btn1 = document.getElementById("btn1");
+        var btn2 = document.getElementById("btn2");
+        var btn3 = document.getElementById("btn3");
+        var btn4 = document.getElementById("btn4");
+
+        btn1.onclick = function () {
+          var name = document.getElementById("name").value;
+          var num = document.getElementById("num").value;
+
+          if (num.length != 11 || num.slice(0, 3) != "010") {
+            alert("다시입력해주세요");
+            document.querySelector("#name").value = null;
+            document.querySelector("#num").value = null;
+            document.f1.name.focus();
+          }
+
+          people.push(new Person(name, num));
+          console.log(people);
+        };
+        btn2.onclick = function () {
+          document.querySelector("#name").value = null;
+          document.querySelector("#num").value = null;
+          document.f1.name.focus();
+        };
+        btn3.onclick = function () {
+          people.forEach((item, index) => {
+            document.querySelector("#result").innerHTML +=
+              "이름 : " +
+              people[index].name +
+              " 전화 번호 :" +
+              people[index].number +
+              "<p>";
+          });
+        };
+        btn4.onclick = function () {
+          document.querySelector("#result").innerHTML = null;
+        };
+      };
+    </script>
+  </head>
+  <body>
+    <form action="#" method="POST" name="f1" onsubmit="return false">
+      <label for="name">이름</label>
+      <input type="text" id="name" />
+      <p>
+        <label for="name">연락처</label>
+        <input type="text" id="num" />
+      </p>
+      <button id="btn1">회원가입</button>
+      <button id="btn2">가입취소</button>
+      <p>
+        <button id="btn3">출력</button>
+        <button id="btn4">지우기</button>
+      </p>
+      <br />
+      <div id="result"></div>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        var counter = 0;
+
+        var handler = function () {
+          var c = counter;
+
+          $("<div></div>").attr("id", c).appendTo("body");
+          $("<p></p>").text("0").appendTo("#" + c);
+          $("<button></button>").text("increase").on("click", increase).appendTo("#" + c);
+          $("<button></button>").text("decrease").on("click", decrease).appendTo("#" + c);
+
+          counter++;
+        };
+
+        var increase = function () {
+          var n = $(this).prev().text();
+          n = Number(n) + 1;
+          $(this).prev().text(n);
+        };
+
+        var decrease = function () {
+          var n = $(this).prev().prev().text();
+          n = Number(n) - 1;
+          $(this).prev().prev().text(n);
+        };
+
+        $("#btn").on("click", handler);
+      });
+    </script>
+  </head>
+  <body>
+    <div id="container">
+      <button id="btn">버튼 추가하기</button>
+    </div>
+  </body>
+</html>

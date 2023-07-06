@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>계산기</title>
+    <link rel="stylesheet" href="css/bargain.css" />
+  </head>
+  <body>
+    
+    <label for ="first">첫번째 수</label>
+    &nbsp;
+    <input type="text" id="first_num">
+
+    <label for ="second">두번째 수</label>
+    &nbsp;
+    <input type="text" id="second_num">
+    <br>
+    &nbsp; &nbsp; &nbsp; &nbsp;
+    <button class="btn" onclick="add()">+</button>
+    <button class="btn" onclick="sub()">-</button>
+    <button class="btn" onclick="mul()">*</button>
+    <button class="btn" onclick="div()">/</button>
+    <button class="btn" onclick="mod()">%</button>
+    <p>
+        <div id="result"></div>
+    </p>
+  </body>
+
+  <script>
+    function add()
+    {
+        var f=document.getElementById("first_num").value;
+        var s=document.getElementById("second_num").value;
+        document.querySelector("#result").innerHTML="두수의 합은 "+(Number(f)+Number(s))+"입니다.";
+    }
+    function sub()
+    {
+        var f=document.getElementById("first_num").value;
+        var s=document.getElementById("second_num").value;
+        document.querySelector("#result").innerHTML="두수의 합은 "+(Number(f)-Number(s))+"입니다.";
+    }
+    function mul()
+    {
+        var f=document.getElementById("first_num").value;
+        var s=document.getElementById("second_num").value;
+        document.querySelector("#result").innerHTML="두수의 합은 "+(Number(f)*Number(s))+"입니다.";
+    }
+    function div()
+    {
+        var f=document.getElementById("first_num").value;
+        var s=document.getElementById("second_num").value;
+        document.querySelector("#result").innerHTML="두수의 합은 "+(Number(f)/Number(s))+"입니다.";
+    }
+    function mod()
+    {
+        var f=document.getElementById("first_num").value;
+        var s=document.getElementById("second_num").value;
+        document.querySelector("#result").innerHTML="두수의 합은 "+(Number(f)%Number(s))+"입니다.";
+    }
+
+  </script>
+</html>

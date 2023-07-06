@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="input">
+      <input type="text" id="intext" />
+      <button id="btn">추가</button>
+      <button id="btn1">삽입</button>
+      <button id="btn2">초기화</button>
+      <button id="btn3">첫번째삭제</button>
+      <button id="btn4">마지막삭제</button>
+    </div>
+    <br />
+    <div id="out"></div>
+
+    <script>
+      var textList = document.querySelector("#out");
+
+      var btn = document.getElementById("btn");
+      var btn1 = document.getElementById("btn1");
+      var btn2 = document.getElementById("btn2");
+      var btn3 = document.getElementById("btn3");
+      var btn4 = document.getElementById("btn4");
+
+      btn.onclick = addText;
+      btn1.onclick = insertText;
+      btn2.onclick = allDelete;
+      btn3.onclick = firstDelete;
+      btn4.onclick = lastDelete;
+
+      function addText() {
+        var li = document.createElement("li");
+
+        var text = document.querySelector("#intext");
+        var newText = document.createTextNode(text.value);
+        li.appendChild(newText);
+
+        textList.appendChild(li);
+        text.value = "";
+      }
+
+      function insertText() {
+        var li = document.createElement("li");
+
+        var text = document.querySelector("#intext");
+        var newText = document.createTextNode(text.value);
+        li.appendChild(newText);
+
+        textList.insertBefore(li, textList.childNodes[0]);
+        text.value = "";
+      }
+
+      function allDelete() {
+        var li = document.querySelectorAll("li");
+
+        for (let i = 0; i < li.length; i++) {
+          li[i].parentNode.removeChild(li[i]);
+        }
+      }
+
+      function firstDelete() {
+        textList.removeChild(textList.childNodes[0]);
+      }
+
+      function lastDelete() {
+        textList.removeChild(
+          textList.childNodes[textList.childNodes.length - 1]
+        );
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let s;
+      while (1) {
+        s = prompt("이메일을 입력하세요");
+        let reg1 = /@/;
+        let reg2 = /\./;
+
+        let a, b;
+        if (reg1.test(s) && reg2.test(s)) {
+          a = s.indexOf("@");
+          b = s.indexOf("\.");
+
+          if (a < b) {
+            break;
+          } else {
+            console.log(a);
+            console.log(b);
+            alert("다시 입력 ㄱㄱ");
+          }
+        } else {
+          alert("다시입력해주세요");
+        }
+      }
+
+      console.log("입력된 이메일은 : " + s);
+    </script>
+  </body>
+</html>

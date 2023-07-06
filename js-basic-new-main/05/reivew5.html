@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function Person(name, number) {
+        this.name = name;
+        this.number = number;
+      }
+      var people = [];
+      window.onload = function () {
+        var btn1 = document.getElementById("submit");
+        var btn2 = document.getElementById("cancle");
+        var btn3 = document.getElementById("show");
+        var btn4 = document.getElementById("del");
+
+        btn1.onclick = function () {
+          var name = document.getElementById("name").value;
+          var number = document.getElementById("number").value;
+          people.push(new Person(name, number));
+        };
+        btn2.onclick = function () {
+          document.querySelector("#name").value = null;
+          document.querySelector("#number").value = null;
+          document.f1.name.focus();
+        };
+        btn3.onclick = function () {
+          document.querySelector("#result").innerHTML = null;
+          people.forEach((item, index) => {
+            document.querySelector("#result").innerHTML +=
+              "이름 : " +
+              people[index].name +
+              " 전번 : " +
+              people[index].number +
+              "<p>";
+          });
+        };
+        btn4.onclick = function () {
+          document.querySelector("#result").innerHTML = null;
+        };
+      };
+    </script>
+    <form action="#" method="post" name="f1" onsubmit="return false">
+      이름 : <input type="text" id="name" />
+      <br />
+      연락처 : <input type="text" id="number" />
+
+      <br />
+      <button id="submit">회원가입</button>
+      <button id="cancle">가입취소</button>
+    </form>
+
+    <button id="show">출력</button>
+    <button id="del">지우기</button>
+    <br />
+
+    <div id="result"></div>
+  </body>
+</html>

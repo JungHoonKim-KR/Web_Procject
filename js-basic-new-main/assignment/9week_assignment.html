@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <script>
+       
+        function addText()
+        {
+            var newP=document.createElement("li")
+            var text=document.querySelector("[name=intext]");
+            var newText=document.createTextNode(text.value);
+
+            newP.appendChild(newText);
+
+            var namelist=document.querySelector("[name=out]")
+            namelist.appendChild(newP);
+            text.value="";
+        }
+
+        function insert_f()
+        {
+            var newP=document.createElement("li");
+            var text=document.querySelector("[name=intext]");
+            
+            var newtext=document.createTextNode(text.value);
+            newP.appendChild(newtext);
+            var namelist=document.querySelector("[name=out]")
+            namelist.insertBefore(newP,namelist.childNodes[0])
+            text.value="";
+        }
+        function reset()
+        {
+            var namelist=document.querySelector("[name=out]")
+            var li=document.querySelectorAll("li");
+
+            for(let i=0;i<li.length;i++)
+            {
+                li[i].parentNode.removeChild(li[i])
+            }
+        }
+        function remove_first()
+        {
+            var namelist=document.querySelector("[name=out]")
+            namelist.removeChild(namelist.childNodes[0])
+
+        }
+        function remove_last()
+        {
+            var namelist=document.querySelector("[name=out]")
+            namelist.removeChild(namelist.childNodes[namelist.childNodes.length-1])
+            
+        }
+
+        
+    </script>
+    <div name="input">
+        <input name="intext">
+        <button id="btn" onclick="addText()">추가</button>
+        <button id="btn" onclick="insert_f()">삽입</button>
+        <button id="btn" onclick="reset()">초기화</button>
+        <button id="btn" onclick="remove_first()">첫번째삭제</button>
+        <button id="btn" onclick="remove_last()">마지막삭제
+        </button>
+        </div>
+        <div name="out"></div>
+</body>
+</html>
