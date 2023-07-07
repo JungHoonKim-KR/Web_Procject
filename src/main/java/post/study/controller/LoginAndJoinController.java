@@ -62,7 +62,7 @@ public class LoginAndJoinController {
         }
 
         return"popup";
-
+///
     }
 
 }
