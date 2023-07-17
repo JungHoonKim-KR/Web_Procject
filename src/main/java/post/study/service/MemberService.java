@@ -2,6 +2,7 @@ package post.study.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import post.study.dto.MemberDto;
 import post.study.entity.Member;
 import post.study.repository.MemberRepository;
 
@@ -18,8 +19,17 @@ public class MemberService {
         return member;
     }
 
-    public Member profileUpdate(){
-        return null;
+    public Member profileUpdate(MemberDto memberDto){
+        Member member = memberRepository.findByemailId(memberDto.getEmailId());
+        member.setPassword(memberDto.getPassword());
+        member.setUsername(memberDto.getUsername());
+        member.setAge(memberDto.getAge());
+        member.setPosition(memberDto.getPosition());
+        memberRepository.save(member);
+        return member;
     }
 
+
+
+    //프로젝트 멤버 초대 미구현
 }

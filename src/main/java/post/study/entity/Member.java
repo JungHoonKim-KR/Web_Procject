@@ -11,16 +11,22 @@ import java.util.List;
 @Getter
 @Setter
 public class Member {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "member_id")
     private Long id;
     private String emailId;
     private String username;
     private String password;
-    private int age;
+    private String position;
+    private Integer age;
 
-    @OneToMany(mappedBy = "member")
-    private List<Question> questionList=new ArrayList<>();
+    @OneToMany(mappedBy = "member") //멤버의 질문
+    private List<Question> questionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member") //멤버의 프로젝트
+    private List<ProjectMember> projectMemberList=new ArrayList<>();
+
 
 
 }
