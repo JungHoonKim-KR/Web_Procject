@@ -28,7 +28,7 @@ public class LoginAndJoinController {
         return "sign-in/login";
     }
 
-    @PostMapping("/question-judge")
+    @PostMapping("/login-judge")
     public String judge(HttpSession session, MemberDto memberDto, Model model) {
         Boolean aBoolean = memberService.loginValidateByemailId(memberDto, memberDto.getPassword());
         if (aBoolean.equals(false)) {
@@ -38,9 +38,9 @@ public class LoginAndJoinController {
             Member findMember = memberService.findMember(memberDto.getEmailId());
             session.setAttribute("member",findMember);
             model.addAttribute("msg", "로그인 되었습니다.");
-            model.addAttribute("url", "/question");
+            model.addAttribute("url", "/project");
+//            System.out.println(findMember.getProjectMemberList());
         }
-
         return "popup";
     }
 
