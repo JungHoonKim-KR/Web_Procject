@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th>
+<html lang="en" xmlns:th xmlns:logcation.th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -20,12 +20,6 @@
     <nav id="navbar-example2" class="navbar bg-light px-3 mb-3">
         <a class="navbar-brand" href="#">문의게시판</a>
         <ul class="nav nav-pills">
-            <li class="nav-item">
-                <span th:text="${username}" style="color:blue"></span> 회원님
-            </li>
-            <li class="nav-item">
-                <a class="link-dark" href='/logout'>로그아웃</a>
-            </li>
         </ul>
     </nav>
 
@@ -82,13 +76,38 @@
 
 </div>
 <!--  부트스트랩 js 사용 -->
-<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="./css/js/bootstrap.js"></script>
+<script src="./css/js/jquery.3.7.0.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 <script th:inline="javascript">
     var l=document.querySelector("#currentPage"+[[${page}]])
     l.setAttribute("class","page-item active")
+
+</script>
+<script th:inline="javascript" >
+     $(document).ready(function (){
+         let username=[[${username}]];
+         let loginUrl = /*[[ @{/} ]]*/ '';
+         let logoutUrl=/*[[@{/logout}]]*/ ''
+
+         if(username==null) {
+
+            let loginElement= $("<li>").append($("<a>").text("로그인").attr('href',loginUrl))
+             $('.nav-pills').append(loginElement)
+         }
+         else {
+             let userNameElement=$("<li>").addClass("nav-item").append($("<span>").text(username))
+             let logoutElement=$("<a>").addClass("nav-item").attr('href',logoutUrl).text("로그아웃")
+             userNameElement.append(logoutElement)
+             $('.nav-pills').append(userNameElement)
+         }
+
+     })
+
+
+
 
 </script>
 </body>
