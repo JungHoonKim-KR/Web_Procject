@@ -13,9 +13,9 @@ public class Category {
     private String category;
 
 
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     private Project project;
+
+
 }
