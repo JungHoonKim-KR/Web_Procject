@@ -22,6 +22,11 @@ public class ProjectMember {
     @JoinColumn(name = "member_id")
     private Member member;
 
-
+    public void setProjectMember(Member member, Project project){
+        this.setMember(member);
+        this.setProject(project);
+        member.addProjectMemberList(this);
+        project.addProjectMember(this);
+    }
 
 }

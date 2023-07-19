@@ -17,15 +17,14 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class ProjectMemberService {
+    private final MemberService  memberService;
     private final ProjectMemberRepository projectMemberRepository;
 
-    public void joinProjectMember(Project project,Member member){
+    public void joinProjectMember(Project project,Member tempMember){
+        Member member = memberService.findMember(tempMember.getEmailId());
         ProjectMember projectMember = new ProjectMember();
-        projectMember.setMember(member);
-        projectMember.setProject(project);
+        projectMember.setProjectMember(member,project);
         projectMemberRepository.save(projectMember);
-
-        project.addProjectMember(projectMember);
 
     }
     //로컬에서 확인하기 위한 메소드 내일 api용 메소드 만들 예쩡

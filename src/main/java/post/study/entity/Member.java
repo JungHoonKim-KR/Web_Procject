@@ -27,6 +27,18 @@ public class Member {
     @OneToMany(mappedBy = "member") //멤버의 프로젝트
     private List<ProjectMember> projectMemberList=new ArrayList<>();
 
+    @OneToMany(mappedBy ="member")
+    private List<BookmarkProject> bookmarkProjectList=new ArrayList<>();
+
+   public void addBookmarkProjectList(BookmarkProject bookmarkProject){
+       bookmarkProjectList.add(bookmarkProject);
+
+
+   }
+
+   public void addProjectMemberList(ProjectMember projectMember){
+       projectMemberList.add(projectMember);
+   }
 
 
 }
