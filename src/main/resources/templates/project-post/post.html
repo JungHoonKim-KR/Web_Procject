@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.104.2">
+    <title>Album example · Bootstrap v5.2</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/album/">
+
+
+    <link href="./css/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<header>
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">About</h4>
+                    <p class="text-muted">빈공간</p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white">Contact</h4>
+                    <ul class="list-unstyled">
+                        <li><a th:href="@{/question}" class="text-white">문의게시판</a></li>
+                        <li><a th:href="@{/profile}" class="text-white">프로필 설정</a></li>
+                        <li><a th:href="@{/project-create}" class="text-white">프로젝트 생성</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2"
+                     viewBox="0 0 24 24">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                </svg>
+                <strong>프로젝트 용병쓰</strong>
+            </a>
+            <a th:href="@{/question}" class="navbar-brand d-flex align-items-center">
+                <strong>문의게시판</strong></a>
+            <span id="aaaa"></span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">프로젝트 용병쓰</h1>
+                <p class="lead text-muted">프로젝트 하고싶나? 일단 눌러봐</p>
+                <p>
+                    <a href="#" class="btn btn-primary my-2">프로젝트 등록</a>or
+                    <a href="#" class="btn btn-secondary my-2">개인 프로필 등록</a>
+                </p>
+                <nav class="navbar navbar-light bg-light">
+                    <div class="container-fluid">
+                        <form class="d-flex">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                <tr th:each="p:${pList}">
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <!--              프로젝트 정보 페이지 이동-->
+                            <a href="http://www.naver.com">
+                                <!--                프로젝트 메인 이미지-->
+                                <img th:src="${p.img}" class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                                     preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <rect width="100%" height="100%" fill="#55595c"/>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em" th:text="${p.projectName}">프로젝트 제목</text>
+                                </img></a>
+
+                            <div class="card-body">
+                                <p class="card-text" th:text="${p.introduction}">프로젝트 설명</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group bookmark">
+                                        <img th:id="${p.id}" class="btn btn-sm btn-outline-secondary"></img>
+                                    </div>
+                                    <!--                <small class="text-muted">9 mins</small>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- 페이지 영역 -->
+
+<div class="container">
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+            <li class="page-item ">
+                <a th:href="@{/project(page=0)}"><span class="page-link">처음</span></a>
+
+            </li>
+            <li class="page-item ">
+                <a th:if="${pageLine}>0" th:href="@{/project(page=${prePage})}"><span class="page-link">이전</span></a>
+            </li>
+
+            <span class="page-item" th:id="currentPage+${page}"
+                  th:each="page: ${#numbers.sequence(startPage, endPage)}">
+                <a class="page-link" th:text="${page+1}" th:href="@{/project(page=${page})}"></a>
+                </span>
+
+            <li class="page-item">
+                <a th:if="${pageLine}<${totalPageLine}" th:href="@{/project(page=${nextPage})}"><span
+                        class="page-link">다음</span></a>
+            </li>
+            <li class="page-item">
+                <a th:href="@{/project(page=${totalPage})}"><span class="page-link">마지막</span></a>
+            </li>
+        </ul>
+    </nav>
+
+
+</div>
+<footer class="text-muted py-5">
+
+    <div class="container">
+        <p class="float-end mb-1">
+            <a href="#">Back to top</a>
+        </p>
+        <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+        <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
+                href="../getting-started/introduction/">getting started guide</a>.</p>
+    </div>
+</footer>
+
+
+<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="./css/js/bootstrap.js"></script>
+<script src="./css/js/jquery.3.7.0.js"></script>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        const PAGE_NUMBER = 5
+        let page = document.location.href.split("http://localhost:8080/project?page=")[1]
+        let name = [[${username}]];
+        var loginUrl = /*[[ @{/} ]]*/ '';
+        var logoutUrl =/*[[@{/logout}]]*/ '';
+        let bookmarkBtn = new Array($('.bookmark').find('img'))[0]
+        let bookmarkImg = [[${bList}]];
+        //로그인 정보
+        if (name == null) {
+            $('#aaaa').append($("<a ></a>").addClass("navbar-brand d-flex align-items-center").attr('href', loginUrl).text("로그인"))
+        } else {
+            var usernameElement = ($('<span></span>').addClass('navbar-brand d-flex align-items-center').text(name + "님 안녕하세요"))
+            var logoutElement = ($('<a></a>').text('로그아웃').attr('href', logoutUrl))
+
+            usernameElement.append(logoutElement)
+            $('#aaaa').append(usernameElement)
+
+        }
+        //북마크
+        for (let i = 0; i < bookmarkBtn.length; i++) {
+            if(name==null){
+                $(bookmarkBtn[i]).attr('src', "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0vuu68IX7IaUcqqSAKbqaNoiKDoDxIiplypOuz5QXBmOqOEJ2AScWwuKidHZbW-LTXKo&usqp=CAU")
+            }
+            else
+            $(bookmarkBtn[i]).attr('src', bookmarkImg[i + (page * PAGE_NUMBER)])
+        }
+        for (let i = 0; i < bookmarkBtn.length; i++) {
+
+            $(bookmarkBtn[i]).click(function () {
+                if (name == null)
+                    alert("로그인이 필요한 서비스입니다.")
+                else {
+                    $.ajax({
+                        type: "GET",
+                        async: true,
+                        dataType: "text",
+                        url: "/project-bookmark",
+                        data: {'projectId': this.id},
+                        success: function (data) {
+                            if (data == "true") {
+                                console.log("북마크 추가")
+                                $(bookmarkBtn[i]).attr('src', "https://w7.pngwing.com/pngs/67/599/png-transparent-star-favorite-bookmark-3d-gold-yellow-thumbnail.png");
+                            } else {
+                                console.log("북마크 취소")
+                                $(bookmarkBtn[i]).attr('src', "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0vuu68IX7IaUcqqSAKbqaNoiKDoDxIiplypOuz5QXBmOqOEJ2AScWwuKidHZbW-LTXKo&usqp=CAU");
+                            }
+
+                        }
+                    })
+                }
+
+            })
+        }
+    })
+
+
+</script>
+
+</body>
+</html>
