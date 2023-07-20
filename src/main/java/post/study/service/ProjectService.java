@@ -32,7 +32,7 @@ public class ProjectService {
         if (search(projectDto)==false){
             Project project = new Project();
             project.setProjectName(projectDto.getProjectName());
-            project.setProjectLeader(projectDto.getProjectLeader());
+            project.setProjectLeader(member.getUsername());
             project.setScale(projectDto.getScale());
             project.setIntroduction(projectDto.getIntroduction());
             project.setImg(projectDto.getImg());

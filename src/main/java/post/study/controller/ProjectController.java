@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import post.study.dto.ProjectDto;
+import post.study.entity.BookmarkProject;
 import post.study.entity.Member;
 import post.study.entity.Project;
 import post.study.entity.ProjectMember;
@@ -29,7 +30,6 @@ public class ProjectController {
 
     @GetMapping("/project")
     public String project(HttpSession session , @RequestParam(required = false,defaultValue = "0",value = "page")int page,Model model){
-        //임시 리스트
 
         //paging: 한 페이지당 9개의 게시물 설정
         Page<Project> projectList = projectService.getProjectList(page);
@@ -37,6 +37,7 @@ public class ProjectController {
         int totalPage=realTotalPage-1;
 
         int displayPage=5;
+
 
         int startPage=page/displayPage*displayPage;
         int endPage=page/displayPage*displayPage+4;
@@ -50,10 +51,15 @@ public class ProjectController {
         if(session.getAttribute("member")!=null) {
             Member testmember = (Member) session.getAttribute("member");
             Member member = memberService.findMember(testmember.getEmailId());
-            session.setAttribute("member",member);
-            model.addAttribute("username",member.getUsername());
             for(ProjectMember m:member.getProjectMemberList())
                 System.out.println("멤버 "+m.getProject().getProjectName());
+
+            //북마크 여부
+            List<String> bookmarkImg = memberService.bookmarkImg(member);
+
+            model.addAttribute("username",member.getUsername());
+            model.addAttribute("bList",bookmarkImg);
+
         }
         model.addAttribute("pList",projectList);
         //이전 페이지
@@ -86,7 +92,7 @@ public class ProjectController {
     @PostMapping("/project-create")
     public String projectCreateJudge(HttpSession session, ProjectDto projectDto, String category, Model model){
         Member member = (Member) session.getAttribute("member");
-        Project project=new Project();
+        Project project;
         if((project=projectService.create(projectDto,member))==null){
             model.addAttribute("msg","이미 존재하는 프로젝트 입니다.");
             model.addAttribute("url","back");
@@ -94,7 +100,7 @@ public class ProjectController {
         else{
             projectMemberService.joinProjectMember(project,member);
             model.addAttribute("msg","프로젝트가 생성되었습니다.");
-            model.addAttribute("url","/project");
+            model.addAttribute("url","/project?page=0");
         System.out.println("projectName = " + projectDto);
         System.out.println("category = " + category);
         }
