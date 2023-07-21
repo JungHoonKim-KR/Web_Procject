@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
+    <link rel="stylesheet" href="./css/main_post.css">
+
+</head>
+<body class="wrapper">
+<!--배너 위에 메인,마이페이지 등 버튼 만들기-->
+<header id="contents_box">
+
+    <img src="./images/용병모집.png" alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="50">
+    <div class="nav_items" style="margin-left:150px">
+        <ul>
+            <li><a th:href="@{/project?page=0}">프로젝트 모집</a></li>
+            <li><a href="/">이용안내</a></li>
+            <li><a href="/">공지사항</a></li>
+            <li><a th:href="@{/question?page=0}">문의게시판</a></li>
+            <li><a th:href="@{/profile}">마이페이지</a></li>
+
+    </div>
+
+    <img src="./images/my_img.png" alt="이미지 불러오기 실패" width="40" height="40" style="margin-right:50px"><br>
+    <div class="login">
+
+    </div>
+    <!--<button type="button" id="login" onclick="location.href='aa.html'"style="margin-right:50px; width:150px ;height:30px">로그인</button>
+    -->
+<!--    <span style="font-size:0.7em; color:gray; width:100px">성빈 님</span>-->
+<!--    <button type="button" id="logout" onclick="location.href='bb.html'"-->
+<!--            style="margin-right:50px; width:150px ;height:30px">로그아웃-->
+<!--    </button>-->
+
+
+</header>
+
+<main style="width:1500px">
+
+    <div id="welcome"
+         style="border-bottom: solid 2px white;background: linear-gradient(-45deg, #212121 50%, Linen 50%);">
+        <div id="welcome_leftpart" style="text-align:left;color:black">
+            <div style="margin-left:50px">
+                &nbsp<strong style="font-size:40px;color:red">용병 모집</strong>
+            </div>
+            <br><br>
+            <strong id="no_hard1" style="color:orange; ;margin:65px">어렵지 않게 step 별로 준비해뒀어요!</strong>
+            <br>
+            <span style="margin:60px; font-size:40px; font-weight:bold">개발자를 찾으시나요?</span>
+            <ul style="margin:40px;font-weight:bold">
+                <li>프로젝트 난이도별, 계급별 개발자 모집가능!</li>
+                <br>
+                <li>프로필을 통해 원하는 개발자를 채용해보세요!</li>
+            </ul>
+            <br>
+            <button class="w-btn-neon2" type="button">
+                개발자 찾기
+            </button>
+
+        </div>
+        <div id="welcome_rightpart" style="text-align:right;color:white">
+            <br>
+            <div style="text-align:right">
+                <ul style="text-align:center ;margin-left:500px ; margin-top:140px">
+                    <button class="w-btn-neon2" type="button" th:onclick="|location.href='@{/project?page=0}'|">프로젝트 찾기</button>
+                </ul>
+                <br>
+                <span style=" font-size:40px; font-weight:bold;">프로젝트를 찾으시나요?</span>
+                <br>
+                <strong id="no_hard2" style="color:greenyellow">어렵지 않게 step 별로 준비해뒀어요!</strong>
+                <br><br><br>
+                <ul style="margin-left:540px;font-weight:bold">
+                    <li class="li_m">프로젝트 난이도별 지원가능!</li>
+                    <br>
+                    <li class="li_m">자신의 프로필로 내 역량을 보여주자!</li>
+                    <br>
+                    <li class="li_m">프로젝트 종료시 내 명예포인트 획득!</li>
+                    <br>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div a_container style="background-color:Linen">
+        <!--프로젝트 커리큘럼 만들기---------------------------------------------------------------->
+
+
+        <div style="border-bottom: solid 2px white;text-align:center ;background-color:Linen">
+            <br>
+            <p><Strong style="text-align:center  ;font-size:35px">개발자 모집 위한 단계별 step!</Strong></p>
+            <br>
+            <strong style="margin:190px ;font-size:20px">step1</strong>
+            <strong style="margin:190px;font-size:20px">step2</strong>
+            <strong style="margin:190px;font-size:20px">step3</strong>
+
+            <div id="step_box1" style="width:1500px">
+
+                <button class="step" style="font-weight:bold">회원가입 하기</button>
+                <button class="step" style="font-weight:bold">프로젝트 생성하기</button>
+                <button class="step" style="font-weight:bold">용병 모집 및 초대</button>
+                <br>
+            </div>
+            <strong style="font-size:20px">여러분의 능력을 마음 껏 뽑낼 수 있는 기회!</strong><br>
+            <br>
+
+        </div>
+
+        <!--step 1 꾸미기 ------------------------------------------------------->
+        <div style="border-bottom: solid 2px white"><br>
+            <h1 style="text-align:center ;font-size:40px ">Step1</h1>
+            <div style="margin-left:200px">
+                <br>
+                <h1 style="font-size:40px;margin-left:30px;">회원가입 하기</h1>
+                <br>
+                <ul style="font-size:17px;font-weight:bold">
+                    프로젝트 시작하기 첫단추!<br>
+                    어렵지 않은 가입과정!<br><br>
+                    (관심분야 입력 시 , 추후 다양한 기능 이용가능!)<br>
+                </ul>
+                <br><br>
+            </div>
+        </div>
+
+        <!--step 2 꾸미기 ----------------------------------------------------------->
+        <div style="border-bottom: solid 2px white"><br>
+            <h1 style="text-align:center ;font-size:40px ">Step2</h1>
+            <div style="text-align:right; margin-right:200px">
+                <br>
+                <h1 style="font-size:40px;margin-left:30px">프로젝트 생성하기</h1>
+                <br>
+                <ul style="font-size:17px;font-weight:bold">
+                    진행할 프로젝트를 만들어보세요!<br>
+                    이름, 내용, 모집 직무등을 기록<br><br>
+                    (해시 태그를 이용해 홍보 가능)<br>
+                </ul>
+                <br><br>
+
+            </div>
+        </div>
+
+
+        <!--step 3 꾸미기 ------------------------------------------------------->
+        <div style="border-bottom: solid 2px white"><br>
+            <h1 style="text-align:center ;font-size:40px ">Step3</h1>
+            <div style="margin-left:200px">
+                <br>
+                <h1 style="font-size:40px;margin-left:30px">용병 모집 및 초대 </h1>
+                <br>
+                <ul style="font-size:17px ; font-weight:bold">
+                    <li>여러 개발자들의 프로필을 통해 초대 가능<br>
+                    <li>개발자들의 프로젝트 요청을 수락</li>
+                    <br>
+                    <li>명예포인트를 통해 최강의 팀을 꾸려보세요!</li>
+                    <br>
+                </ul>
+                <br><br>
+            </div>
+        </div>
+    </div>
+    <div b_container style="background-color:#13161c">
+        <div style="text-align:center ;border-bottom: solid 2px black;background-color:#13161c">
+            <br>
+            <p><Strong style="text-align:center  ;font-size:35px ; color:cyan">프로젝트 시작을 위한 단계별 step!</Strong></p>
+            <br>
+            <strong style="margin:190px ;font-size:20px; color:white">step1</strong>
+            <strong style="margin:190px;font-size:20px;color:white">step2</strong>
+            <strong style="margin:190px;font-size:20px;color:white">step3</strong>
+
+            <div style="width:1500px">
+                <button class="step_b" style="font-weight:bold">회원가입 하기</button>
+                <button class="step_b" style="font-weight:bold">관심있는 프로젝트 찾기</button>
+                <button class="step_b" style="font-weight:bold"> 프로젝트 지원하기</button>
+                <br>
+            </div>
+            <strong style="font-size:20px;color:white">여러분의 능력을 마음 껏 뽑낼 수 있는 기회!</strong><br>
+            <br>
+        </div>
+        </p>
+
+        <!--step 1 꾸미기 ------------------------------------------------------->
+        <div style="border-bottom: solid 2px black"><br>
+            <h1 style="text-align:center ;font-size:40px;color:white ">Step1</h1>
+            <div style="margin-left:200px ;">
+                <br>
+                <h1 style="font-size:40px;margin-left:30px;color:cyan">회원가입 하기</h1>
+                <br>
+                <ul style="font-size:17px;font-weight:bold;color:white">
+                    프로젝트 시작하기 첫단추!<br>
+                    어렵지 않은 가입과정!<br><br>
+                    (내 프로필을 통해 나를 소개해요)<br>
+                </ul>
+                <br><br>
+            </div>
+        </div>
+
+        <!--step 2 꾸미기 ----------------------------------------------------------->
+        <div style="border-bottom: solid 2px black"><br>
+            <h1 style="text-align:center ;font-size:40px;color:white ">Step2</h1>
+            <div style="text-align:right; margin-right:200px">
+                <br>
+                <h1 style="font-size:40px;margin-left:30px ;color:cyan">관심있는 프로젝트 찾기</h1>
+                <br>
+                <ul style="font-size:17px;font-weight:bold;color:white">
+                    카테고리를 통해 관심있는 프로젝트 필터링<br>
+                    <br><br>
+                    (관심분야 입력 시 , 추후 다양한 기능 이용가능!)<br>
+                </ul>
+                <br><br>
+
+            </div>
+        </div>
+
+
+        <!--step 3 꾸미기 ------------------------------------------------------->
+        <div style="border-bottom: solid 2px black"><br>
+            <h1 style="text-align:center ;font-size:40px ;color:white">Step3</h1>
+            <div style="margin-left:200px">
+                <br>
+                <h1 style="font-size:40px;margin-left:30px;color:cyan">회원가입 하기</h1>
+                <br>
+                <ul style="font-size:17px ; font-weight:bold;color:white">
+                    <li>프로젝트 시작하기 첫단추!<br>
+                    <li>어렵지 않은 가입과정!</li>
+                    <br>
+                    <li>(관심분야 입력 시 , 추후 다양한 기능 이용가능!)</li>
+                    <br>
+                </ul>
+                <br><br>
+            </div>
+        </div>
+
+        <div id="advertisement" style=" border-bottom: solid 2px white">
+            <div id="banner_comments">
+                <br>
+                <h1 style="text-align:center ;color:white">지금 여러분이 할 수있는 최고의 선택!</h1>
+            </div>
+            <div id="banner" style="text-align:center">
+                <img src="./images/프로젝트사진1.jpg" id="project_pic" alt="이미지 불러오기 실패" width="650" height="300"
+                     style="margin-top:10px ;margin-left:30px;margin-bottom:10px"><br>
+                <div id="circle_btn ">
+                    <button class="circle"></button>
+                    <button class="circle"></button>
+                    <button class="circle"></button>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</main>
+
+
+<!--광고,배너 판 만들기-------------------------------------------------------------------->
+<!--회색 #EEEEEE"-->
+
+</body>
+
+<!--사진들 출처
+  발표관리자 :https://kr.freepik.com/photos/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8
+  용병모집 : 동아대학교 사진
+  프로젝트사진1.jpg : https://velog.io/@c-on/%EC%96%B4%EB%96%A4-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EB%A5%BC-%ED%95%B4%EC%95%BC%ED%95%A0%EA%B9%8C
+  프로젝트사진2:https://slack.com/intl/ko-kr/blog/productivity/project-management-step
+  프로젝트사진3:https://velog.io/@chris/10-tips-for-starting-and-creating-side-projects
+  my_img : https://www.pngegg.com/ko/search?q=%EB%82%B4+%EA%B3%84%EC%A0%95+%EC%95%84%EC%9D%B4%EC%BD%98
+  왼쪽화살표 사진 :http://cmicvictoria.org/botones/
+-->
+<script type="text/javascript" src="./css/js/bootstrap.js"></script>
+<script src="./css/js/jquery.3.7.0.js"></script>
+<script src="/css/js/main_post.js"></script>
+<script th:inline="javascript">
+    // <span style="font-size:0.7em; color:gray; width:100px">성빈 님</span>
+    // <button type="button" id="logout" onClick="location.href='bb.html'"
+    //         style="margin-right:50px; width:150px ;height:30px">로그아웃
+    // </button>
+    $(document).ready(function () {
+        let name = [[${username}]];
+        var loginUrl = /*[[ @{/login} ]]*/ '';
+        var logoutUrl =/*[[@{/logout}]]*/ '';
+        console.log(name)
+        //로그인 정보
+        if (name == null) {
+            $('.login').append($('<button>').attr({
+                type:'button',
+                id:'login',
+                style:"margin-right:50px; width:150px ;height:30px",
+            }).text('로그인').click(function (){
+                $(location).attr('href',loginUrl)
+            }))
+        } else {
+
+            let usernameElement=$('<span>').text(name+"님").css({
+                fontsize:"0.7em",
+                color:"gray",
+                width:"100px"
+            })
+            let logoutElement=$('<button>').text('로그아웃').attr({
+                type: 'button',
+                id:'logout',
+                style:"margin-right:50px; width:150px ;height:30px",
+            }).click(function (){
+                $(location).attr('href',logoutUrl)
+            })
+
+            usernameElement.append(logoutElement)
+            // var usernameElement = ($('<span></span>').addClass('navbar-brand d-flex align-items-center').text(name + "님 안녕하세요"))
+            // var logoutElement = ($('<a></a>').text('로그아웃').attr('href', logoutUrl))
+
+            $('.login').append(usernameElement)
+
+        }
+    })
+
+
+</script>
+</html>
