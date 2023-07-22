@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import post.study.dto.MemberDto;
 import post.study.entity.Member;
+import post.study.norm.field;
+import post.study.norm.language;
 import post.study.service.LoginAndJoinService;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,13 +21,19 @@ public class LoginAndJoinController {
 
 
     @GetMapping("/")
+    public String main(HttpSession session, Model model) {
+        Member member = (Member) session.getAttribute("member");
+        if (member == null) {
+            model.addAttribute("username", null);
+        } else {
+            model.addAttribute("username", member.getUsername());
+        }
+
+        return "main_post";
+    }
+
+    @GetMapping("/login")
     public String login() {
-////        Member member = new Member();
-////        member.setEmailId("kik12321@1234");
-////        member.setPassword("kik@0811012");
-////        member.setAge(24);
-////        member.setUsername("kim");
-////        memberRepository.save(member);
         return "sign-in/login";
     }
 
@@ -36,32 +45,41 @@ public class LoginAndJoinController {
             model.addAttribute("url", "back");
         } else {
             Member findMember = memberService.findMember(memberDto.getEmailId());
-            session.setAttribute("member",findMember);
+            session.setAttribute("member", findMember);
             model.addAttribute("msg", "로그인 되었습니다.");
-            model.addAttribute("url", "/project");
-//            System.out.println(findMember.getProjectMemberList());
+            model.addAttribute("url", "/");
         }
         return "popup";
     }
 
     @GetMapping("/join")
-    public String join(){
-        return"sign-in/join";
+    public String join(Model model) {
+        ArrayList<String> languageList = new ArrayList<>();
+        ArrayList<String> fieldList = new ArrayList<>();
+        for (language l : language.values()) {
+            languageList.add(l.name());
+        }
+        for (field f : field.values()) {
+            fieldList.add(f.name());
+        }
+
+        model.addAttribute("lList", languageList);
+        model.addAttribute("fList", fieldList);
+        return "sign-in/join";
     }
 
     @PostMapping("/join")
-    public String save(MemberDto memberDto,Model model){
-        if(memberService.join(memberDto)==null){
-            model.addAttribute("msg","이미 가입된 회원입니다.");
-            model.addAttribute("url","back");
-        }
-        else {
+    public String save(MemberDto memberDto, String language, String field, Model model) {
+        if (memberService.join(memberDto, language, field) == null) {
+            model.addAttribute("msg", "이미 가입된 회원입니다.");
+            model.addAttribute("url", "back");
+        } else {
             System.out.println("memberDto = " + memberDto);
-            model.addAttribute("msg","회원가입 되었습니다.");
-            model.addAttribute("url","/");
+            model.addAttribute("msg", "회원가입 되었습니다.");
+            model.addAttribute("url", "/");
         }
 
-        return"popup";
+        return "popup";
 
     }
 

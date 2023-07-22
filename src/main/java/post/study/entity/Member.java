@@ -18,7 +18,6 @@ public class Member {
     private String emailId;
     private String username;
     private String password;
-    private String position;
     private Integer age;
 
     @OneToMany(mappedBy = "member") //멤버의 질문
@@ -30,6 +29,12 @@ public class Member {
     @OneToMany(mappedBy ="member")
     private List<BookmarkProject> bookmarkProjectList=new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<Language_Member> languageList=new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Field_Member> fieldMemberList=new ArrayList<>();
+
    public void addBookmarkProjectList(BookmarkProject bookmarkProject){
        bookmarkProjectList.add(bookmarkProject);
 
@@ -38,6 +43,17 @@ public class Member {
 
    public void addProjectMemberList(ProjectMember projectMember){
        projectMemberList.add(projectMember);
+   }
+
+   public void addLanguage(Language_Member language){
+       languageList.add(language);
+       language.setMember(this);
+
+   }
+
+   public void addField(Field_Member field){
+       fieldMemberList.add(field);
+       field.setMember(this);
    }
 
 

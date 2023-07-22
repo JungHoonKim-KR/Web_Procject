@@ -2,7 +2,6 @@ package post.study.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import post.study.dto.ProjectDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ import java.util.List;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name ="project_id")
+    @Column(name = "project_id")
     private Long id;
     private String projectName;
     private String projectLeader;
@@ -23,24 +22,29 @@ public class Project {
     private String introduction;
 
     @OneToMany(mappedBy = "project")
-    private List<Category> categoryList=new ArrayList<>();
+    private List<Language_Project> languageList = new ArrayList<>();
 
     @OneToMany(mappedBy = "project")
-    private List<ProjectMember> projectMemberList=new ArrayList<>();
+    private List<ProjectMember> projectMemberList = new ArrayList<>();
     @OneToMany(mappedBy = "project")
-    private List<BookmarkProject>bookmarkProjectList=new ArrayList<>();
+    private List<BookmarkProject> bookmarkProjectList = new ArrayList<>();
+    @OneToMany(mappedBy = "project")
+    private List<Field_Project> fieldList = new ArrayList<>();
 
-    public void addProjectMember(ProjectMember projectMember){
+    public void addProjectMember(ProjectMember projectMember) {
         projectMemberList.add(projectMember);
 
     }
 
-    public void addCategory(Category category){
-        categoryList.add(category);
-        category.setProject(this);
+    public void addLanguage(Language_Project language) {
+        languageList.add(language);
+        language.setProject(this);
     }
 
-//    public ProjectDto projectToDto(Project project){
-//        return new ProjectDto(project);
-//    }
+    public void addField(Field_Project field) {
+
+        fieldList.add(field);
+        field.setProject(this);
+    }
+
 }

@@ -4,7 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import post.study.dto.MemberDto;
+import post.study.entity.Field_Member;
+import post.study.entity.Field_Project;
+import post.study.entity.Language_Member;
 import post.study.entity.Member;
+import post.study.repository.FieldMemberRepository;
+import post.study.repository.LanguageMemberRepository;
 import post.study.repository.MemberRepository;
 
 
@@ -12,7 +17,8 @@ import post.study.repository.MemberRepository;
 @Transactional
 @RequiredArgsConstructor
 public class LoginAndJoinService {
-
+    private final FieldMemberRepository fieldMemberRepository;
+    private final LanguageMemberRepository languageMemberRepository;
     private final MemberRepository memberRepository;
     /**
      로그인
@@ -41,10 +47,10 @@ public class LoginAndJoinService {
     /**
      회원가입
      */
-    public Member join(MemberDto memberDto){
+    public Member join(MemberDto memberDto,String language, String field){
         if(joinValidateByEmailId(memberDto.getEmailId())==false)
             return null;
-        else return save(memberDto);
+        else return save(memberDto,language,field);
     }
     public Boolean joinValidateByEmailId(String emailId){
         Member findMember = memberRepository.findByemailId(emailId);
@@ -54,12 +60,28 @@ public class LoginAndJoinService {
         else return false;
     }
 
-    public Member save(MemberDto memberDto){
+    public Member save(MemberDto memberDto, String language, String field){
+        String[] languageList = language.split(",");
+        String[] fieldList = field.split(",");
         Member member=new Member();
         member.setEmailId(memberDto.getEmailId());
         member.setUsername(memberDto.getUsername());
         member.setPassword(memberDto.getPassword());
         member.setAge(memberDto.getAge());
+
+        for(String s: languageList){
+            Language_Member l = new Language_Member(s);
+            member.addLanguage(l);
+            languageMemberRepository.save(l);
+
+        }
+
+        for(String s: fieldList){
+            Field_Member f = new Field_Member(s);
+            member.addField(f);
+            fieldMemberRepository.save(f);
+        }
+
         memberRepository.save(member);
         return member;
 
