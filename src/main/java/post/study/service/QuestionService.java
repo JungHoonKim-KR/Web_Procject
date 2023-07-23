@@ -36,14 +36,14 @@ public class QuestionService {
     }
 
 
-    public Question save(Long memberId, String title, String content) {
+    public Question create(Long memberId, String title, String content) {
         Member member = memberRepository.findById(memberId).get();
         Question question = new Question();
         question.setMember(member);
         question.setUsername(member.getUsername());
         question.setTitle(title);
         question.setContent(content);
-
+        question.setMember(member);
         questionRepository.save(question);
 
         return question;

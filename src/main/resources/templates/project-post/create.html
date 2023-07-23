@@ -53,11 +53,14 @@
             프로젝트 규모
         </div>
 
-        <select name="category" multiple>
-            <option th:each="c:${cList}" th:value="${c}" th:text="${c}"></option>
+        <select name="language" multiple>
+            <option th:each="l:${lList}" th:value="${l}" th:text="${l}"></option>
         </select>
-
-        카테고리
+        언어
+<!--        <select name="language" multiple>-->
+<!--            <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>-->
+<!--        </select>-->
+<!--        분야-->
         <div class="form-floating">
             <input type="text" class="form-control" id="floatingIntroduce"
                    name="introduction" th:value="${introduction}">

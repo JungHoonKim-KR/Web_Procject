@@ -29,8 +29,6 @@ public class Question {
     private Member member;
 
 
-
-
     public void setMember(Member member) {
         this.member = member;
         member.getQuestionList().add(this);

@@ -17,7 +17,6 @@ public class QuestionDto {
     private Member member;
 
     public QuestionDto(Question question) {
-        this.id = question.getId();
         this.title = question.getTitle();
         this.content = question.getContent();
         this.username = question.getUsername();

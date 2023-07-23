@@ -26,7 +26,15 @@ public class QuestionController {
 
     @GetMapping("/question")
     public String post(HttpSession session, @RequestParam(required = false, defaultValue = "0", value = "page") int page, Model model) {
-        Member member = (Member) session.getAttribute("member");
+
+        if(session.getAttribute("member")!=null){
+            Member member = (Member) session.getAttribute("member");
+            model.addAttribute("username", member.getUsername());
+        }
+        else{
+           model.addAttribute("username",null);
+
+        }
         Page<Question> questionPage = questionService.getQuestionList(page);
         int realTotalPage = questionPage.getTotalPages();
         int totalPage = realTotalPage - 1; //0부터 시작하기 때문에
@@ -37,10 +45,10 @@ public class QuestionController {
 
         int startNum = 0;
 
-        //startPage
+        //startPage : page가 0~displayPage-1 이면 항상 1로 표시됨
         int startPage = (page / displayPage) * displayPage;
 
-        //endPage
+        //endPage : page가 0~displayPage-1 이면 항상 displayPage로 표시됨
 
         int endPage = (page / displayPage) * displayPage + 4;
 
@@ -62,34 +70,38 @@ public class QuestionController {
             endPage = totalPage;
         }
         System.out.println("startNum = " + startNum);
-        model.addAttribute("username", member.getUsername());
         model.addAttribute("qList", questionPage.getContent());
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("totalPage", totalPage);
         model.addAttribute("page", page);
         model.addAttribute("pageLine",pageLine);
-        model.addAttribute("displayPage", displayPage);
         model.addAttribute("totalPageLine",totalPageLine);
         System.out.println("page = " + page);
         return "question/post";
     }
 
     @GetMapping("/question-write")
-    public String write() {
+    public String write(HttpSession session, Model model) {
+        Member member = (Member) session.getAttribute("member");
+        if(member==null){
+            model.addAttribute("msg","로그인이 필요한 서비스입니다.");
+            model.addAttribute("url","back");
+            return "popup";
+        }
+
         return "question/write";
     }
 
     @PostMapping("/question-write")
     public String save(HttpSession session, String title, String content,Model model) {
-        System.out.println("----------");
-
+        //question은 dto로 받지 않았음 : 1. 여러가지 방식, 2. 멤버 변수가 적어서
         Member member = (Member) session.getAttribute("member");
         if (title== null || content== null) {
             model.addAttribute("msg", "빈칸을 채워주세요");
             model.addAttribute("url", "/question-write");
         } else {
-            questionService.save(member.getId(), title,content);
+            questionService.create(member.getId(), title,content);
             model.addAttribute("msg", "작성 완료");
             model.addAttribute("url", "/question");
         }
