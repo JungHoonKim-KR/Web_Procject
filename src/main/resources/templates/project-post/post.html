@@ -83,7 +83,7 @@
                 <div class="col-sm-4 offset-md-1 py-4">
                     <h4 class="text-white">Contact</h4>
                     <ul class="list-unstyled">
-                        <li><a th:href="@{/question}" class="text-white">문의게시판</a></li>
+                        <li><a th:href="@{/question?page=0}" class="text-white">문의게시판</a></li>
                         <li><a th:href="@{/profile}" class="text-white">프로필 설정</a></li>
                         <li><a th:href="@{/project-create}" class="text-white">프로젝트 생성</a></li>
                     </ul>
@@ -220,11 +220,12 @@
 <script type="text/javascript" src="./css/js/bootstrap.js"></script>
 <script src="./css/js/jquery.3.7.0.js"></script>
 <script th:inline="javascript">
+
     $(document).ready(function () {
         const PAGE_NUMBER = 5
         let page = document.location.href.split("http://localhost:8080/project?page=")[1]
         let name = [[${username}]];
-        var loginUrl = /*[[ @{/} ]]*/ '';
+        var loginUrl = /*[[ @{/login} ]]*/ '';
         var logoutUrl =/*[[@{/logout}]]*/ '';
         let bookmarkBtn = new Array($('.bookmark').find('img'))[0]
         let bookmarkImg = [[${bList}]];
@@ -239,6 +240,9 @@
             $('#aaaa').append(usernameElement)
 
         }
+        //현재 페이지 활성화
+        $("#currentPage"+[[${page}]]).attr("class","page-item active")
+
         //북마크
         for (let i = 0; i < bookmarkBtn.length; i++) {
             if(name==null){
