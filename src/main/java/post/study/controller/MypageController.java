@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import post.study.dto.MemberDto;
 import post.study.dto.ProjectDto;
+import post.study.entity.BookmarkProject;
 import post.study.entity.Member;
 import post.study.entity.Project;
 import post.study.entity.ProjectMember;
 import post.study.norm.field;
 import post.study.norm.language;
+import post.study.service.BookmarkProjectService;
 import post.study.service.MemberService;
 import post.study.service.ProjectMemberService;
 import post.study.service.ProjectService;
@@ -26,6 +28,7 @@ public class MypageController {
     private final MemberService memberService;
     private final ProjectMemberService projectMemberService;
     private final ProjectService projectService;
+    private final BookmarkProjectService bookmarkProjectService;
     @GetMapping("/mypage-profile")
     public String profile(HttpSession session, Model model){
         Member member = (Member) session.getAttribute("member");
@@ -72,7 +75,7 @@ public class MypageController {
     }
 
     @GetMapping("/mypage-project")
-    public String project(HttpSession session,String projectName,Model model){
+    public String project(String projectName,Model model){
         System.out.println("프로젝트명:"+ projectName);
         Project project = projectService.findProject(projectName);
 
@@ -108,6 +111,14 @@ public class MypageController {
             model.addAttribute("url","/mypage-projectList");
         }
         return"popup";
+    }
+
+    @GetMapping("/mypage-bookmarkProjectList")
+    public String bookmarProjectkList(HttpSession session, Model model){
+        Member member = (Member) session.getAttribute("member");
+        List<BookmarkProject> bookmarkList = bookmarkProjectService.findBookmarkList(member);
+        model.addAttribute("bList",bookmarkList);
+        return "mypage/bookmarkProjectList";
     }
 
 

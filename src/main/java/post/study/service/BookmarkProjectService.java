@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class BookmarkService {
+public class BookmarkProjectService {
     private final ProjectService projectService;
     private final BookmarkProjectRepository bookmarkProjectRepository;
     private final MemberService memberService;
@@ -35,10 +35,6 @@ public class BookmarkService {
 
     }
 
-    public List<BookmarkProject> bookmarkProjectList() {
-        List<BookmarkProject> all = bookmarkProjectRepository.findAll();
-        return all;
-    }
 
     public List<String> bookmarkImg(Member member){
         if(member==null)
@@ -56,5 +52,10 @@ public class BookmarkService {
             }
         }
         return  bookmarkImg;
+    }
+
+    public List<BookmarkProject> findBookmarkList(Member member){
+        List<BookmarkProject> bookmarkProjectByMemberId = bookmarkProjectRepository.findBookmarkProjectByMemberId(member.getId());
+        return  bookmarkProjectByMemberId;
     }
 }

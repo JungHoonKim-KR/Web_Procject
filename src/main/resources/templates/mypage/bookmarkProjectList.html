@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
+
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body class="text-center">
+<form action="/mypage-project">
+    <tr th:each="b:${bList}" class="list-group">
+        <li>
+            <button type="submit" th:onclick="|location.href='@{/project-introduce}'|" class="list-group-item list-group-item-action " name="projectName" th:value="${b.getProject().getProjectName()}" th:text="${b.getProject().getProjectName()}">프로필 설정</button>
+
+        </li>
+    </tr>
+</form>
+<a  class="btn btn-primary" th:href="@{/}">메인으로 이동</a>
+<div class="list-group">
+    <a th:href="@{/mypage-profile}" class="list-group-item list-group-item-action ">프로필 설정</a>
+    <a th:href="@{/mypage-projectList}" class="list-group-item list-group-item-action ">프로젝트 설정</a>
+    <a th:href="@{/mypage-bookmarkProjectList}" class="list-group-item list-group-item-action active">북마크 설정</a>
+</div>
+</body>
+</html>
