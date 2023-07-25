@@ -8,11 +8,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import post.study.Paging;
 import post.study.dto.MemberDto;
 import post.study.dto.QuestionDto;
 import post.study.entity.Member;
 import post.study.entity.Question;
+import post.study.repository.ProjectRepository;
+import post.study.repository.QuestionRepository;
 import post.study.service.MemberService;
+import post.study.service.ProjectService;
 import post.study.service.QuestionService;
 
 import javax.servlet.http.HttpSession;
@@ -22,11 +26,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionController {
     private final QuestionService questionService;
-
+    private final ProjectRepository projectRepository;
+    private final ProjectService projectService;
+    private final QuestionRepository questionRepository;
 
     @GetMapping("/question")
     public String post(HttpSession session, @RequestParam(required = false, defaultValue = "0", value = "page") int page, Model model) {
-
+        Paging paging = new Paging(projectRepository,projectService,questionRepository);
+        paging.setQuestionPaging(page);
         if(session.getAttribute("member")!=null){
             Member member = (Member) session.getAttribute("member");
             model.addAttribute("username", member.getUsername());
@@ -36,48 +43,20 @@ public class QuestionController {
 
         }
         Page<Question> questionPage = questionService.getQuestionList(page);
-        int realTotalPage = questionPage.getTotalPages();
-        int totalPage = realTotalPage - 1; //0부터 시작하기 때문에
-        List<Question> content = questionPage.getContent();
-        System.out.println("totalPage = " + totalPage);
 
-        int displayPage = 5;
-
-        int startNum = 0;
-
-        //startPage : page가 0~displayPage-1 이면 항상 1로 표시됨
-        int startPage = (page / displayPage) * displayPage;
-
-        //endPage : page가 0~displayPage-1 이면 항상 displayPage로 표시됨
-
-        int endPage = (page / displayPage) * displayPage + 4;
-
-        //pageLine
-        int pageLine = page / displayPage;
-
-        int totalPageLine=totalPage/displayPage;
         //페이지 라인 : 0~displayPage를 한 페이지 라인을 정의
 
-        //이전 페이지
-        model.addAttribute("prevPage", (pageLine-1)*displayPage);
-        //다음 페이지
-        model.addAttribute("nextPage", (pageLine+1)*displayPage);
-
         //페이지 리스트
+        model.addAttribute("qList", paging.getQuestionList());
+        model.addAttribute("prevPage", paging.getPrevPage());
+        model.addAttribute("nextPage", paging.getNextPage());
+        model.addAttribute("startPage",paging.getStartPage());
+        model.addAttribute("endPage",paging.getEndPage());
+        model.addAttribute("page",page);
+        model.addAttribute("totalPage",paging.getTotalPage());
+        model.addAttribute("pageLine",paging.getPageLine());
+        model.addAttribute("totalPageLine",paging.getTotalPageLine());
 
-        System.out.println(endPage);
-        if (totalPage < endPage) {
-            endPage = totalPage;
-        }
-        System.out.println("startNum = " + startNum);
-        model.addAttribute("qList", questionPage.getContent());
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("totalPage", totalPage);
-        model.addAttribute("page", page);
-        model.addAttribute("pageLine",pageLine);
-        model.addAttribute("totalPageLine",totalPageLine);
-        System.out.println("page = " + page);
         return "question/post";
     }
 
