@@ -5,15 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import post.study.Paging;
 import post.study.dto.ProjectDto;
-import post.study.entity.BookmarkProject;
-import post.study.entity.Member;
-import post.study.entity.Project;
-import post.study.entity.ProjectMember;
-import post.study.norm.Category;
-import post.study.service.MemberService;
-import post.study.service.ProjectMemberService;
-import post.study.service.ProjectService;
+import post.study.entity.*;
+import post.study.norm.field;
+import post.study.norm.language;
+import post.study.repository.ProjectRepository;
+import post.study.repository.QuestionRepository;
+import post.study.service.*;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
@@ -24,76 +23,90 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class ProjectController {
+    private final QuestionRepository questionRepository;
     private final MemberService memberService;
     private final ProjectService projectService;
     private final ProjectMemberService projectMemberService;
-
+    private final BookmarkProjectService BookmarkProjectService;
+    private final ProjectRepository projectRepository;
     @GetMapping("/project")
     public String project(HttpSession session , @RequestParam(required = false,defaultValue = "0",value = "page")int page,Model model){
+        Paging paging = new Paging(projectRepository,projectService,questionRepository);
+        paging.setProjectPaging(page);
 
         //paging: 한 페이지당 9개의 게시물 설정
-        Page<Project> projectList = projectService.getProjectList(page);
-        int realTotalPage=projectList.getTotalPages();
-        int totalPage=realTotalPage-1;
+//        Page<Project> projectList = pagingService.getProjectList(page);
+//        for(Project p: projectList){
+//            List<Language_Project> allLanguage = projectService.findAllLanguage(p);
+//            p.setLanguageList(allLanguage);
+//
+//            List<Field_Project> allField = projectService.findAllField(p);
+//            p.setFieldList(allField);
+//        }
+        List<String> languageList = projectMemberService.languageList();
+        List<String> fieldList = projectMemberService.fieldList();
 
-        int displayPage=5;
-
-
-        int startPage=page/displayPage*displayPage;
-        int endPage=page/displayPage*displayPage+4;
-        if(totalPage<endPage)
-            endPage=totalPage;
-
-
-        int pageLine=page/displayPage;
-        int totalPageLine=totalPage/displayPage;
-
+        //로그인 정보
         if(session.getAttribute("member")!=null) {
             Member testmember = (Member) session.getAttribute("member");
             Member member = memberService.findMember(testmember.getEmailId());
-            for(ProjectMember m:member.getProjectMemberList())
-                System.out.println("멤버 "+m.getProject().getProjectName());
-
             //북마크 여부
-            List<String> bookmarkImg = memberService.bookmarkImg(member);
+            List<String> bookmarkImg = BookmarkProjectService.bookmarkImg(member);
 
             model.addAttribute("username",member.getUsername());
             model.addAttribute("bList",bookmarkImg);
 
         }
-        model.addAttribute("pList",projectList);
+        model.addAttribute("lList", languageList);
+        model.addAttribute("fList", fieldList);
+        model.addAttribute("pList",paging.getProjectList());
         //이전 페이지
-        model.addAttribute("prevPage", (pageLine-1)*displayPage);
+
+        model.addAttribute("prevPage", paging.getPrevPage());
         //다음 페이지
-        model.addAttribute("nextPage", (pageLine+1)*displayPage);
-        model.addAttribute("startPage",startPage);
-        model.addAttribute("endPage",endPage);
+        model.addAttribute("nextPage", paging.getNextPage());
+        model.addAttribute("startPage",paging.getStartPage());
+        model.addAttribute("endPage",paging.getEndPage());
         model.addAttribute("page",page);
-        model.addAttribute("totalPage",totalPage);
-        model.addAttribute("pageLine",pageLine);
-        model.addAttribute("totalPageLine",totalPageLine);
+        model.addAttribute("totalPage",paging.getTotalPage());
+        model.addAttribute("pageLine",paging.getPageLine());
+        model.addAttribute("totalPageLine",paging.getTotalPageLine());
 
 
 
         return "project-post/post";
     }
-//프로젝트 생성
+    //프로젝트 생성
     @GetMapping("/project-create")
     public String projectCreate(HttpSession session, Model model){
-        ArrayList<String> categoryList=new ArrayList<>();
-        for(Category c:Category.values()){
-            categoryList.add(c.name());
+        Member member = (Member) session.getAttribute("member");
+        if(member==null){
+            model.addAttribute("msg","로그인이 필요한 서비스입니다.");
+            model.addAttribute("url","back");
+            return "popup";
         }
-        Member member= (Member) session.getAttribute("member");
-        model.addAttribute("cList",categoryList);
-        return"project-post/create";
+        else {
+            ArrayList<String> languageList=new ArrayList<>();
+            ArrayList<String> fieldList=new ArrayList<>();
+            for (language l : language.values()) {
+                languageList.add(l.name());
+            }
+            for(field f: field.values()){
+                fieldList.add(f.name());
+            }
+
+            model.addAttribute("lList", languageList);
+            model.addAttribute("fList",fieldList);
+            return "project-post/create";
+        }
     }
 
     @PostMapping("/project-create")
-    public String projectCreateJudge(HttpSession session, ProjectDto projectDto, String category, Model model){
+    public String projectCreateJudge(HttpSession session, ProjectDto projectDto, String language,String field, Model model){
         Member member = (Member) session.getAttribute("member");
+
         Project project;
-        if((project=projectService.create(projectDto,member))==null){
+        if((project=projectService.create(projectDto,language,field,member))==null){
             model.addAttribute("msg","이미 존재하는 프로젝트 입니다.");
             model.addAttribute("url","back");
         }
@@ -101,8 +114,7 @@ public class ProjectController {
             projectMemberService.joinProjectMember(project,member);
             model.addAttribute("msg","프로젝트가 생성되었습니다.");
             model.addAttribute("url","/project?page=0");
-        System.out.println("projectName = " + projectDto);
-        System.out.println("category = " + category);
+
         }
 
         return "popup";
@@ -114,21 +126,16 @@ public class ProjectController {
         Member member = (Member) session.getAttribute("member");
         Project project = projectService.findProject(projectId);
 
-        Boolean result = memberService.updateBookmarkProject(member, project);
-        System.out.println("결과  "+result);
+        Boolean result = BookmarkProjectService.updateBookmarkProject(member, project);
 
         return result;
     }
 
-    @GetMapping("/project-refer")
-    public String refer(HttpSession session , Model model){
-        Member member = (Member) session.getAttribute("member");
-        List<String> projectMembers = projectMemberService.findMyProject(member);
-        for(String projectMember:projectMembers){
-            System.out.println(projectMember);
-        }
-        model.addAttribute("username",member.getUsername());
-
-        return "project-post/post";
+    @GetMapping("/project-introduce")
+    public String projectIntroduce(String projectName,Model model){
+        Project project = projectService.findProject(projectName);
+        System.out.println("프로젝트명: "+projectName);
+        model.addAttribute("project",project);
+        return"project-post/project";
     }
 }
