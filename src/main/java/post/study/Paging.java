@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 import post.study.entity.Field_Project;
 import post.study.entity.Language_Project;
 import post.study.entity.Project;
@@ -14,7 +15,6 @@ import post.study.repository.ProjectRepository;
 import post.study.repository.QuestionRepository;
 import post.study.service.ProjectService;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Transactional

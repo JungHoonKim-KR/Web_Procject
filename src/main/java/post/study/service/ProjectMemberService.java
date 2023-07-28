@@ -2,6 +2,7 @@ package post.study.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import post.study.dto.MemberDto;
 import post.study.dto.ProjectDto;
 import post.study.entity.Member;
@@ -11,7 +12,6 @@ import post.study.norm.field;
 import post.study.norm.language;
 import post.study.repository.ProjectMemberRepository;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +60,7 @@ public class ProjectMemberService {
         }
         return fieldList;
     }
+
 
 
 }

@@ -1,5 +1,6 @@
 package post.study.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -14,8 +15,7 @@ import post.study.repository.ProjectRepository;
 import post.study.repository.QuestionRepository;
 import post.study.service.*;
 
-import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.GenericDeclaration;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class ProjectController {
     private final BookmarkProjectService BookmarkProjectService;
     private final ProjectRepository projectRepository;
     @GetMapping("/project")
-    public String project(HttpSession session , @RequestParam(required = false,defaultValue = "0",value = "page")int page,Model model){
+    public String project(HttpSession session , @RequestParam(required = false,defaultValue = "0",value = "page")int page, Model model){
         Paging paging = new Paging(projectRepository,projectService,questionRepository);
         paging.setProjectPaging(page);
 
@@ -76,6 +76,11 @@ public class ProjectController {
 
         return "project-post/post";
     }
+
+//    @PostMapping("/project")
+//    public String projectSearch(HttpSession session,String language, String field,Model model){
+//
+//    }
     //프로젝트 생성
     @GetMapping("/project-create")
     public String projectCreate(HttpSession session, Model model){
@@ -138,4 +143,6 @@ public class ProjectController {
         model.addAttribute("project",project);
         return"project-post/project";
     }
+
+
 }

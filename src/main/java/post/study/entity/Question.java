@@ -1,11 +1,11 @@
 package post.study.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import post.study.dto.QuestionDto;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity

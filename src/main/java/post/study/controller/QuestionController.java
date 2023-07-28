@@ -1,5 +1,6 @@
 package post.study.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +20,6 @@ import post.study.service.MemberService;
 import post.study.service.ProjectService;
 import post.study.service.QuestionService;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller

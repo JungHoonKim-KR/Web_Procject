@@ -28,6 +28,8 @@
                 font-size: 3.5rem;
             }
         }
+
+
     </style>
 
 
@@ -52,15 +54,14 @@
                    name="scale" th:value="${scale}">
             프로젝트 규모
         </div>
+        <select name="field" multiple>
+            <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>
+        </select> 분야
 
         <select name="language" multiple>
             <option th:each="l:${lList}" th:value="${l}" th:text="${l}"></option>
-        </select>
-        언어
-<!--        <select name="language" multiple>-->
-<!--            <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>-->
-<!--        </select>-->
-<!--        분야-->
+        </select> 언어
+
         <div class="form-floating">
             <input type="text" class="form-control" id="floatingIntroduce"
                    name="introduction" th:value="${introduction}">

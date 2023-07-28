@@ -1,5 +1,6 @@
 package post.study.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,14 +11,16 @@ import post.study.entity.Member;
 import post.study.norm.field;
 import post.study.norm.language;
 import post.study.service.LoginAndJoinService;
+import post.study.service.ProjectMemberService;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class LoginAndJoinController {
     private final LoginAndJoinService memberService;
+    private final ProjectMemberService projectMemberService;
 
 
     @GetMapping("/")
@@ -54,17 +57,11 @@ public class LoginAndJoinController {
 
     @GetMapping("/join")
     public String join(Model model) {
-        ArrayList<String> languageList = new ArrayList<>();
-        ArrayList<String> fieldList = new ArrayList<>();
-        for (language l : language.values()) {
-            languageList.add(l.name());
-        }
-        for (field f : field.values()) {
-            fieldList.add(f.name());
-        }
+        List<String> fieldList = projectMemberService.fieldList();
+        List<String> languageList = projectMemberService.languageList();
 
-        model.addAttribute("lList", languageList);
         model.addAttribute("fList", fieldList);
+        model.addAttribute("lList", languageList);
         return "sign-in/join";
     }
 

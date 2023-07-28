@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import post.study.entity.BookmarkProject;
 import post.study.entity.Project;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @ResponseBody

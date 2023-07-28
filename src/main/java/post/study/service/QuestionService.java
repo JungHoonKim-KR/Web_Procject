@@ -15,7 +15,6 @@ import post.study.entity.Question;
 import post.study.repository.MemberRepository;
 import post.study.repository.QuestionRepository;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 

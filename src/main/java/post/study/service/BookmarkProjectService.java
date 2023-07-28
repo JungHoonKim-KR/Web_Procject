@@ -7,7 +7,7 @@ import post.study.entity.Member;
 import post.study.entity.Project;
 import post.study.repository.BookmarkProjectRepository;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 @Service

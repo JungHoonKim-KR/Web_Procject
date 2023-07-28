@@ -1,5 +1,6 @@
 package post.study.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,6 @@ import post.study.service.MemberService;
 import post.study.service.ProjectMemberService;
 import post.study.service.ProjectService;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,21 +37,14 @@ public class MypageController {
             model.addAttribute("url","back");
             return "popup";
         }
-        ArrayList<String> languageList = new ArrayList<>();
-        ArrayList<String> fieldList = new ArrayList<>();
-        for (language l : language.values()) {
-            languageList.add(l.name());
-        }
-        for (field f : field.values()) {
-            fieldList.add(f.name());
-        }
-
+        List<String> fieldList = projectMemberService.fieldList();
+        List<String> languageList = projectMemberService.languageList();
         model.addAttribute("emailId",member.getEmailId());
         model.addAttribute("password",member.getPassword());
         model.addAttribute("username",member.getUsername());
         model.addAttribute("age",member.getAge());
-        model.addAttribute("lList",languageList);
         model.addAttribute("fList",fieldList);
+        model.addAttribute("lList",languageList);
 
         return "mypage/profile";
     }
@@ -76,22 +69,15 @@ public class MypageController {
 
     @GetMapping("/mypage-project")
     public String project(String projectName,Model model){
-        System.out.println("프로젝트명:"+ projectName);
         Project project = projectService.findProject(projectName);
 
-
-        ArrayList<String> languageList=new ArrayList<>();
-        ArrayList<String> fieldList=new ArrayList<>();
-        for (language l : language.values()) {
-            languageList.add(l.name());
-        }
-        for(field f: field.values()){
-            fieldList.add(f.name());
-        }
+        List<String> fieldList = projectMemberService.fieldList();
+        List<String> languageList = projectMemberService.languageList();
         model.addAttribute("projectName",project.getProjectName());
         model.addAttribute("projectLeader",project.getProjectLeader());
-        model.addAttribute("lList", languageList);
         model.addAttribute("fList",fieldList);
+        model.addAttribute("lList", languageList);
+
         return"mypage/project";
 
     }
@@ -99,8 +85,6 @@ public class MypageController {
     @PostMapping("/mypage-project")
     public String project(ProjectDto projectDto,String language, String field ,Model model){
         Project project = projectService.update(projectDto, language, field);
-        System.out.println("projectDto = " + projectDto.getProjectLeader());
-        System.out.println("projectDto = " + projectDto.getProjectName());
 
         if(project==null){
             model.addAttribute("msg","프로젝트 명이 중복됩니다.");

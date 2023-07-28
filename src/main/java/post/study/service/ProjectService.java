@@ -1,5 +1,6 @@
 package post.study.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,7 +14,6 @@ import post.study.repository.LanguageMemberRepository;
 import post.study.repository.LanguageProjectRepository;
 import post.study.repository.ProjectRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -126,6 +126,7 @@ public class ProjectService {
         List<Field_Project> allById = fieldProjectRepository.findAllById(project.getId());
         return allById;
     }
+
 
 
 }
