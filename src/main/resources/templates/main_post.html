@@ -268,9 +268,9 @@
   my_img : https://www.pngegg.com/ko/search?q=%EB%82%B4+%EA%B3%84%EC%A0%95+%EC%95%84%EC%9D%B4%EC%BD%98
   왼쪽화살표 사진 :http://cmicvictoria.org/botones/
 -->
-<script type="text/javascript" src="./css/js/bootstrap.js"></script>
-<script src="./css/js/jquery.3.7.0.js"></script>
-<script src="/css/js/main_post.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script src="/js/jquery.3.7.0.js"></script>
+<script src="/js/main_post.js"></script>
 <script th:inline="javascript">
     // <span style="font-size:0.7em; color:gray; width:100px">성빈 님</span>
     // <button type="button" id="logout" onClick="location.href='bb.html'"
@@ -280,7 +280,6 @@
         let name = [[${username}]];
         var loginUrl = /*[[ @{/login} ]]*/ '';
         var logoutUrl =/*[[@{/logout}]]*/ '';
-        console.log(name)
         //로그인 정보
         if (name == null) {
             $('.login').append($('<button>').attr({
@@ -306,8 +305,6 @@
             })
 
             usernameElement.append(logoutElement)
-            // var usernameElement = ($('<span></span>').addClass('navbar-brand d-flex align-items-center').text(name + "님 안녕하세요"))
-            // var logoutElement = ($('<a></a>').text('로그아웃').attr('href', logoutUrl))
 
             $('.login').append(usernameElement)
 
