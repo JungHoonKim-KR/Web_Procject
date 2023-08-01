@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쇼핑몰 상세페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .product-details {
+            flex: 1 1 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .product-details img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .product-reviews {
+            flex: 1 1 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 10px;
+        }
+
+        .product-reviews h2 {
+            margin-bottom: 10px;
+        }
+
+        .product-reviews ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .product-reviews li {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .product-reviews li:last-child {
+            border-bottom: none;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>로고</h1>
+</header>
+
+<main>
+    <div class="product-details">
+        <h1>프로젝트 소개 이미지</h1>
+        <img th:src="${project.getImg()}" alt="Product Image">
+
+    </div>
+
+    <div class="product-reviews">
+        <h1 th:text="${project.getProjectName()}"></h1>
+        <ul>
+            <li>
+                <h2>프로젝트 리더</h2>: <text th:text="${project.getProjectLeader()}">프로젝트 리더</text>
+                <h2>프로젝트 주제</h2>: <text>프로젝트 주제</text>
+                <h2>모집 조건</h2>: <text>모집 조건</text>
+            </li>
+        </ul>
+        <button>신청하기</button>
+    </div>
+</main>
+
+<footer>
+    <p>All rights reserved.</p>
+    <!-- 하단에 저작권 정보 등이 위치할 수 있습니다. -->
+</footer>
+</body>
+</html>

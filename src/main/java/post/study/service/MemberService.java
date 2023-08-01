@@ -5,21 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import post.study.dto.MemberDto;
 import post.study.entity.*;
-import post.study.repository.BookmarkProjectRepository;
 import post.study.repository.FieldMemberRepository;
 import post.study.repository.LanguageMemberRepository;
 import post.study.repository.MemberRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class MemberService {
-    private final ProjectService projectService;
     private final MemberRepository memberRepository;
-    private final BookmarkProjectRepository bookmarkProjectRepository;
     private final LanguageMemberRepository languageMemberRepository;
     private final FieldMemberRepository fieldMemberRepository;
 
@@ -37,7 +31,7 @@ public class MemberService {
 
         if (language != null) {
             String[] languageList = language.split(",");
-            languageMemberRepository.deleteLanguage_MemberByMemberId(member.getId());
+            memberRepository.deleteLanguage_MemberByMemberId(member.getId());
             for (String s : languageList) {
                 Language_Member l = new Language_Member(s);
                 member.addLanguage(l);
@@ -48,7 +42,7 @@ public class MemberService {
 
         if (field != null) {
             String[] fieldList = field.split(",");
-            fieldMemberRepository.deleteFeild_MemberByMemberId(member.getId());
+            memberRepository.deleteFeild_MemberByMemberId(member.getId());
             for (String s : fieldList) {
                 Field_Member f = new Field_Member(s);
                 member.addField(f);

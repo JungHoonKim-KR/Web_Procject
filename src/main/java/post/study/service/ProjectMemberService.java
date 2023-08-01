@@ -3,13 +3,12 @@ package post.study.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import post.study.dto.MemberDto;
-import post.study.dto.ProjectDto;
 import post.study.entity.Member;
 import post.study.entity.Project;
 import post.study.entity.ProjectMember;
 import post.study.norm.field;
 import post.study.norm.language;
+import post.study.repository.MemberRepository;
 import post.study.repository.ProjectMemberRepository;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import java.util.List;
 public class ProjectMemberService {
     private final MemberService memberService;
     private final ProjectMemberRepository projectMemberRepository;
+    private final MemberRepository memberRepository;
 
     public void joinProjectMember(Project project, Member tempMember) {
         Member member = memberService.findMember(tempMember.getEmailId());
@@ -61,6 +61,15 @@ public class ProjectMemberService {
         return fieldList;
     }
 
+    public List<Member> find() {
+        String s = "C,JAVA";
+        List<String> list = new ArrayList<>();
+        String arr[] = s.split(",");
+        for (String c : arr) {
+            list.add(c);
+        }
+        return memberRepository.findMember(list);
+    }
 
 
 }

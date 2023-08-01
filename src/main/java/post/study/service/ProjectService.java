@@ -3,19 +3,16 @@ package post.study.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import post.study.dto.ProjectDto;
 import post.study.entity.*;
-import post.study.norm.field;
 import post.study.repository.FieldProjectRepository;
-import post.study.repository.LanguageMemberRepository;
 import post.study.repository.LanguageProjectRepository;
 import post.study.repository.ProjectRepository;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -94,7 +91,7 @@ public class ProjectService {
 
             if(language!=null) {
                 String[] languageList = language.split(",");
-                languageProjectRepository.deleteLanguage_ProjectByProjectId(findProject.getId());
+                projectRepository.deleteLanguage_ProjectByProjectId(findProject.getId());
                 for (String s : languageList) {
                     Language_Project l = new Language_Project(s);
                     findProject.addLanguage(l);
@@ -105,7 +102,7 @@ public class ProjectService {
 
             if(field!=null) {
                 String[] fieldList = field.split(",");
-                fieldProjectRepository.deleteFeild_ProjectByProjectId(findProject.getId());
+                projectRepository.deleteFeild_ProjectByProjectId(findProject.getId());
                 for (String s : fieldList) {
                     Field_Project f = new Field_Project(s);
                     findProject.addField(f);
@@ -118,15 +115,31 @@ public class ProjectService {
     }
 
     public List<Language_Project> findAllLanguage(Project project){
-        List<Language_Project> allById = languageProjectRepository.findAllById(project.getId());
+        List<Language_Project> allById = projectRepository.findLanguageById(project.getId());
         return allById;
     }
 
     public List<Field_Project> findAllField(Project project){
-        List<Field_Project> allById = fieldProjectRepository.findAllById(project.getId());
+        List<Field_Project> allById = projectRepository.findFieldById(project.getId());
         return allById;
     }
 
 
+    public Page<Project> findList(String field, String language, Pageable pageable){
+        String [] f=field.split(",");
+        String [] l=language.split(",");
 
+        List<String>fList=new ArrayList<>();
+        List<String> lList=new ArrayList<>();
+        for(String s: f){
+            fList.add(s);
+
+        }
+
+        for(String s:l){
+            lList.add(s);
+        }
+        Page<Project> projectList = projectRepository.searchProjectList(fList, lList, pageable);
+        return projectList;
+    }
 }

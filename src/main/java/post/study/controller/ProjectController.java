@@ -2,11 +2,13 @@ package post.study.controller;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import post.study.Paging;
+import post.study.service.PagingService;
 import post.study.dto.ProjectDto;
 import post.study.entity.*;
 import post.study.norm.field;
@@ -15,34 +17,24 @@ import post.study.repository.ProjectRepository;
 import post.study.repository.QuestionRepository;
 import post.study.service.*;
 
-import org.springframework.transaction.annotation.Transactional;
-import java.lang.reflect.GenericDeclaration;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class ProjectController {
+    private final ProjectRepository projectRepository;
     private final QuestionRepository questionRepository;
     private final MemberService memberService;
     private final ProjectService projectService;
     private final ProjectMemberService projectMemberService;
     private final BookmarkProjectService BookmarkProjectService;
-    private final ProjectRepository projectRepository;
     @GetMapping("/project")
-    public String project(HttpSession session , @RequestParam(required = false,defaultValue = "0",value = "page")int page, Model model){
-        Paging paging = new Paging(projectRepository,projectService,questionRepository);
-        paging.setProjectPaging(page);
+    public String project(HttpSession session , Model model,@PageableDefault(size = 6,sort = "id",direction = Sort.Direction.DESC) Pageable pageable){
+        String type="ALL";
+        PagingService paging = new PagingService(projectRepository,questionRepository,projectService);
+        paging.setProjectPaging(null,null,type,pageable);
 
-        //paging: 한 페이지당 9개의 게시물 설정
-//        Page<Project> projectList = pagingService.getProjectList(page);
-//        for(Project p: projectList){
-//            List<Language_Project> allLanguage = projectService.findAllLanguage(p);
-//            p.setLanguageList(allLanguage);
-//
-//            List<Field_Project> allField = projectService.findAllField(p);
-//            p.setFieldList(allField);
-//        }
         List<String> languageList = projectMemberService.languageList();
         List<String> fieldList = projectMemberService.fieldList();
 
@@ -57,30 +49,75 @@ public class ProjectController {
             model.addAttribute("bList",bookmarkImg);
 
         }
+        model.addAttribute("type",type);
         model.addAttribute("lList", languageList);
         model.addAttribute("fList", fieldList);
         model.addAttribute("pList",paging.getProjectList());
-        //이전 페이지
-
         model.addAttribute("prevPage", paging.getPrevPage());
-        //다음 페이지
         model.addAttribute("nextPage", paging.getNextPage());
         model.addAttribute("startPage",paging.getStartPage());
         model.addAttribute("endPage",paging.getEndPage());
-        model.addAttribute("page",page);
+        model.addAttribute("page",pageable.getPageNumber());
         model.addAttribute("totalPage",paging.getTotalPage());
         model.addAttribute("pageLine",paging.getPageLine());
         model.addAttribute("totalPageLine",paging.getTotalPageLine());
 
-
-
         return "project-post/post";
     }
 
-//    @PostMapping("/project")
-//    public String projectSearch(HttpSession session,String language, String field,Model model){
-//
-//    }
+    @GetMapping("/projectSearch")
+    public String projectSearch(HttpSession session, String language, String field,Model model,@PageableDefault(size = 6,sort = "id",direction = Sort.Direction.DESC) Pageable pageable){
+        String type="SEARCH";
+        String searchField,searchLanguage;
+        if(session.getAttribute("field")!=null){
+            searchField = (String) session.getAttribute("field");
+        }
+        else {
+            session.setAttribute("field",field);
+            searchField = field;
+        }
+        if(session.getAttribute("language")!=null){
+            searchLanguage= (String) session.getAttribute("language");
+        }
+        else {
+            session.setAttribute("language",language);
+            searchLanguage = language;
+        }
+        PagingService paging = new PagingService(projectRepository,questionRepository,projectService);
+        paging.setProjectPaging(searchField,searchLanguage,type,pageable);
+
+        List<String> languageList = projectMemberService.languageList();
+        List<String> fieldList = projectMemberService.fieldList();
+        if(session.getAttribute("member")!=null) {
+            Member testmember = (Member) session.getAttribute("member");
+            Member member = memberService.findMember(testmember.getEmailId());
+            //북마크 여부
+            List<String> bookmarkImg = BookmarkProjectService.bookmarkImg(member);
+
+            model.addAttribute("username",member.getUsername());
+            model.addAttribute("bList",bookmarkImg);
+
+        }
+        if(paging.getProjectList()==null){
+
+            type="NONE";
+        }
+        model.addAttribute("type",type);
+        model.addAttribute("lList", languageList);
+        model.addAttribute("fList", fieldList);
+        model.addAttribute("pList",paging.getProjectList());
+        model.addAttribute("prevPage", paging.getPrevPage());
+        model.addAttribute("nextPage", paging.getNextPage());
+        model.addAttribute("startPage",paging.getStartPage());
+        model.addAttribute("endPage",paging.getEndPage());
+        model.addAttribute("page",pageable.getPageNumber());
+        model.addAttribute("totalPage",paging.getTotalPage());
+        model.addAttribute("pageLine",paging.getPageLine());
+        model.addAttribute("totalPageLine",paging.getTotalPageLine());
+
+        return "project-post/post";
+
+    }
     //프로젝트 생성
     @GetMapping("/project-create")
     public String projectCreate(HttpSession session, Model model){

@@ -8,12 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import post.study.dto.MemberDto;
 import post.study.entity.Member;
-import post.study.norm.field;
-import post.study.norm.language;
 import post.study.service.LoginAndJoinService;
 import post.study.service.ProjectMemberService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,7 +28,10 @@ public class LoginAndJoinController {
         } else {
             model.addAttribute("username", member.getUsername());
         }
-
+        List<Member> members = projectMemberService.find();
+        for(Member m : members){
+            System.out.println("member : "+ m.getId());
+        }
         return "main_post";
     }
 

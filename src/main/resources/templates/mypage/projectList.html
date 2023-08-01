@@ -23,6 +23,10 @@
 </tr>
 </form>
 <a  class="btn btn-primary" th:href="@{/}">메인으로 이동</a>
-
+<div class="list-group">
+    <a th:href="@{/mypage-profile}" class="list-group-item list-group-item-action ">프로필 설정</a>
+    <a th:href="@{/mypage-projectList}" class="list-group-item list-group-item-action active ">프로젝트 설정</a>
+    <a th:href="@{/mypage-bookmarkProjectList}" class="list-group-item list-group-item-action">북마크 설정</a>
+</div>
 </body>
 </html>

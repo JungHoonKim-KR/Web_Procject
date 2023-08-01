@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import post.study.dto.MemberDto;
 import post.study.entity.Field_Member;
-import post.study.entity.Field_Project;
 import post.study.entity.Language_Member;
 import post.study.entity.Member;
 import post.study.repository.FieldMemberRepository;
