@@ -3,7 +3,9 @@ package post.study.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class Project {
     private String scale;
     private String img;
     private String introduction;
+    private LocalDateTime createTime=LocalDateTime.now();
+
 
     @OneToMany(mappedBy = "project")
     private List<Language_Project> languageList = new ArrayList<>();
