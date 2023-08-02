@@ -1,0 +1,140 @@
+
+html,body{width:100%,;height:100%}
+body,input,textarea,select,button,table{font-size:12px}
+img,fieldset{border:0}
+ul,ol{List-style:none}
+em,address{font-style:none}
+a{text-decoration:none}
+a:hover,a:active,a:focus{text-decoration:underline}
+
+.search {
+    position: relative;
+    width: 300px;
+    margin-top:100px;
+    margin-left:500px;
+    margin-bottom:150px;
+    
+  }
+  
+ 
+  
+  #searching_img {
+    position : absolute;
+    width: 20px;
+    top: 13px;
+    right: -200px;
+    margin: 0;
+    cursor: pointer;
+  }
+
+.wrapper2{
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+}
+
+
+.w-btn {
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+    margin-top:20px;
+    margin-left:20px;
+    cursor: pointer;
+}
+.w-btn-gra2 {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    color: white;
+}.w-btn-gra-anim {
+    background-size: 400% 400%;
+    animation: gradient1 5s ease infinite;
+}
+@keyframes gradient1 {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+.fixed_img_col li{
+    float:left;
+    width:120px;
+    height:80px;
+    padding:20px 100px;
+    margin-bottom:-1px;
+  
+    margin-top:20px;
+    border-bottom:1px solid cyan;
+   
+              
+}
+.check_wrap{
+    accent-color: cyan;
+}
+
+.fixed_img_col li a{
+    display:block;
+}
+
+.date{
+    width:200px;
+    height:10px;
+}
+
+.fixed_img_col li a .thumb{
+    position :relative;
+    display:block;
+  
+    height:150px;
+    width:200px;
+    text-align:center;
+    line-height:120px;
+}
+.fixed_img_col li a .thumb em{
+    display:none;
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,.5);
+    color:#aaa;
+    font-weight:bold;
+    text-align:center;
+    line-height:120px;
+}
+
+.fixed_img_col li a:hover .thumb em{
+    display:block;
+    
+}
+.heart1{
+    cursor: pointer;
+}
+.fixed_img_col li a strong{
+    display:block;
+    padding: 8px 0 4px;
+    color:#333;
+    font-weight:bold;
+    line-height:1.4;
+}
+.fixed_img_col li a:hover{
+    text-decoration: none;
+}
+.fixed_img_col li p{
+   color:#767676;
+   font-size:.9em;
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/main_post.css">
+    <link rel="stylesheet" href="./css/project_bulletin.css">
+    <link rel="stylesheet" href="./css/project_page.css">
+</head>
+
+<body class="wrapper2" style="background-color:#13161c">
+<header id="contents_box">
+    <img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="50">
+    <div class="nav_items" style="margin-left:150px;">
+        <ul>
+            <li><a th:href="@{/project?page=0}"><span style="color:white">프로젝트 모집</span></a></li>
+            <li><a href="/"><span style="color:white">공지사항</span></a></li>
+            <li><a th:href="@{/question?page=0}"><span style="color:white">문의게시판</span></a></li>
+            <li><a href="/"><span style="color:white">랭킹</span></a></li>
+            <li><a th:href="@{/mypage-profile}"><span style="color:white">마이페이지</span></a></li>
+        </ul>
+    </div>
+
+    <span th:if="${username==null}">
+        <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
+                style="margin-right:50px; width:150px ;height:30px">로그인</button>
+    </span>
+    <span th:unless="${username==null}">
+              <span th:text="${username}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
+        <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
+                style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
+            </span>
+</header>
+
+<div class="wrap2" style=" width:1500px;height:2000px">
+
+
+    <div class="fixed_img_col" style="height:1500px">
+
+        <h1 style="color:white; text-align:center;font-size:50px; margin-top:100px">프로젝트</h1>
+
+        <span style="color:white;font-size:20px;margin-left:570px">원하는 카테고리의 프로젝트만 검색하기</span><br><br>
+        <span style="font-size:15px;color:white;;margin-left:640px">카테고리 선택 후 검색버튼 클릭!</span><br><br><br>
+        <form action="/projectSearch" method="get">
+
+            <div class="check_wrap" style="margin-left:300px">
+                <div style="border-bottom:1px solid cyan;width:930px">
+
+                    <span style="color:white;margin-left:360px">분야 : </span>
+                    <input type="checkbox" name="field" id="프론트엔드" value="프론트엔드"/><span
+                        style="color:white;">프론트엔드</span>
+                    <input type="checkbox" name="field" id="백엔드" value="백엔드"/><span
+                        style="color:white;">백엔드</span><br><br><br>
+                </div>
+                <br><br>
+                <span style="color:white;margin-left:100px">언어 : </span>
+                <input type="checkbox" name="language" id="C" style="margin-left:10px" value="C"/><span
+                    style="color:white;">C</span>
+                <input type="checkbox" name="language" id="JAVA" style="margin-left:10px" value="JAVA"/><span
+                    style="color:white;">JAVA</span>
+                <input type="checkbox" name="language" id="PYTHON" style="margin-left:10px" value="PYTHON"/><span
+                    style="color:white;">PYTHON</span>
+                <input type="checkbox" name="language" id="CSS" style="margin-left:10px" value="CSS"/><span
+                    style="color:white;">CSS</span>
+                <input type="checkbox" name="language" id="JAVASCRIPT" style="margin-left:10px"
+                       value="JAVASCRIPT"/><span style="color:white;">JAVASCRIPT</span>
+                <input type="checkbox" name="language" id="TYPESCRIPT" style="margin-left:10px"
+                       value="TYPESCRIPT"/><span style="color:white;">TYPESCRIPT</span>
+                <input type="checkbox" name="language" id="SQL" style="margin-left:10px" value="SQL"/><span
+                    style="color:white;">SQL</span>
+                <input type="checkbox" name="language" id="PHP" style="margin-left:10px" value="PHP"/><span
+                    style="color:white;">PHP</span>
+                <input type="checkbox" name="language" id="KOTLIN" style="margin-left:10px" value="KOTLIN"/><span
+                    style="color:white;">KOTLIN</span>
+                <input type="checkbox" name="language" id="GO" style="margin-left:10px" value="GO"/><span
+                    style="color:white;">GO</span>
+                <input type="checkbox" name="language" id="SWIFT" style="margin-left:10px" value="SWIFT"/><span
+                    style="color:white;">SWIFT</span>
+            </div>
+        </form>
+        <br>
+        <div style="border-bottom:1px solid white ;width:1500px;height:150px">
+            <button class="w-btn w-btn-gra2 w-btn-gra-anim" id="search_btn" style="margin-left:680px;width:150px;"
+                    type="button">
+                <span style="font-size:15px">검색</span>
+            </button>
+            <a th:href="@{/project-create}">프로젝트 생성</a>
+
+        </div>
+        <div style="height:670px">
+            <ul style="margin-left:70px;margin-top:100px">
+              <span th:each="p:${pList}">
+                <li>
+                    <img src="./images/하트모양(회색).jpg" th:id="${p.id}+bookmark" class="heart1" width="20" height="20"
+                         alt=""
+                         style="margin-left:180px">
+                    <a th:href=" '/project-introduce?projectName=' +${p.projectName}" class="proj"><span
+                            class="thumb"><img th:src="${p.img}" width="200" height="150"
+                                               alt=""><em>프로젝트 소개 보기</em></span><strong
+                            th:text="${p.projectName}" style="color:white;width:200px">프로젝트 제목 </strong></a>
+                    <p class="date" th:text="${p.introduction}">프로젝트 소개</p>
+                      <span th:each="f:${p.getFieldList()}">
+                                        <text class="date" style="color: gray" th:text="${f.getField()}"></text>
+                                    </span>
+                                        <span th:each="g:${p.getLanguageList()}">
+                                        <text class="date" style="color: gray" th:text="${g.getLanguage()}"></text>
+                                    </span>
+                </li>
+                  </span>
+                <li>
+            </ul>
+        </div>
+
+        <div style="border-bottom:1px solid white">
+            <div class="pagination-container" style="color:white;">
+
+                <span th:if="${type=='ALL'}">
+                <a th:href="@{/project(page=0)}" style="color:white;margin-left:100px;"><span>처음</span></a>
+
+                <a th:if="${pageLine}>0" style="color:white;" th:href="@{/project(page=${prePage})}"><span>이전</span></a>
+                    <span th:id="currentPage+${page}" th:each="page: ${#numbers.sequence(startPage, endPage)}">
+
+                 <a class="number-button-wrapper" th:text="${page+1}" style="color:white;margin-left:20px;"
+                    th:href="@{/project(page=${page})}"></a>
+                    </span>
+
+            <a th:if="${pageLine}<${totalPageLine}" style="color:white;" th:href="@{/project(page=${nextPage})}"><span>다음</span></a>
+
+                <a th:href="@{/project(page=${totalPage})}" style="color:white;margin-left:20px;"><span>마지막</span></a>
+
+                </span>
+
+                <span th:if="${type=='SEARCH'}">
+                <a th:href="@{/projectSearch(page=0)}" style="color:white;margin-left:100px;"><span>처음</span></a>
+
+                <a th:if="${pageLine}>0" style="color:white;"
+                   th:href="@{/projectSearch(page=${prePage})}"><span>이전</span></a>
+                    <span th:id="currentPage+${page}" th:each="page: ${#numbers.sequence(startPage, endPage)}">
+
+                 <a class="number-button-wrapper" th:text="${page+1}" style="color:white;margin-left:20px;"
+                    th:href="@{/projectSearch(page=${page})}"></a>
+                    </span>
+
+            <a th:if="${pageLine}<${totalPageLine}" style="color:white;"
+               th:href="@{/projectSearch(page=${nextPage})}"><span>다음</span></a>
+
+                <a th:href="@{/projectSearch(page=${totalPage})}" style="color:white;margin-left:20px;"><span>마지막</span></a>
+
+                </span>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="advertisement" style=" border-bottom: solid 2px white;background-color:#13161c;height:1000px">
+        <div id="banner_comments">
+            <br><br><br>
+            <h1 style="color:white; text-align:center;font-size:40px">지금 여러분이 할 수있는 최고의 선택!</h1><br><br>
+
+        </div>
+        <div id="banner" style="text-align:center">
+            <img src="./images/프로젝트사진1.jpg" id="project_pic" alt="이미지 불러오기 실패" width="650" height="300"
+                 style="margin-top:10px ;margin-left:30px;margin-bottom:10px"><br>
+            <div id="circle_btn ">
+                <button class="circle"></button>
+                <button class="circle"></button>
+                <button class="circle"></button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="./js/project_bulletin.js"></script>
+<script src="./js/pagination.js"></script>
+</body>
+</html>
