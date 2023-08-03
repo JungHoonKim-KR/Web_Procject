@@ -1,6 +1,8 @@
 package post.study.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import post.study.entity.BookmarkProject;
 import post.study.entity.Member;
@@ -8,8 +10,10 @@ import post.study.entity.Project;
 import post.study.repository.BookmarkProjectRepository;
 
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -17,10 +21,11 @@ public class BookmarkProjectService {
     private final ProjectService projectService;
     private final BookmarkProjectRepository bookmarkProjectRepository;
     private final MemberService memberService;
+
     public Boolean updateBookmarkProject(Member tempMember, Project tempProject) {
         Member member = memberService.findMember(tempMember.getEmailId());
         Project project = projectService.findProject(tempProject.getId());
-        BookmarkProject findProject = bookmarkProjectRepository.findBookmarkProject(member.getId(), project.getId());
+        BookmarkProject findProject = bookmarkProjectRepository.updateBookmarkProject(member.getId(), project.getId());
         if (findProject == null) {
             BookmarkProject bookmarkProject = new BookmarkProject();
             bookmarkProject.setBookmarkProject(member, project);
@@ -36,26 +41,30 @@ public class BookmarkProjectService {
     }
 
 
-    public List<String> bookmarkImg(Member member){
-        if(member==null)
-            return null;
-        List<String> bookmarkImg=new ArrayList<>();
-        List<Project> projectList = projectService.findAllProject();
-        for(int i=projectList.size()-1; i>=0;i--){
-            BookmarkProject bookmarkProject = bookmarkProjectRepository.findBookmarkProject(member.getId(), projectList.get(i).getId());
+    public List<String> bookmarkImg(Member member, Page<Project> projectList) {
 
-            if(bookmarkProject==null){
-                bookmarkImg.add("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0vuu68IX7IaUcqqSAKbqaNoiKDoDxIiplypOuz5QXBmOqOEJ2AScWwuKidHZbW-LTXKo&usqp=CAU");
+        List<String> bookmarkImg = new ArrayList<>();
+        List<Long> bookmarkProject = bookmarkProjectRepository.findBookmarkProject(member.getId(), projectList.getContent());
+        if(!bookmarkProject.isEmpty()) {
+            int bookmarkIndex = 0;
+            for (Project p : projectList) {
+                if (p.getId() == bookmarkProject.get(bookmarkIndex)) {
+                    bookmarkImg.add("./images/하트모양(빨강).jpg");
+                    bookmarkIndex++;
+
+                } else {
+                    bookmarkImg.add("./images/하트모양(회색).jpg");
+
+                }
             }
-            else{
-                bookmarkImg.add("https://w7.pngwing.com/pngs/67/599/png-transparent-star-favorite-bookmark-3d-gold-yellow-thumbnail.png");
-            }
+
         }
-        return  bookmarkImg;
+        return bookmarkImg;
+
     }
 
-    public List<BookmarkProject> findBookmarkList(Member member){
-        List<BookmarkProject> bookmarkProjectByMemberId = bookmarkProjectRepository.findBookmarkProjectByMemberId(member.getId());
-        return  bookmarkProjectByMemberId;
+    public List<BookmarkProject> findBookmarkList(Member member) {
+        List<BookmarkProject> bookmarkProjectByMemberId = bookmarkProjectRepository.findBookmarkProjectByMemberIdOrderByProjectCreateTime(member.getId());
+        return bookmarkProjectByMemberId;
     }
 }

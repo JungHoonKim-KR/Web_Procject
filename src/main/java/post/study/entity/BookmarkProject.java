@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 @Getter
@@ -21,9 +23,12 @@ public class BookmarkProject {
     @JoinColumn(name = "project_id")
     private Project project;
 
+    private LocalDateTime projectCreateTime;
+
     public void setBookmarkProject(Member member,Project project){;
         this.setMember(member);
         this.setProject(project);
+        this.projectCreateTime=project.getCreateTime();
         member.addBookmarkProjectList(this);
     }
 }
