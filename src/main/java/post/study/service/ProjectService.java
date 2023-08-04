@@ -18,6 +18,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class ProjectService {
+    private final FieldLanguageService fieldLanguageService;
     private final ProjectRepository projectRepository;
     private final LanguageProjectRepository languageProjectRepository;
     private final FieldProjectRepository fieldProjectRepository;
@@ -39,7 +40,7 @@ public class ProjectService {
             project.setImg(projectDto.getImg());
 
             if(language!=null) {
-                String[] languageList = language.split(",");
+                List<String> languageList = fieldLanguageService.getLanguageList(language);
                 for (String s : languageList) {
                     Language_Project l = new Language_Project(s);
                     project.addLanguage(l);
@@ -49,7 +50,7 @@ public class ProjectService {
             }
 
             if(field!=null) {
-                String[] fieldList = field.split(",");
+                List<String> fieldList = fieldLanguageService.getFieldList(field);
                 for (String s : fieldList) {
                     Field_Project f = new Field_Project(s);
                     project.addField(f);
@@ -90,7 +91,7 @@ public class ProjectService {
             //추가 예정
 
             if(language!=null) {
-                String[] languageList = language.split(",");
+                List<String> languageList = fieldLanguageService.getLanguageList(language);
                 projectRepository.deleteLanguage_ProjectByProjectId(findProject.getId());
                 for (String s : languageList) {
                     Language_Project l = new Language_Project(s);
@@ -101,7 +102,7 @@ public class ProjectService {
             }
 
             if(field!=null) {
-                String[] fieldList = field.split(",");
+                List<String> fieldList = fieldLanguageService.getFieldList(field);
                 projectRepository.deleteFeild_ProjectByProjectId(findProject.getId());
                 for (String s : fieldList) {
                     Field_Project f = new Field_Project(s);

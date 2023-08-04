@@ -25,6 +25,7 @@ public class BookmarkProjectService {
     public Boolean updateBookmarkProject(Member tempMember, Project tempProject) {
         Member member = memberService.findMember(tempMember.getEmailId());
         Project project = projectService.findProject(tempProject.getId());
+        //북마크 되어 있는지 조회
         BookmarkProject findProject = bookmarkProjectRepository.updateBookmarkProject(member.getId(), project.getId());
         if (findProject == null) {
             BookmarkProject bookmarkProject = new BookmarkProject();
@@ -51,6 +52,8 @@ public class BookmarkProjectService {
                 if (p.getId() == bookmarkProject.get(bookmarkIndex)) {
                     bookmarkImg.add("./images/하트모양(빨강).jpg");
                     bookmarkIndex++;
+                    if(bookmarkIndex == bookmarkProject.size())
+                        break;
 
                 } else {
                     bookmarkImg.add("./images/하트모양(회색).jpg");

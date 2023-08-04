@@ -13,7 +13,9 @@
 
 <body class="wrapper2" style="background-color:#13161c">
 <header id="contents_box">
-    <img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="50">
+
+
+    <img src="./images/프로젝트용병모집(메인).jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="50">
     <div class="nav_items" style="margin-left:150px;">
         <ul>
             <li><a th:href="@{/project?page=0}"><span style="color:white">프로젝트 모집</span></a></li>
@@ -41,10 +43,15 @@
     <div class="fixed_img_col" style="height:1500px">
 
         <h1 style="color:white; text-align:center;font-size:50px; margin-top:100px">프로젝트</h1>
-
         <span style="color:white;font-size:20px;margin-left:570px">원하는 카테고리의 프로젝트만 검색하기</span><br><br>
         <span style="font-size:15px;color:white;;margin-left:640px">카테고리 선택 후 검색버튼 클릭!</span><br><br><br>
+
         <form action="/projectSearch" method="get">
+            <!--히든-->
+            <input type="hidden" id="bookmarkImg" th:value="${bList}">
+            <input type="hidden" id="username" th:value="${username}">
+            <input type="hidden" id="searchField" name="searchField" th:value="${fList}">
+            <input type="hidden" id="searchLanguage" name="searchLanguage" th:value="${lList}">
 
             <div class="check_wrap" style="margin-left:300px">
                 <div style="border-bottom:1px solid cyan;width:930px">
@@ -80,54 +87,55 @@
                 <input type="checkbox" name="language" id="SWIFT" style="margin-left:10px" value="SWIFT"/><span
                     style="color:white;">SWIFT</span>
             </div>
-        </form>
         <br>
         <div style="border-bottom:1px solid white ;width:1500px;height:150px">
-            <button class="w-btn w-btn-gra2 w-btn-gra-anim" id="search_btn" style="margin-left:680px;width:150px;"
-                    type="button">
-                <span style="font-size:15px">검색</span>
+            <button class="w-btn w-btn-gra2 w-btn-gra-anim" id="search_btn" style="margin-left:680px;width:150px;font-size:15px"
+                    type="submit">
+                검색
             </button>
-            <a th:href="@{/project-create}">프로젝트 생성</a>
 
         </div>
+        </form>
+        <a th:href="@{/project-create}">프로젝트 생성</a>
+
         <div style="height:670px">
             <ul style="margin-left:70px;margin-top:100px">
-              <span th:each="p:${pList}">
-                <li>
-                    <img src="./images/하트모양(회색).jpg" th:id="${p.id}+bookmark" class="heart1" width="20" height="20"
+                <li style="margin-top:150px" th:each="p:${pList}">
+                    <img src="./images/하트모양(회색).jpg" th:id="${p.id}" class="bookmark heart1" width="20" height="20"
                          alt=""
                          style="margin-left:180px">
                     <a th:href=" '/project-introduce?projectName=' +${p.projectName}" class="proj"><span
                             class="thumb"><img th:src="${p.img}" width="200" height="150"
                                                alt=""><em>프로젝트 소개 보기</em></span><strong
                             th:text="${p.projectName}" style="color:white;width:200px">프로젝트 제목 </strong></a>
-                    <p class="date" th:text="${p.introduction}">프로젝트 소개</p>
-                      <span th:each="f:${p.getFieldList()}">
-                                        <text class="date" style="color: gray" th:text="${f.getField()}"></text>
-                                    </span>
-                                        <span th:each="g:${p.getLanguageList()}">
-                                        <text class="date" style="color: gray" th:text="${g.getLanguage()}"></text>
+                    <p th:text="${p.introduction}">프로젝트 소개</p>
+                    <span th:each="f:${p.getFieldList()}">
+                        <text style="color: gray" th:text="${f.getField()}"></text>
+                    </span>
+                    <span th:each="g:${p.getLanguageList()}">
+                                        <text style="color: gray" th:text="${g.getLanguage()}"></text>
                                     </span>
                 </li>
-                  </span>
-                <li>
+
             </ul>
         </div>
 
         <div style="border-bottom:1px solid white">
-            <div class="pagination-container" style="color:white;">
+            <div class="pagination-container" style="color:white;margin-top: 100px">
 
                 <span th:if="${type=='ALL'}">
                 <a th:href="@{/project(page=0)}" style="color:white;margin-left:100px;"><span>처음</span></a>
 
-                <a th:if="${pageLine}>0" style="color:white;" th:href="@{/project(page=${prePage})}"><span>이전</span></a>
+                <a th:if="${pageLine}>0" style="color:white;margin-left: 20px"
+                   th:href="@{/project(page=${prePage})}"><span>이전</span></a>
                     <span th:id="currentPage+${page}" th:each="page: ${#numbers.sequence(startPage, endPage)}">
 
                  <a class="number-button-wrapper" th:text="${page+1}" style="color:white;margin-left:20px;"
                     th:href="@{/project(page=${page})}"></a>
                     </span>
 
-            <a th:if="${pageLine}<${totalPageLine}" style="color:white;" th:href="@{/project(page=${nextPage})}"><span>다음</span></a>
+            <a th:if="${pageLine}<${totalPageLine}" style="color:white; margin-left: 20px"
+               th:href="@{/project(page=${nextPage})}"><span>다음</span></a>
 
                 <a th:href="@{/project(page=${totalPage})}" style="color:white;margin-left:20px;"><span>마지막</span></a>
 
@@ -136,7 +144,7 @@
                 <span th:if="${type=='SEARCH'}">
                 <a th:href="@{/projectSearch(page=0)}" style="color:white;margin-left:100px;"><span>처음</span></a>
 
-                <a th:if="${pageLine}>0" style="color:white;"
+                <a th:if="${pageLine}>0" style="color:white; margin-left: 20px"
                    th:href="@{/projectSearch(page=${prePage})}"><span>이전</span></a>
                     <span th:id="currentPage+${page}" th:each="page: ${#numbers.sequence(startPage, endPage)}">
 
@@ -144,7 +152,7 @@
                     th:href="@{/projectSearch(page=${page})}"></a>
                     </span>
 
-            <a th:if="${pageLine}<${totalPageLine}" style="color:white;"
+            <a th:if="${pageLine}<${totalPageLine}" style="color:white; margin-left: 20px"
                th:href="@{/projectSearch(page=${nextPage})}"><span>다음</span></a>
 
                 <a th:href="@{/projectSearch(page=${totalPage})}" style="color:white;margin-left:20px;"><span>마지막</span></a>
@@ -176,7 +184,9 @@
 </div>
 
 
-<script src="./js/project_bulletin.js"></script>
+<script th:inline="javascript" type="text/javascript" src="./js/project_bulletin.js?">
+
+</script>
 <script src="./js/pagination.js"></script>
 </body>
 </html>

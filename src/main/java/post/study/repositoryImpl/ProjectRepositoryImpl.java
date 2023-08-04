@@ -31,7 +31,6 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
         int fieldSize = fieldList.size();
         int languageSize = languageList.size();
         long total=0;
-
         if (fieldSize == 0 && languageSize != 0) {
             QueryResults<Project> projectQueryResults = queryFactory.select(project)
                     .from(language_Project)
@@ -89,6 +88,11 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
         }
         if(projectList.isEmpty())
             return null;
+
+        List<Long> projectNumberList=new ArrayList<>();
+        for(Project p:projectList){
+            projectNumberList.add(p.getId());
+        }
 
         PageImpl<Project> projects = new PageImpl<>(projectList, pageable, total);
 

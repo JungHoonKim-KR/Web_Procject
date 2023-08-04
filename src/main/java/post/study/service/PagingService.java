@@ -25,6 +25,7 @@ import java.util.List;
 @Setter
 @Service
 public class PagingService {
+    private final FieldLanguageService fieldLanguageService;
     private final ProjectRepository projectRepository;
     private final QuestionRepository questionRepository;
     private final ProjectService projectService;
@@ -62,25 +63,19 @@ public class PagingService {
         List<String> languageList = new ArrayList<>();
         if (type.equals("ALL")) {
             projectList = getAllProjectList(pageable);
-        }
-        else if (type.equals("SEARCH")) {
-            if (field!=null) {
-                String[] f = field.split(",");
+        } else if (type.equals("SEARCH")) {
+            if (field != null) {
+                fieldList = fieldLanguageService.getFieldList(field);
+                System.out.println("분야: "+fieldList);
 
-                for (String s : f) {
-                    fieldList.add(s);
-                }
             }
-            if (language!=null) {
-                String[] l = language.split(",");
-
-                for (String s : l) {
-                    languageList.add(s);
-                }
+            if (language != null) {
+                languageList = fieldLanguageService.getLanguageList(language);
             }
             projectList = getSearchProjectList(fieldList, languageList, pageable);
+            System.out.println("이거: "+projectList);
         }
-        if(projectList!=null) {
+        if (projectList != null) {
             totalPage = projectList.getTotalPages() - 1;
 
             setPaging(pageable.getPageNumber());

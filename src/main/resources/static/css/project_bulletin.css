@@ -1,9 +1,9 @@
 
-html,body{width:100%,;height:100%}
+html,body{width:100%;height:100%}
 body,input,textarea,select,button,table{font-size:12px}
 img,fieldset{border:0}
 ul,ol{List-style:none}
-em,address{font-style:none}
+/*em,address{font-style:none}*/
 a{text-decoration:none}
 a:hover,a:active,a:focus{text-decoration:underline}
 
@@ -13,11 +13,11 @@ a:hover,a:active,a:focus{text-decoration:underline}
     margin-top:100px;
     margin-left:500px;
     margin-bottom:150px;
-    
+
   }
-  
- 
-  
+
+
+
   #searching_img {
     position : absolute;
     width: 20px;
@@ -75,11 +75,10 @@ a:hover,a:active,a:focus{text-decoration:underline}
     height:80px;
     padding:20px 100px;
     margin-bottom:-1px;
-  
+
     margin-top:20px;
-    border-bottom:1px solid cyan;
-   
-              
+    /*border-bottom:1px solid ;*/
+
 }
 .check_wrap{
     accent-color: cyan;
@@ -97,7 +96,7 @@ a:hover,a:active,a:focus{text-decoration:underline}
 .fixed_img_col li a .thumb{
     position :relative;
     display:block;
-  
+
     height:150px;
     width:200px;
     text-align:center;
@@ -119,7 +118,7 @@ a:hover,a:active,a:focus{text-decoration:underline}
 
 .fixed_img_col li a:hover .thumb em{
     display:block;
-    
+
 }
 .heart1{
     cursor: pointer;
