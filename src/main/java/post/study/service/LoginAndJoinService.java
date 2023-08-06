@@ -11,11 +11,14 @@ import post.study.repository.FieldMemberRepository;
 import post.study.repository.LanguageMemberRepository;
 import post.study.repository.MemberRepository;
 
+import java.util.List;
+
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class LoginAndJoinService {
+    private final FieldLanguageService fieldLanguageService;
     private final FieldMemberRepository fieldMemberRepository;
     private final LanguageMemberRepository languageMemberRepository;
     private final MemberRepository memberRepository;
@@ -60,19 +63,19 @@ public class LoginAndJoinService {
     }
 
     public Member save(MemberDto memberDto, String language, String field){
-        String[] languageList = language.split(",");
-        String[] fieldList = field.split(",");
+
         Member member=new Member();
         member.setEmailId(memberDto.getEmailId());
         member.setUsername(memberDto.getUsername());
         member.setPassword(memberDto.getPassword());
         member.setAge(memberDto.getAge());
+        List<String> fieldList = fieldLanguageService.getFieldList(field);
+        List<String> languageList = fieldLanguageService.getLanguageList(language);
 
         for(String s: languageList){
             Language_Member l = new Language_Member(s);
             member.addLanguage(l);
             languageMemberRepository.save(l);
-
         }
 
         for(String s: fieldList){

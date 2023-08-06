@@ -3,36 +3,33 @@ package post.study.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import post.study.Paging;
-import post.study.dto.MemberDto;
+import post.study.service.FieldLanguageService;
+import post.study.service.PagingService;
 import post.study.dto.QuestionDto;
 import post.study.entity.Member;
 import post.study.entity.Question;
 import post.study.repository.ProjectRepository;
 import post.study.repository.QuestionRepository;
-import post.study.service.MemberService;
 import post.study.service.ProjectService;
 import post.study.service.QuestionService;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class QuestionController {
-    private final QuestionService questionService;
+    private final FieldLanguageService fieldLanguageService;
     private final ProjectRepository projectRepository;
-    private final ProjectService projectService;
     private final QuestionRepository questionRepository;
+    private final QuestionService questionService;
+    private final ProjectService projectService;
 
     @GetMapping("/question")
     public String post(HttpSession session, @RequestParam(required = false, defaultValue = "0", value = "page") int page, Model model) {
-        Paging paging = new Paging(projectRepository,projectService,questionRepository);
+        PagingService paging = new PagingService(fieldLanguageService,projectRepository,questionRepository,projectService);
         paging.setQuestionPaging(page);
         if(session.getAttribute("member")!=null){
             Member member = (Member) session.getAttribute("member");

@@ -9,6 +9,6 @@ import post.study.entity.Question;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question,Long> {
-    Page<Question>findAll(Pageable pageable);
+    Page<Question> findAll(Pageable pageable);
 
 }

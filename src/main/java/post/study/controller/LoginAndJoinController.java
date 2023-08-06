@@ -29,9 +29,7 @@ public class LoginAndJoinController {
             model.addAttribute("username", member.getUsername());
         }
         List<Member> members = projectMemberService.find();
-        for(Member m : members){
-            System.out.println("member : "+ m.getId());
-        }
+
         return "main_post";
     }
 
