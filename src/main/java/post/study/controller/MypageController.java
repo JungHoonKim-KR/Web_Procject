@@ -12,19 +12,13 @@ import post.study.entity.BookmarkProject;
 import post.study.entity.Member;
 import post.study.entity.Project;
 import post.study.entity.ProjectMember;
-import post.study.norm.field;
-import post.study.norm.language;
-import post.study.service.BookmarkProjectService;
-import post.study.service.MemberService;
-import post.study.service.ProjectMemberService;
-import post.study.service.ProjectService;
-
-import java.util.ArrayList;
+import post.study.service.*;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class MypageController {
+    private final FieldLanguageService fieldLanguageService;
     private final MemberService memberService;
     private final ProjectMemberService projectMemberService;
     private final ProjectService projectService;
@@ -52,7 +46,6 @@ public class MypageController {
     @PostMapping("/mypage-profile")
     public String profileUpdate(MemberDto memberDto,String language, String field, Model model){
 
-            System.out.println("memberDto = " + memberDto);
             memberService.profileUpdate(memberDto,language,field);
             model.addAttribute("msg","변경되었습니다.");
             model.addAttribute("url","/");
@@ -70,9 +63,8 @@ public class MypageController {
     @GetMapping("/mypage-project")
     public String project(String projectName,Model model){
         Project project = projectService.findProject(projectName);
-
-        List<String> fieldList = projectMemberService.fieldList();
-        List<String> languageList = projectMemberService.languageList();
+        List<String> fieldList = fieldLanguageService.fieldList();
+        List<String> languageList = fieldLanguageService.languageList();
         model.addAttribute("projectName",project.getProjectName());
         model.addAttribute("projectLeader",project.getProjectLeader());
         model.addAttribute("fList",fieldList);

@@ -66,19 +66,17 @@ public class PagingService {
         } else if (type.equals("SEARCH")) {
             if (field != null) {
                 fieldList = fieldLanguageService.getFieldList(field);
-                System.out.println("분야: "+fieldList);
 
             }
             if (language != null) {
                 languageList = fieldLanguageService.getLanguageList(language);
             }
             projectList = getSearchProjectList(fieldList, languageList, pageable);
-            System.out.println("이거: "+projectList);
         }
         if (projectList != null) {
             totalPage = projectList.getTotalPages() - 1;
-
             setPaging(pageable.getPageNumber());
+
             for (Project p : projectList) {
                 List<Language_Project> allLanguage = projectService.findAllLanguage(p);
                 p.setLanguageList(allLanguage);

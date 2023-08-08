@@ -10,25 +10,30 @@
     <link rel="stylesheet" href="./css/main_post.css">
 
 </head>
-<body class="wrapper">
+<body class="wrapper" style="background-color:Linen">
 <!--배너 위에 메인,마이페이지 등 버튼 만들기-->
 <header id="contents_box">
 
-    <img src="./images/용병모집.png" alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="50">
-    <div class="nav_items" style="margin-left:150px">
+    <img src="./images/프로젝트용병모집(메인).jpg" id="donga"alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="45"  >
+    <div class="nav_items" style="margin-left:150px;">
         <ul>
-            <li><a th:href="@{/project?page=0}">프로젝트 모집</a></li>
-            <li><a href="/">이용안내</a></li>
+            <li><a href="/">프로젝트 모집</a></li>
             <li><a href="/">공지사항</a></li>
-            <li><a th:href="@{/question?page=0}">문의게시판</a></li>
-            <li><a th:href="@{/mypage-profile}">마이페이지</a></li>
+            <li><a href="/" >문의게시판</a></li>
+            <li><a href="/">랭킹</a></li>
+            <li><a href="/">마이페이지</a></li>
         </ul>
     </div>
 
-    <img src="./images/my_img.png" alt="이미지 불러오기 실패" width="40" height="40" style="margin-right:50px"><br>
-    <div class="login">
-
-    </div>
+    <span th:if="${username==null}">
+        <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
+                style="margin-right:50px; width:150px ;height:30px">로그인</button>
+    </span>
+    <span th:unless="${username==null}">
+              <span th:text="${username}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
+        <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
+                style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
+            </span>
     <!--<button type="button" id="login" onclick="location.href='aa.html'"style="margin-right:50px; width:150px ;height:30px">로그인</button>
     -->
 <!--    <span style="font-size:0.7em; color:gray; width:100px">성빈 님</span>-->
@@ -269,48 +274,8 @@
   왼쪽화살표 사진 :http://cmicvictoria.org/botones/
 -->
 <script type="text/javascript" src="/js/bootstrap.js"></script>
-<script src="/js/jquery.3.7.0.js"></script>
 <script src="/js/main_post.js"></script>
 <script th:inline="javascript">
-    // <span style="font-size:0.7em; color:gray; width:100px">성빈 님</span>
-    // <button type="button" id="logout" onClick="location.href='bb.html'"
-    //         style="margin-right:50px; width:150px ;height:30px">로그아웃
-    // </button>
-    $(document).ready(function () {
-        let name = [[${username}]];
-        var loginUrl = /*[[ @{/login} ]]*/ '';
-        var logoutUrl =/*[[@{/logout}]]*/ '';
-        //로그인 정보
-        if (name == null) {
-            $('.login').append($('<button>').attr({
-                type:'button',
-                id:'login',
-                style:"margin-right:50px; width:150px ;height:30px",
-            }).text('로그인').click(function (){
-                $(location).attr('href',loginUrl)
-            }))
-        } else {
-
-            let usernameElement=$('<span>').text(name+"님").css({
-                fontsize:"0.7em",
-                color:"gray",
-                width:"100px"
-            })
-            let logoutElement=$('<button>').text('로그아웃').attr({
-                type: 'button',
-                id:'logout',
-                style:"margin-right:50px; width:150px ;height:30px",
-            }).click(function (){
-                $(location).attr('href',logoutUrl)
-            })
-
-            usernameElement.append(logoutElement)
-
-            $('.login').append(usernameElement)
-
-        }
-    })
-
 
 </script>
 </html>

@@ -1,16 +1,15 @@
 package post.study.repositoryImpl;
 
 import com.querydsl.core.QueryResults;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import post.study.entity.*;
 import post.study.repositoryCustom.ProjectRepositoryCustom;
 
+import java.beans.PropertyEditor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
         List<Project> projectList = new ArrayList<>();
         int fieldSize = fieldList.size();
         int languageSize = languageList.size();
-        long total=0;
+        long total = 0;
         if (fieldSize == 0 && languageSize != 0) {
             QueryResults<Project> projectQueryResults = queryFactory.select(project)
                     .from(language_Project)
@@ -41,6 +40,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                     .limit(pageable.getPageSize())
                     .fetchResults();
             total = projectQueryResults.getTotal();
+            System.out.println(projectQueryResults.getTotal());
             projectList = projectQueryResults.getResults();
         } else if (fieldSize != 0 && languageSize == 0) {
             QueryResults<Project> projectQueryResults = queryFactory.select(project)
@@ -54,30 +54,34 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
             total = projectQueryResults.getTotal();
             projectList = projectQueryResults.getResults();
         } else {
-            List<Long> language_searchList = queryFactory.select(project.id)
+            List<Project> tempProjectList = new ArrayList<>();
+            List<Long> languageQueryResults = queryFactory.select(project.id)
                     .from(language_Project)
                     .where(language_Project.language.in(languageList))
                     .groupBy(project.id)
                     .having(project.count().eq((long) languageSize))
                     .fetch();
-            if (language_searchList != null) {
-                QueryResults<Project> projectQueryResults = queryFactory
+            if (!languageQueryResults.isEmpty()) {
+                QueryResults<Project> fieldQueryResults = queryFactory
                         .select(project)
                         .from(field_Project)
                         .where(field_Project.field.in(fieldList))
                         .groupBy(project)
                         .having(project.count().eq((long) fieldSize))
-                        .offset(pageable.getOffset())
-                        .limit(pageable.getPageSize())
                         .fetchResults();
-                total = projectQueryResults.getTotal();
 
-                List<Project> field_searchList = projectQueryResults.getResults();
-                if (field_searchList != null) {
-                    for (Long l : language_searchList) {
+                List<Project> field_searchList = fieldQueryResults.getResults();
+                for(Project p: field_searchList){
+                    System.out.println("fff: "+p.getId());
+                }
+                for(Long l: languageQueryResults)
+                    System.out.println("lll: "+l);
+                if (!field_searchList.isEmpty()) {
+                    for (Long l : languageQueryResults) {
                         for (Project f : field_searchList) {
                             if (l.equals(f.getId())) {
-                                projectList.add(f);
+                                System.out.println("fli: "+f.getId());
+                                tempProjectList.add(f);
                                 break;
                             }
 
@@ -85,17 +89,25 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                     }
                 }
             }
-        }
-        if(projectList.isEmpty())
-            return null;
+            if (tempProjectList.isEmpty())
+                return null;
+            total=tempProjectList.size();
+            int subStart= (int) pageable.getOffset();
+            int subEnd= total<((pageable.getPageNumber()+1) * pageable.getPageSize())? (int) total :((pageable.getPageNumber()+1) * pageable.getPageSize());
 
-        List<Long> projectNumberList=new ArrayList<>();
-        for(Project p:projectList){
-            projectNumberList.add(p.getId());
+            System.out.println("pageNum: "+pageable.getPageNumber());
+
+            System.out.println("offset: " + pageable.getOffset());
+            System.out.println("limit: " + pageable.getPageSize());
+            System.out.println("total: " + total);
+            projectList = tempProjectList.subList(subStart,subEnd);
+
+
         }
+
+
 
         PageImpl<Project> projects = new PageImpl<>(projectList, pageable, total);
-
         return projects;
     }
 }
