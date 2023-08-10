@@ -78,11 +78,10 @@ bookmarkImg = document.querySelector("#bookmarkImg").value.replace('[', '').repl
 var field = document.getElementsByName('field');
 var language = document.getElementsByName('language');
 var searchField = []
-searchField = document.querySelector('#searchField').value.replace('[', '').replace(']', '').replace(' ', '').split(',');
+searchField = document.querySelector('#searchField').value.replace('[', '').replace(']', '').replaceAll(' ', '').split(',');
 var searchLanguage = []
-searchLanguage = document.querySelector('#searchLanguage').value.replace('[', '').replace(']', '').replace(' ', '').split(',');
-console.log(searchField)
-console.log(searchLanguage)
+searchLanguage = document.querySelector('#searchLanguage').value.replace('[', '').replace(']', '').replaceAll(' ', '').split(',');
+
 if (searchField.length != 0) {
     for (let index1 = 0; index1 < searchField.length; index1++) {
         for (let index2 = 0; index2 < field.length; index2++) {
@@ -100,12 +99,14 @@ if (searchLanguage.length != 0) {
         for (let index4 = 0; index4 < language.length; index4++) {
 
             if (searchLanguage[index3] == language[index4].value) {
+                console.log(language[index4])
                 language[index4].checked = true;
                 break;
             }
         }
     }
 }
+
 
 heart.forEach(function (item, index) {
     if (username && bookmarkImg[index].includes('빨강'))
