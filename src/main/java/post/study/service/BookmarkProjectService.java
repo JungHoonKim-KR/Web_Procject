@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import post.study.dto.MemberDto;
+import post.study.dto.ProjectDto;
 import post.study.entity.BookmarkProject;
 import post.study.entity.Member;
 import post.study.entity.Project;
@@ -22,34 +24,35 @@ public class BookmarkProjectService {
     private final BookmarkProjectRepository bookmarkProjectRepository;
     private final MemberService memberService;
 
-    public Boolean updateBookmarkProject(Member tempMember, Project tempProject) {
-        Member member = memberService.findMember(tempMember.getEmailId());
-        Project project = projectService.findProject(tempProject.getId());
+    public Boolean updateBookmarkProject(MemberDto memberDto, ProjectDto projectDto) {
+        Member member = memberService.findMember(memberDto.getEmailId());
+        Project project = projectService.findProject(projectDto.getProjectName());
         //북마크 되어 있는지 조회
         BookmarkProject findProject = bookmarkProjectRepository.updateBookmarkProject(member.getId(), project.getId());
         if (findProject == null) {
             BookmarkProject bookmarkProject = new BookmarkProject();
             bookmarkProject.setBookmarkProject(member, project);
             bookmarkProjectRepository.save(bookmarkProject);
-            System.out.println("북마크 성공");
             return true;
         } else {
             bookmarkProjectRepository.deleteBookmarkProject(member.getId(), project.getId());
-            System.out.println("북마크 취소");
             return false;
         }
 
     }
 
 
-    public List<String> bookmarkImg(Member member, Page<Project> projectList) {
+    public List<String> bookmarkImg(MemberDto memberDto, Page<Project> projectList) {
 
         List<String> bookmarkImg = new ArrayList<>();
-        List<Long> bookmarkProject = bookmarkProjectRepository.findBookmarkProject(member.getId(), projectList.getContent());
+        List<Long> bookmarkProject = bookmarkProjectRepository.findBookmarkProject(memberDto.getId(), projectList.getContent());
+        for(Long id:bookmarkProject){
+            System.out.println("번회 "+id);
+        }
         if(!bookmarkProject.isEmpty()) {
             int bookmarkIndex = 0;
             for (Project p : projectList) {
-                if (p.getId() == bookmarkProject.get(bookmarkIndex)) {
+                if (p.getId() .equals(bookmarkProject.get(bookmarkIndex))) {
                     bookmarkImg.add("./images/하트모양(빨강).jpg");
                     bookmarkIndex++;
                     if(bookmarkIndex == bookmarkProject.size())
@@ -66,8 +69,8 @@ public class BookmarkProjectService {
 
     }
 
-    public List<BookmarkProject> findBookmarkList(Member member) {
-        List<BookmarkProject> bookmarkProjectByMemberId = bookmarkProjectRepository.findBookmarkProjectByMemberIdOrderByProjectCreateTime(member.getId());
+    public List<BookmarkProject> findBookmarkList(MemberDto memberDto) {
+        List<BookmarkProject> bookmarkProjectByMemberId = bookmarkProjectRepository.findBookmarkProjectByMemberIdOrderByProjectCreateTime(memberDto.getId());
         return bookmarkProjectByMemberId;
     }
 }

@@ -13,19 +13,19 @@
     <br>
     <form action="/question-update" method="get">
         <span><strong>제목</strong></span><br>
-        <span th:text="${title}"></span>
-        <input type="hidden" name="id" th:value="${id}">
-        <input type="hidden" name="title" th:value="${title}">
+        <span th:text="${question.getId}"></span>
+        <input type="hidden" name="id" th:value="${question.getId()}">
+        <input type="hidden" name="title" th:value="${question.getTitle()}">
         <p>
         <hr>
         <span><strong>내용</strong></span><br>
-        <span th:text="${content}"></span>
-        <input type="hidden" name="content" th:value="${content}">
+        <span th:text="${question.getContent()}"></span>
+        <input type="hidden" name="content" th:value="${question.getContent()}">
 
         <p>
             <button type="button" class="w-25 btn btn-primary" onclick="location.href='/question'">글 목록</button> &nbsp;
-            <button th:if="${myId}==${userId}" type="submit" class="w-25 btn btn-primary" onclick="location.href='/question-update'">글 수정</button> &nbsp;
-            <button th:if="${myId}==${userId}" type="button" class="w-25 btn btn-primary" onclick="location.href='/question-delete?'">글 삭제</button>
+            <button th:if="${userId}==${question.getMember().getId()}" type="submit" class="w-25 btn btn-primary" onclick="location.href='/question-update'">글 수정</button> &nbsp;
+            <button th:if="${userId}==${question.getMember().getId()}" type="button" class="w-25 btn btn-primary" onclick="location.href='/question-delete?'">글 삭제</button>
     </form>
 </div>
 

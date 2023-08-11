@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import post.study.dto.MemberDto;
 import post.study.entity.Member;
-import post.study.service.LoginAndJoinService;
+import post.study.service.MemberService;
 import post.study.service.ProjectMemberService;
 
 import java.util.List;
@@ -16,19 +16,18 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class LoginAndJoinController {
-    private final LoginAndJoinService memberService;
+    private final MemberService memberService;
     private final ProjectMemberService projectMemberService;
 
 
     @GetMapping("/")
     public String main(HttpSession session, Model model) {
-        Member member = (Member) session.getAttribute("member");
-        if (member == null) {
+        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        if (memberDto == null) {
             model.addAttribute("username", null);
         } else {
-            model.addAttribute("username", member.getUsername());
+            model.addAttribute("username", memberDto.getUsername());
         }
-        List<Member> members = projectMemberService.find();
 
         return "main_post";
     }
@@ -46,9 +45,10 @@ public class LoginAndJoinController {
             model.addAttribute("url", "back");
         } else {
             Member findMember = memberService.findMember(memberDto.getEmailId());
-            session.setAttribute("member", findMember);
+            session.setAttribute("member", memberService.memberToDto(findMember));
             model.addAttribute("msg", "로그인 되었습니다.");
             model.addAttribute("url", "/");
+
         }
         return "popup";
     }
@@ -69,7 +69,6 @@ public class LoginAndJoinController {
             model.addAttribute("msg", "이미 가입된 회원입니다.");
             model.addAttribute("url", "back");
         } else {
-            System.out.println("memberDto = " + memberDto);
             model.addAttribute("msg", "회원가입 되었습니다.");
             model.addAttribute("url", "/");
         }

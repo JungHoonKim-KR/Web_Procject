@@ -1,6 +1,7 @@
 package post.study.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,37 +25,50 @@ public class Member {
     private List<Question> questionList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member") //멤버의 프로젝트
-    private List<ProjectMember> projectMemberList=new ArrayList<>();
-
-    @OneToMany(mappedBy ="member")
-    private List<BookmarkProject> bookmarkProjectList=new ArrayList<>();
+    private List<ProjectMember> projectMemberList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Language_Member> languageList=new ArrayList<>();
+    private List<BookmarkProject> bookmarkProjectList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Field_Member> fieldMemberList=new ArrayList<>();
+    private List<Language_Member> languageList = new ArrayList<>();
 
-   public void addBookmarkProjectList(BookmarkProject bookmarkProject){
-       bookmarkProjectList.add(bookmarkProject);
+    @OneToMany(mappedBy = "member")
+    private List<Field_Member> fieldMemberList = new ArrayList<>();
+
+    public Member() {
+
+    }
+
+    @Builder
+    public Member(Long id,String emailId, String username, String password, Integer age) {
+        this.id=id;
+        this.emailId = emailId;
+        this.username = username;
+        this.password = password;
+        this.age = age;
+    }
+
+    public void addBookmarkProjectList(BookmarkProject bookmarkProject) {
+        bookmarkProjectList.add(bookmarkProject);
 
 
-   }
+    }
 
-   public void addProjectMemberList(ProjectMember projectMember){
-       projectMemberList.add(projectMember);
-   }
+    public void addProjectMemberList(ProjectMember projectMember) {
+        projectMemberList.add(projectMember);
+    }
 
-   public void addLanguage(Language_Member language){
-       languageList.add(language);
-       language.setMember(this);
+    public void addLanguage(Language_Member language) {
+        languageList.add(language);
+        language.setMember(this);
 
-   }
+    }
 
-   public void addField(Field_Member field){
-       fieldMemberList.add(field);
-       field.setMember(this);
-   }
+    public void addField(Field_Member field) {
+        fieldMemberList.add(field);
+        field.setMember(this);
+    }
 
 
 }

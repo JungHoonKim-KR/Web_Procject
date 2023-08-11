@@ -1,5 +1,6 @@
 package post.study.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import post.study.entity.Project;
 import post.study.entity.Question;
@@ -15,14 +16,15 @@ public class MemberDto {
     private String password;
     private String position;
     private Integer age;
-    private List<Question> questionList = new ArrayList<>();
 
-    public MemberDto(String emailId, String username, String password, String position, Integer age, List<Question> questionList) {
+    @Builder
+    public MemberDto(Long id,String emailId, String username, String password, String position, Integer age) {
+        this.id=id;
         this.emailId = emailId;
         this.username = username;
         this.password = password;
         this.position = position;
         this.age = age;
-        this.questionList = questionList;
+
     }
 }
