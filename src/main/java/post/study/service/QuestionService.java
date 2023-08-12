@@ -25,6 +25,28 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final MemberRepository memberRepository;
 
+    public QuestionDto questionToDto(Question question){
+        return  QuestionDto.builder()
+                .id(question.getId())
+                .username(question.getUsername())
+                .title(question.getTitle())
+                .content(question.getContent())
+                .dateTime(question.getDateTime())
+                .member(question.getMember())
+                .build();
+
+    }
+
+    public Question questionToEntity(QuestionDto questionDto){
+        return Question.builder()
+                .id(questionDto.getId())
+                .username(questionDto.getUsername())
+                .title(questionDto.getTitle())
+                .content(questionDto.getContent())
+                .dateTime(questionDto.getDateTime())
+                .member(questionDto.getMember())
+                .build();
+    }
     /**
      *
      * 조회
@@ -48,10 +70,9 @@ public class QuestionService {
         return question;
     }
 
-    public QuestionDto findQuestion(Long id){
+    public Question findQuestion(Long id){
         Question question = questionRepository.findById(id).get();
-        QuestionDto questionDto = question.questionToDto(question);
-        return questionDto;
+        return question;
     }
 
     public Question update(QuestionDto question){
@@ -59,7 +80,6 @@ public class QuestionService {
         findQuestion.setTitle(question.getTitle());
         findQuestion.setContent(question.getContent());
         questionRepository.save(findQuestion);
-        System.out.println("findQuestion = " + findQuestion);
         return findQuestion;
     }
 

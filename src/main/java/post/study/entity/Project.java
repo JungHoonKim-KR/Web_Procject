@@ -1,6 +1,7 @@
 package post.study.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,7 +23,7 @@ public class Project {
     private String scale;
     private String img;
     private String introduction;
-    private LocalDateTime createTime=LocalDateTime.now();
+    private LocalDateTime createTime = LocalDateTime.now();
 
 
     @OneToMany(mappedBy = "project")
@@ -35,9 +36,32 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Field_Project> fieldList = new ArrayList<>();
 
+    @OneToOne(mappedBy = "project")
+    private Applicant applicant;
+
+
+    @Builder
+    public Project(Long id,String projectName, String projectLeader, String scale, String img, String introduction,LocalDateTime createTime) {
+        this.id=id;
+        this.projectName = projectName;
+        this.projectLeader = projectLeader;
+        this.scale = scale;
+        this.img = img;
+        this.introduction = introduction;
+        this.createTime=createTime;
+    }
+
+    public Project() {
+
+    }
+
     public void addProjectMember(ProjectMember projectMember) {
         projectMemberList.add(projectMember);
 
+    }
+
+    public void addApplicant(Applicant applicant){
+        this.applicant=applicant;
     }
 
     public void addLanguage(Language_Project language) {

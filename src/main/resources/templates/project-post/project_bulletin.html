@@ -12,29 +12,29 @@
 </head>
 
 <body class="wrapper2" style="background-color:#13161c">
-<header id="contents_box">
+    <header id="contents_box">
 
-    <img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="45">
-    <div class="nav_items" style="margin-left:150px;">
-        <ul>
-            <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
-            <li><a href="/"><span style="color:white">공지사항</span></a></li>
-            <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
-            <li><a href="/"><span style="color:white">랭킹</span></a></li>
-            <li><a th:href="@{/mypage-profile}"><span style="color:white">마이페이지</span></a></li>
-        </ul>
-    </div>
+        <img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="45">
+        <div class="nav_items" style="margin-left:150px;">
+            <ul>
+                <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
+                <li><a href="/"><span style="color:white">공지사항</span></a></li>
+                <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
+                <li><a href="/"><span style="color:white">랭킹</span></a></li>
+                <li><a th:href="@{/mypage-profile}"><span style="color:white">마이페이지</span></a></li>
+            </ul>
+        </div>
 
-    <span th:if="${username==null}">
-        <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
-                style="margin-right:50px; width:150px ;height:30px">로그인</button>
-    </span>
-    <span th:unless="${username==null}">
-              <span th:text="${username}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
-        <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
-                style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
-            </span>
-</header>
+        <span th:if="${username==null}">
+            <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
+                    style="margin-right:50px; width:150px ;height:30px">로그인</button>
+        </span>
+        <span th:unless="${username==null}">
+                  <span th:text="${username}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
+            <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
+                    style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
+                </span>
+    </header>
 
 <div class="wrap2" style=" width:1500px;height:2000px">
 

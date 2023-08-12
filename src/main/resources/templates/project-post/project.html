@@ -75,11 +75,34 @@
             padding: 10px;
         }
     </style>
+    <link rel="stylesheet" href="./css/project_bulletin.css">
+    <link rel="stylesheet" href="./css/main_post.css">
+
 </head>
 <body>
-<header>
-    <h1>로고</h1>
-</header>
+    <header id="contents_box">
+
+        <img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="45">
+        <div class="nav_items" style="margin-left:150px;">
+            <ul>
+                <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
+                <li><a href="/"><span style="color:white">공지사항</span></a></li>
+                <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
+                <li><a href="/"><span style="color:white">랭킹</span></a></li>
+                <li><a th:href="@{/mypage-profile}"><span style="color:white">마이페이지</span></a></li>
+            </ul>
+        </div>
+
+        <span th:if="${member.getUsername()==null}">
+        <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
+                style="margin-right:50px; width:150px ;height:30px">로그인</button>
+    </span>
+        <span th:unless="${member.getUsername()==null}">
+              <span th:text="${member.getUsername()}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
+        <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
+                style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
+            </span>
+    </header>
 
 <main>
     <div class="product-details">
@@ -97,7 +120,17 @@
                 <h2>모집 조건</h2>: <text>모집 조건</text>
             </li>
         </ul>
-        <button>신청하기</button>
+        <form action="/project-apply" method="get">
+            <input type="hidden" name="id" th:value="${project.getId()}">
+            <input type="hidden" name="projectName" th:value="${project.getProjectName()}">
+            <input type="hidden" name="projectLeader" th:value="${project.getProjectLeader()}">
+            <input type="hidden" name="scale" th:value="${project.getScale()}">
+            <input type="hidden" name="img" th:value="${project.getIntroduction()}">
+            <input type="hidden" name="introduction" th:value="${project.getIntroduction()}">
+            <input type="hidden" name="creationTime" th:value="${project.creationTime}">
+            <input type="hidden" name="emailId" th:value="${member.getEmailId()}">
+        <button id="apply_btn" type="submit">신청하기</button>
+        </form>
     </div>
 </main>
 
@@ -105,5 +138,33 @@
     <p>All rights reserved.</p>
     <!-- 하단에 저작권 정보 등이 위치할 수 있습니다. -->
 </footer>
+
+<script th:inline="javascript">
+    var username=[[${username}]];
+    var project=[[${project}]];
+    console.log(project.id)
+    // let apply = document.querySelector("#apply_btn");
+    // apply.addEventListener("click",function (){
+    //     if(confirm("신청 하시겠습니까?")){
+    //         if(username==null)
+    //             alert('로그인이 필요합니다.');
+    //         else {
+    //             var url="/project-apply";
+    //             var params={
+    //                 id:project.id,
+    //                 username:username
+    //             }
+    //             var queryString=new URLSearchParams(params).toString()
+    //             fetch(url +"?"+queryString,{
+    //                 method:"Get",
+    //                 headers: {
+    //                     "Content-Type": "application/json"
+    //                 },
+    //             })
+    //         }
+    //     }
+
+    // })
+</script>
 </body>
 </html>

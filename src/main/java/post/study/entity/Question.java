@@ -1,6 +1,7 @@
 package post.study.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,8 +12,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-
-
 public class Question {
     @Id
     @GeneratedValue
@@ -29,13 +28,24 @@ public class Question {
     private Member member;
 
 
+
+    @Builder
+    public Question(Long id, String title, String content, String username, LocalDateTime dateTime,Member member) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.username = username;
+        this.dateTime = dateTime;
+        this.member=member;
+    }
+
+    public Question() {
+
+    }
+
     public void setMember(Member member) {
         this.member = member;
         member.getQuestionList().add(this);
     }
 
-    public QuestionDto questionToDto(Question question){
-
-        return new QuestionDto(question);
-    }
 }

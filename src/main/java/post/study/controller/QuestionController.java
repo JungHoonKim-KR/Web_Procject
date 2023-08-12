@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import post.study.dto.MemberDto;
 import post.study.service.FieldLanguageService;
 import post.study.service.PagingService;
 import post.study.dto.QuestionDto;
@@ -32,8 +33,8 @@ public class QuestionController {
         PagingService paging = new PagingService(fieldLanguageService,projectRepository,questionRepository,projectService);
         paging.setQuestionPaging(page);
         if(session.getAttribute("member")!=null){
-            Member member = (Member) session.getAttribute("member");
-            model.addAttribute("username", member.getUsername());
+            MemberDto memberDto = (MemberDto) session.getAttribute("member");
+            model.addAttribute("username", memberDto.getUsername());
         }
         else{
            model.addAttribute("username",null);
@@ -59,8 +60,8 @@ public class QuestionController {
 
     @GetMapping("/question-write")
     public String write(HttpSession session, Model model) {
-        Member member = (Member) session.getAttribute("member");
-        if(member==null){
+        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        if(memberDto==null){
             model.addAttribute("msg","로그인이 필요한 서비스입니다.");
             model.addAttribute("url","back");
             return "popup";
@@ -72,12 +73,12 @@ public class QuestionController {
     @PostMapping("/question-write")
     public String save(HttpSession session, String title, String content,Model model) {
         //question은 dto로 받지 않았음 : 1. 여러가지 방식, 2. 멤버 변수가 적어서
-        Member member = (Member) session.getAttribute("member");
+        MemberDto memberDto = (MemberDto) session.getAttribute("member");
         if (title== null || content== null) {
             model.addAttribute("msg", "빈칸을 채워주세요");
             model.addAttribute("url", "/question-write");
         } else {
-            questionService.create(member.getId(), title,content);
+            questionService.create(memberDto.getId(), title,content);
             model.addAttribute("msg", "작성 완료");
             model.addAttribute("url", "/question");
         }
@@ -87,34 +88,38 @@ public class QuestionController {
 
     @GetMapping("/question-content")
     public String content(HttpSession session, Long id, Model model) {
-        QuestionDto questionDto = questionService.findQuestion(id);
+        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        if(memberDto!=null){
+            model.addAttribute("userId", memberDto.getId());
+
+        }
+        Question question = questionService.findQuestion(id);
 
         session.setAttribute("questionId", id);
-        Member member = (Member) session.getAttribute("member");
-        session.setAttribute("myId", member.getId());
-        model.addAttribute("id", questionDto.getId());
-        model.addAttribute("title", questionDto.getTitle());
-        model.addAttribute("content", questionDto.getContent());
-        model.addAttribute("userId",questionDto.getMember().getId());
-        model.addAttribute("myId", session.getAttribute("myId"));
+        model.addAttribute("question",question);
         return "question/content";
     }
 
     @GetMapping("/question-update")
-    public String update(Long id, Model model) {
-        QuestionDto questionDto = questionService.findQuestion(id);
+    public String update(HttpSession session,Long id, Model model) {
+        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        if(memberDto==null){
+            model.addAttribute("msg","접근 권한이 없습니다.");
+            model.addAttribute("url","back");
+            return "popup";
 
-        model.addAttribute("id",questionDto.getId());
-        model.addAttribute("title", questionDto.getTitle());
-        model.addAttribute("content", questionDto.getContent());
+        }
+        Question question = questionService.findQuestion(id);
+
+        model.addAttribute("question",question);
         return "question/update";
     }
 
     @PostMapping("/question-update")
     public String update2(Long id,String title, String content, Model model) {
-        QuestionDto questionDto = questionService.findQuestion(id);
-        questionDto.setTitle(title);
-        questionDto.setContent(content);
+        Question question = questionService.findQuestion(id);
+        QuestionDto questionDto = new QuestionDto(question.getId(), title, content);
+
         questionService.update(questionDto);
         model.addAttribute("msg", "작성 완료");
         model.addAttribute("url", "/question");
