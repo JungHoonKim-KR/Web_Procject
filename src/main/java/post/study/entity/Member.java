@@ -36,6 +36,8 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Field_Member> fieldMemberList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<Applicant> applicantList=new ArrayList<>();
     public Member() {
 
     }
@@ -57,6 +59,10 @@ public class Member {
 
     public void addProjectMemberList(ProjectMember projectMember) {
         projectMemberList.add(projectMember);
+    }
+
+    public void addApplicantList(Applicant applicant){
+        applicantList.add(applicant);
     }
 
     public void addLanguage(Language_Member language) {
