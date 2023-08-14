@@ -46,12 +46,12 @@
 
     <div class="form-floating">
       <input type="text" class="form-control" id="floatingInput"
-             name="projectName" th:value="${projectName}" >
+             name="projectName" th:value="${project.getProjectName()}" >
       <label for="floatingInput">프로젝트명</label>
     </div>
     <div class="form-floating">
       <input type="text" class="form-control" id="floatingPassword" placeholder="Password"
-             name="projectLeader" th:value="${projectLeader}">
+             name="projectLeader" th:value="${project.getProjectLeader()}">
       <label for="floatingPassword">프로젝트 리더</label>
     </div>
 
@@ -75,6 +75,10 @@
 
 
   </form>
+<form action="/mypage-project/apply" method="Get">
+  <input type="hidden" name="id" th:value="${project.getId()}">
+  <button type="submit" th:onclick="|location.href='@{/mypage-project/apply}'|" >가입 신청자 관리</button>
+</form>
 
 </main>
 
