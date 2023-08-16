@@ -47,7 +47,6 @@ public class BookmarkProjectService {
         List<String> bookmarkImg = new ArrayList<>();
         List<Long> bookmarkProject = bookmarkProjectRepository.findBookmarkProject(memberDto.getId(), projectList.getContent());
         for(Long id:bookmarkProject){
-            System.out.println("번회 "+id);
         }
         if(!bookmarkProject.isEmpty()) {
             int bookmarkIndex = 0;

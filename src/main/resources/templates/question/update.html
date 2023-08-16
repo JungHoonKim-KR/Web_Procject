@@ -14,13 +14,13 @@
     <div class="mb-3">
 
       <span>제목</span>
-      <input type="hidden" name="id" th:value="${id}">
-      <input type="text" class="form-control" name="title" th:value="${title}">
+      <input type="hidden" name="id" th:value="${question.getId()}">
+      <input type="text" class="form-control" name="title" th:value="${question.getTitle()}">
     </div>
 
     <div class="mb-3">
       <span>내용</span>
-      <textarea class=" form-control" name="content" th:text="${content}"></textarea>
+      <textarea class=" form-control" name="content" th:text="${question.getContent()}"></textarea>
     </div>
 
     <button type="submit" class="w-25 btn btn-primary">작성</button>
