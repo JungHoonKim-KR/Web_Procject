@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import post.study.entity.*;
 import post.study.repositoryCustom.ProjectRepositoryCustom;
 
-import java.beans.PropertyEditor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +37,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                     .having(project.count().eq((long) languageSize))
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
+                    .orderBy(project.createTime.desc())
                     .fetchResults();
             total = projectQueryResults.getTotal();
             System.out.println(projectQueryResults.getTotal());
@@ -50,6 +50,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                     .having(project.count().eq((long) fieldSize))
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
+                    .orderBy(project.createTime.desc())
                     .fetchResults();
             total = projectQueryResults.getTotal();
             projectList = projectQueryResults.getResults();
@@ -60,6 +61,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                     .where(language_Project.language.in(languageList))
                     .groupBy(project.id)
                     .having(project.count().eq((long) languageSize))
+                    .orderBy(project.createTime.desc())
                     .fetch();
             if (!languageQueryResults.isEmpty()) {
                 QueryResults<Project> fieldQueryResults = queryFactory
@@ -68,19 +70,14 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                         .where(field_Project.field.in(fieldList))
                         .groupBy(project)
                         .having(project.count().eq((long) fieldSize))
+                        .orderBy(project.createTime.desc())
                         .fetchResults();
 
                 List<Project> field_searchList = fieldQueryResults.getResults();
-                for(Project p: field_searchList){
-                    System.out.println("fff: "+p.getId());
-                }
-                for(Long l: languageQueryResults)
-                    System.out.println("lll: "+l);
                 if (!field_searchList.isEmpty()) {
                     for (Long l : languageQueryResults) {
                         for (Project f : field_searchList) {
                             if (l.equals(f.getId())) {
-                                System.out.println("fli: "+f.getId());
                                 tempProjectList.add(f);
                                 break;
                             }
@@ -95,11 +92,6 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
             int subStart= (int) pageable.getOffset();
             int subEnd= total<((pageable.getPageNumber()+1) * pageable.getPageSize())? (int) total :((pageable.getPageNumber()+1) * pageable.getPageSize());
 
-            System.out.println("pageNum: "+pageable.getPageNumber());
-
-            System.out.println("offset: " + pageable.getOffset());
-            System.out.println("limit: " + pageable.getPageSize());
-            System.out.println("total: " + total);
             projectList = tempProjectList.subList(subStart,subEnd);
 
 
