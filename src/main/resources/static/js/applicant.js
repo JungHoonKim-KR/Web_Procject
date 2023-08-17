@@ -18,9 +18,13 @@ join_btn.forEach(function (element){
             .catch(error => {
                 // Handle the error case here if needed
             });
+        if(this.value=="승인")
+            alert("승인하였습니다.")
+        else if(this.value="거절")
+            alert("거절하였습니다.")
         setTimeout(function(){
             location.reload();
-        }, 500);
+        }, 300);
 
     })
 

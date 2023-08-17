@@ -1,0 +1,67 @@
+.main-container {
+    width: 1500px;
+
+    display: grid;
+    grid-template-columns: 630px 700px; /* 각 행(세로줄)의 길이 */
+    grid-template-rows: 200px 330px 890px 400px; /* 각 열(가로줄)의 길이 */
+    gap: 10px; /* 자식요소간의 간격 */
+}
+
+.small_pic{
+    margin-left:15px;
+    cursor:pointer;
+}
+
+#add_pic{
+
+    margin-top:210px;
+
+    cursor:pointer;
+    width:40px;height:40px;
+    font-size:25px;
+    border-radius:50%;border:none
+
+}
+
+.direction{
+    cursor:pointer;
+}
+
+.pull {position:relative;
+    margin-left: 140px;
+    padding: 20px;
+    width:400px;
+    height:150px;
+    color: black;
+    border-radius: 10px;
+    background-color: white;
+    font-size:18px
+
+}
+
+
+.pull:after {
+    content:"";
+    position: absolute;
+    top: 0px;
+    left :-25px;
+
+    border-right: 35px solid white;
+    border-top:10px solid white;
+    border-bottom:10px solid transparent;}
+
+
+.apply_btn {
+    background-color: #13161c;
+    border-color:  cyan;
+    margin-left:180px;
+    margin-top:30px;
+    color: white;
+    width :300px;
+    height:100px;
+    cursor:pointer;
+
+    font-size:20px
+
+}
+  

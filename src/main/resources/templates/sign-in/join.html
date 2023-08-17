@@ -1,85 +1,157 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <title>Signin Template · Bootstrap v5.1</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 
-
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
+    <!-- 공통 메소드들 정리해논 파일 -->
+    <script type="text/javascript" src="Utility.js"></script>
+    <link rel="stylesheet" href="./css/main_post.css">
+    <link rel="stylesheet" href="./css/sign_up.css">
 
 
-    <!-- Custom styles for this template -->
-    <link href="css/signin.css" rel="stylesheet">
 </head>
-<body class="text-center">
+<body class="wrapper" style="background-color:Linen">
 
-<main class="form-signin">
-    <form action="/join" method="post">
-        <img class="mb-4" src="css/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-        <h1 class="h3 mb-3 fw-normal">회원가입</h1>
 
-        <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-                   name="emailId">
-            <label for="floatingInput">아이디</label>
-        </div>
-        <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                   name="password">
-            <label for="floatingPassword">패스워드</label>
-        </div>
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingName" placeholder="name"
-                   name="username">
-            <label for="floatingPassword">이름</label>
+<header>
+    <header id="contents_box" style="border-bottom: solid 2px white;">
+        <img src="./images/프로젝트용병모집(메인).jpg" class="donga" alt="이미지 불러오기 실패" style="margin-left:50px" width="200"
+             height="45">
+        <div class="nav_items" style="margin-left:150px;">
+            <ul>
+                <li><a href="/">프로젝트 모집</a></li>
+                <li><a href="/">공지사항</a></li>
+                <li><a th:href="@{/question}">문의게시판</a></li>
+                <li><a href="/">랭킹</a></li>
+                <li><a th:href="@{/mypage-profile}">마이페이지</a></li>
+            </ul>
         </div>
 
-        <div class="form-floating">
-            <input type="password" class="form-control" id="floatingAge" placeholder="age"
-                   name="age">
-            <label for="floatingPassword">나이</label>
-        </div>
 
-        <select name="field" multiple>
-            <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>
-        </select> 분야
+    </header>
 
-        <select name="language" multiple>
-            <option th:each="l:${lList}" th:value="${l}" th:text="${l}"></option>
-        </select> 언어
-        <p>
-        <p>
-        <p>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">회원가입</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
-    </form>
-</main>
+</header>
 
 
+<!--  -->
+<div style="background-color:Linen">
+    <div class="wrap" style="width:1500px ; height:1000px">
 
+        <form action="/join" class="container" method="POST">
+            <p>
+                <!-- 회원 정보 -->
+                회원정보를 입력해주세요
+            </p>
+
+            <!-- Collection of personal(member) information? -->
+            <!-- 회원 정보 -->
+            <div class="MemberInfo_box">
+
+
+                <!-- 휴대폰 번호 또는 이메일 주소 -->
+
+                <!-- 비밀번호 -->
+                <div>
+                    <input type="text" name="emailId" placeholder="E-Mail">
+                    <p>E-Mail</p>
+                </div>
+
+                <!-- 비밀번호 확인 -->
+                <div>
+                    <input type="password" name="password" placeholder="비밀번호">
+                    <p>비밀번호</p>
+                </div>
+
+                <!-- 닉네임 -->
+                <div>
+                    <input type="text" name="username" placeholder="닉네임">
+                    <p>닉네임</p>
+                </div>
+
+                <div style="margin-top:20px">
+                    <label for="lang">Your Language</label>
+                    1.
+                    <select name="language" id="lang1" style="margin:13px;width:85px">
+                        <option value="null">없음</option>
+                        <option value="C">C</option>
+                        <option value="JAVA">JAVA</option>
+                        <option value="PYTHON">PYTHON
+                        <option value="CSS">CSS</option>
+                        <option value="JAVASCRIPT">JAVASCRIPT</option>
+                        <option value="typescript">typescript</option>
+                        <option value="SQL">SQL</option>
+                        <option value="PHP">PHP</option>
+                        <option value="KOTLIN">KOTLIN</option>
+                        <option value="GO">GO</option>
+                        <option value="SWIFT">SWIFT</option>
+                    </select>
+                    2.
+                    <select name="language" id="lang2" style="margin:13px;width:85px">
+                        <option value="null">없음</option>
+                        <option value="C">C</option>
+                        <option value="JAVA">JAVA</option>
+                        <option value="PYTHON">PYTHON
+                        <option value="CSS">CSS</option>
+                        <option value="JAVASCRIPT">JAVASCRIPT</option>
+                        <option value="typescript">typescript</option>
+                        <option value="SQL">SQL</option>
+                        <option value="PHP">PHP</option>
+                        <option value="KOTLIN">KOTLIN</option>
+                        <option value="GO">GO</option>
+                        <option value="SWIFT">SWIFT</option>
+                    </select>
+                    3.
+                    <select name="language" id="lang3" style="margin:13px;width:85px">
+                        <option value="null">없음</option>
+                        <option value="C">C</option>
+                        <option value="JAVA">JAVA</option>
+                        <option value="PYTHON">PYTHON
+                        <option value="CSS">CSS</option>
+                        <option value="JAVASCRIPT">JAVASCRIPT</option>
+                        <option value="typescript">typescript</option>
+                        <option value="SQL">SQL</option>
+                        <option value="PHP">PHP</option>
+                        <option value="KOTLIN">KOTLIN</option>
+                        <option value="GO">GO</option>
+                        <option value="SWIFT">SWIFT</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:40px;margin-top:20px">
+                    <label for="fieldd">Your field</label>
+                    1.
+                    <select name="field" id="f1" style="margin:4px;width: 100px">
+                        <option value="null">없음</option>
+                        <option value="프론트엔드">프론트엔드</option>
+                        <option value="백엔드">백엔드</option>
+
+                    </select>
+                    2.
+                    <select name="field" id="f2" style="margin:4px;width: 100px">
+                        <option value="null">없음</option>
+                        <option value="프론트엔드">프론트엔드</option>
+                        <option value="백엔드">백엔드</option>
+
+                    </select>
+                    3.
+                    <select name="field" id="f3" style="margin:4px;width: 100px">
+                        <option value="null">없음</option>
+                        <option value="프론트엔드">프론트엔드</option>
+                        <option value="백엔드">백엔드</option>
+                    </select>
+                </div>
+
+                <div>
+                    <!-- 회원가입 -->
+                    <button type="submit" value="회원가입">회원가입</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="js/sign_up.js"></script>
 </body>
 </html>

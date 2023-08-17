@@ -1,37 +1,50 @@
 
   
-  li {
-    list-style-type: none;
-  }
+  /*li {*/
+  /*  list-style-type: none;*/
+  /*}*/
 
   
-  .pagination-container {
-    display: flex;
-    justify-content: center;
-    margin-top:20px;
-    margin-bottom:150px
-  }
-  .number-button{
-    margin-left:20px;
-    font-size:15px;
-  }
-  .prev-button{
-    font-size:15px;
-  }
-  .next-button{
-    font-size:15px;
-  }
+  /*.pagination-container {*/
+  /*  display: flex;*/
+  /*  justify-content: center;*/
+  /*  margin-top:20px;*/
+  /*  margin-bottom:150px*/
+  /*}*/
+  /*.first-button{*/
+  /*  font-size:15px;*/
+  /*}*/
+  /*.prev-button{*/
+  /*  font-size:15px;*/
+  /*}*/
+  /*.number-button{*/
+  /*  margin-left:20px;*/
+  /*  font-size:15px;*/
+  /*}*/
+  /*.next-button{*/
+  /*  font-size:15px;*/
+  /*}*/
+  /*.last-button{*/
+  /*  font-size:15px;*/
+  /*}*/
+  /*.first-button:hover{*/
+  /*  text-decoration: underline;*/
+  /*  cursor: pointer;*/
+  /*}*/
+  /*.number-button:hover{*/
+  /*  text-decoration: underline; */
+  /*  cursor: pointer;*/
+  /*}*/
 
-  .number-button:hover{
-    text-decoration: underline; 
-    cursor: pointer;
-  }
-
-  .prev-button:hover{
-    text-decoration: underline; 
-    cursor: pointer;
-  }
-  .next-button:hover{
-    text-decoration: underline; 
-    cursor: pointer;
-  }
+  /*.prev-button:hover{*/
+  /*  text-decoration: underline; */
+  /*  cursor: pointer;*/
+  /*}*/
+  /*.next-button:hover{*/
+  /*  text-decoration: underline; */
+  /*  cursor: pointer;*/
+  /*}*/
+  /*.last-button:hover{*/
+  /*  text-decoration: underline;*/
+  /*  cursor: pointer;*/
+  /*}*/

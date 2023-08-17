@@ -109,7 +109,8 @@ if (searchLanguage.length != 0) {
 
 
 heart.forEach(function (item, index) {
-    if (username && bookmarkImg[index].includes('빨강'))
+    //includes 하는 대상(bookmarkImg)이 null이면 includes가 에러 나서 null체크를 먼저 하게 함
+    if (username && bookmarkImg[index]!=null && bookmarkImg[index].includes('빨강'))
         heart[index].setAttribute('src', bookmarkImg[index])
 
     heart[index].addEventListener('click', function () {
@@ -136,4 +137,28 @@ heart.forEach(function (item, index) {
                 });
         }
     })
+})
+
+var page_btn=document.querySelectorAll(".number-button");
+var cur_page=document.getElementById("cur_page").value;
+console.log(cur_page)
+//page_btn에 처
+page_btn[cur_page].style.backgroundColor="cyan";
+page_btn[cur_page].style.color="black";
+
+page_btn.forEach(function (item,index){
+    page_btn[index].addEventListener("click",function(){
+        page_btn[index].style.backgroundColor="cyan";
+        page_btn[index].style.color="black";
+
+        present_page=index;
+
+        page_btn.forEach(function (item,index){
+            if(index!=present_page){
+                page_btn[index].style.backgroundColor="#13161c";
+                page_btn[index].style.color="white";
+            }
+
+        });
+    });
 })
