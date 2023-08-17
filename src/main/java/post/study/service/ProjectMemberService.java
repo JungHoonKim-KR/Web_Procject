@@ -3,11 +3,15 @@ package post.study.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import post.study.dto.MemberDto;
+import post.study.dto.ProjectDto;
+import post.study.entity.Applicant;
 import post.study.entity.Member;
 import post.study.entity.Project;
 import post.study.entity.ProjectMember;
 import post.study.norm.field;
 import post.study.norm.language;
+import post.study.repository.ApplicationRepository;
 import post.study.repository.MemberRepository;
 import post.study.repository.ProjectMemberRepository;
 
@@ -18,15 +22,34 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class ProjectMemberService {
+    private final ApplicationRepository applicationRepository;
+    private final ProjectService projectService;
     private final MemberService memberService;
     private final ProjectMemberRepository projectMemberRepository;
     private final MemberRepository memberRepository;
 
-    public void joinProjectMember(Project project, Member tempMember) {
-        Member member = memberService.findMember(tempMember.getEmailId());
+
+    public void joinProjectMember(ProjectDto projectDto, MemberDto memberDto) {
+        Member member = memberService.findMember(memberDto.getEmailId());
+        Project project = projectService.findProject(projectDto.getId());
+//        Project project = projectService.projectToEntity(projectDto);
         ProjectMember projectMember = new ProjectMember();
         projectMember.setProjectMember(member, project);
         projectMemberRepository.save(projectMember);
+    }
+
+    public void deleteApplicant(ProjectDto projectDto, MemberDto memberDto){
+        Member member = memberService.findMember(memberDto.getEmailId());
+        applicationRepository.deleteApplicant(projectDto.getId(),member.getId());
+    }
+
+    public void applyMemberToProject(ProjectDto projectDto,MemberDto memberDto){
+        Member member = memberRepository.findByemailId(memberDto.getEmailId());
+        Project project = projectService.projectToEntity(projectDto);
+
+        Applicant applicant = new Applicant();
+        applicant.setApplicant(member,project);
+        applicationRepository.save(applicant);
 
     }
 
@@ -71,5 +94,8 @@ public class ProjectMemberService {
         return memberRepository.findMember(list);
     }
 
+    public List<Applicant> findApplicant(ProjectDto projectDto){
+       return applicationRepository.findAllByProjectId(projectDto.getId());
+    }
 
 }

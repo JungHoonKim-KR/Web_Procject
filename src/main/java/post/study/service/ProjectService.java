@@ -1,10 +1,12 @@
 package post.study.service;
 
 import jakarta.transaction.Transactional;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import post.study.dto.MemberDto;
 import post.study.dto.ProjectDto;
 import post.study.entity.*;
 import post.study.repository.FieldProjectRepository;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Builder
 @Transactional
 @RequiredArgsConstructor
 public class ProjectService {
@@ -23,6 +26,36 @@ public class ProjectService {
     private final LanguageProjectRepository languageProjectRepository;
     private final FieldProjectRepository fieldProjectRepository;
 
+    public Project projectToEntity(ProjectDto projectDto){
+
+        return Project.builder()
+                .id(projectDto.getId())
+                .projectName(projectDto.getProjectName())
+                .projectLeader(projectDto.getProjectLeader())
+                .scale(projectDto.getScale())
+                .img(projectDto.getImg())
+                .introduction(projectDto.getIntroduction())
+                .createTime(projectDto.getCreationTime())
+                .build();
+//        Project project = new Project();
+//        project.setProjectName(projectDto.getProjectName());
+//        project.setProjectLeader(leaderName);
+//        project.setScale(projectDto.getScale());
+//        project.setIntroduction(projectDto.getIntroduction());
+//        project.setImg(projectDto.getImg());
+    }
+    public ProjectDto projectToDto(Project project){
+        return ProjectDto.builder()
+                .id(project.getId())
+                .projectName(project.getProjectName())
+                .projectLeader(project.getProjectLeader())
+                .scale(project.getScale())
+                .img(project.getImg())
+                .introduction(project.getIntroduction())
+                .creationTime(project.getCreateTime())
+                .build();
+    }
+
     public Boolean search(ProjectDto projectDto) {
         Project project = projectRepository.findByProjectName(projectDto.getProjectName());
         if (project == null)
@@ -30,11 +63,11 @@ public class ProjectService {
         else return true;
     }
 
-    public Project create(ProjectDto projectDto,String language,String field, Member member) {
+    public Project create(ProjectDto projectDto,String language,String field, MemberDto memberDto) {
         if (search(projectDto) == false) {
             Project project = new Project();
+            project.setProjectLeader(projectDto.getProjectLeader());
             project.setProjectName(projectDto.getProjectName());
-            project.setProjectLeader(member.getUsername());
             project.setScale(projectDto.getScale());
             project.setIntroduction(projectDto.getIntroduction());
             project.setImg(projectDto.getImg());
@@ -58,7 +91,7 @@ public class ProjectService {
                 }
             }
             projectRepository.save(project);
-            //임시. project.addProjectMember를 save하지 않음
+
             return project;
         } else return null;
 
@@ -79,6 +112,7 @@ public class ProjectService {
 
     public Project findProject(String projectName) {
         Project byProjectName = projectRepository.findByProjectName(projectName);
+
         return byProjectName;
     }
 
@@ -111,7 +145,7 @@ public class ProjectService {
                 }
             }
             projectRepository.save(findProject);
-            return findProject;
+           return findProject;
         } else return null;
     }
 
@@ -126,21 +160,5 @@ public class ProjectService {
     }
 
 
-    public Page<Project> findList(String field, String language, Pageable pageable){
-        String [] f=field.split(",");
-        String [] l=language.split(",");
 
-        List<String>fList=new ArrayList<>();
-        List<String> lList=new ArrayList<>();
-        for(String s: f){
-            fList.add(s);
-
-        }
-
-        for(String s:l){
-            lList.add(s);
-        }
-        Page<Project> projectList = projectRepository.searchProjectList(fList, lList, pageable);
-        return projectList;
-    }
 }
