@@ -14,7 +14,7 @@ public class Applicant {
     @JoinColumn(name = "memberId")
     private Member member;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "projectId")
     private Project project;
 
@@ -22,6 +22,6 @@ public class Applicant {
         this.setMember(member);
         this.setProject(project);
         member.addApplicantList(this);
-        project.setApplicant(this);
+        project.addApplicantList(this);
     }
 }

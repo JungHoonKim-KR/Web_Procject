@@ -36,8 +36,8 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Field_Project> fieldList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "project")
-    private Applicant applicant;
+    @OneToMany(mappedBy = "project")
+    private List<Applicant> applicantList=new ArrayList<>();
 
 
     @Builder
@@ -60,8 +60,8 @@ public class Project {
 
     }
 
-    public void addApplicant(Applicant applicant){
-        this.applicant=applicant;
+    public void addApplicantList(Applicant applicant){
+        applicantList.add(applicant);
     }
 
     public void addLanguage(Language_Project language) {
