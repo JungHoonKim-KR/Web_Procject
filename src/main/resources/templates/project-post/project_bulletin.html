@@ -105,7 +105,6 @@
         <a th:href="@{/project-create}">프로젝트 생성</a>
 
         <span th:if="${pList==null}" style="color:white; align-content: center" >검색 결과가 없습니다</span>
-        <span th:value="${pList==null}"></span>
         <div th:unless="${pList==null}" style="height:670px">
             <ul style="margin-left:70px; margin-top: -100px">
                 <li style="margin-top:150px" th:each="p:${paging.getProjectList()}">
