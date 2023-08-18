@@ -141,17 +141,22 @@ heart.forEach(function (item, index) {
 
 var page_btn=document.querySelectorAll(".number-button");
 var cur_page=document.getElementById("cur_page").value;
-console.log(cur_page)
-//page_btn에 처
-page_btn[cur_page].style.backgroundColor="cyan";
-page_btn[cur_page].style.color="black";
+var cur_pageLine=document.getElementById("cur_pageLine").value;
+var displayPage=5;
+//에러 : querySelector로 가져오는 배열은 항상 size 5 이하 but cur_page는 무한히 늘어남.
+//즉 pageLine을 고려하여 cur_page-5*pageLine을 해줘야 함
+let cur_pageIndex=cur_page-((cur_pageLine)*displayPage);
+console.log(cur_pageIndex)
+console.log(cur_pageLine)
+page_btn[cur_pageIndex].style.backgroundColor="cyan";
+page_btn[cur_pageIndex].style.color="black";
 
 page_btn.forEach(function (item,index){
     page_btn[index].addEventListener("click",function(){
         page_btn[index].style.backgroundColor="cyan";
         page_btn[index].style.color="black";
 
-        present_page=index;
+        let present_page = index;
 
         page_btn.forEach(function (item,index){
             if(index!=present_page){
