@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th>
+<html lang="en">
 <head>
 
     <meta charset="UTF-8">
@@ -8,72 +8,51 @@
     <title>Document</title>
 
     <!-- 공통 메소드들 정리해논 파일 -->
-    <script type="text/javascript" src="Utility.js"></script>
-    <link rel="stylesheet" href="./css/main_post.css">
-    <link rel="stylesheet" href="./css/sign_up.css">
+    <link rel="stylesheet" href="/css/main_post.css">
+    <link rel="stylesheet" href="/css/sign_up.css">
 
 
 </head>
-<body class="wrapper" style="background-color:Linen">
-
-
-<header>
-    <header id="contents_box" style="border-bottom: solid 2px white;">
-        <img src="./images/프로젝트용병모집(메인).jpg" class="donga" alt="이미지 불러오기 실패" style="margin-left:50px" width="200"
-             height="45">
-        <div class="nav_items" style="margin-left:150px;">
-            <ul>
-                <li><a href="/">프로젝트 모집</a></li>
-                <li><a href="/">공지사항</a></li>
-                <li><a th:href="@{/question}">문의게시판</a></li>
-                <li><a href="/">랭킹</a></li>
-                <li><a th:href="@{/mypage-profile}">마이페이지</a></li>
-            </ul>
-        </div>
-
-
-    </header>
-
-</header>
+<body class="wrapper" style="background-color:Linen" >
 
 
 <!--  -->
 <div style="background-color:Linen">
-    <div class="wrap" style="width:1500px ; height:1000px">
+    <div class="wrap"style="width:1500px ; height:1000px" >
 
-        <form action="/join" class="container" method="POST">
-            <p>
+        <form action="/join" method="POST" class="container" style="margin-top:260px">
+            <br><br>
+            <p style="font-weight:bold;font-size:30px">
+                <!-- 회원 정보 -->
+                회원가입
+            </p>
+            <p style="font-weight:bold;font-size:15px">
                 <!-- 회원 정보 -->
                 회원정보를 입력해주세요
             </p>
 
             <!-- Collection of personal(member) information? -->
             <!-- 회원 정보 -->
-            <div class="MemberInfo_box">
-
+            <div class="MemberInfo_box" style="margin-left:17px">
 
                 <!-- 휴대폰 번호 또는 이메일 주소 -->
-
-                <!-- 비밀번호 -->
-                <div>
-                    <input type="text" name="emailId" placeholder="E-Mail">
-                    <p>E-Mail</p>
-                </div>
-
-                <!-- 비밀번호 확인 -->
-                <div>
-                    <input type="password" name="password" placeholder="비밀번호">
-                    <p>비밀번호</p>
-                </div>
-
-                <!-- 닉네임 -->
-                <div>
-                    <input type="text" name="username" placeholder="닉네임">
+                <div style="margin-bottom:30px">
+                    <input type="text" name="username" class="information_in"placeholder="이름">
                     <p>닉네임</p>
                 </div>
 
-                <div style="margin-top:20px">
-                    <label for="lang">Your Language</label>
+                <div style="margin-bottom:30px">
+                    <input type="text" name="emailId" class="information_in" placeholder="E-Mail">
+                    <p>E-Mail</p>
+                </div>
+
+                <div style="margin-bottom:30px">
+                    <input type="password" name="password" class="information_in" placeholder="비밀번호">
+                    <p>비밀번호</p>
+                </div>
+
+                <div style="margin-top:30px">
+                    <label for="lang"style="font-weight:bold">Your Language</label>
                     1.
                     <select name="language" id="lang1" style="margin:13px;width:85px">
                         <option value="null">없음</option>
@@ -90,7 +69,7 @@
                         <option value="SWIFT">SWIFT</option>
                     </select>
                     2.
-                    <select name="language" id="lang2" style="margin:13px;width:85px">
+                    <select name="language" id="lang2"style="margin:13px;width:85px">
                         <option value="null">없음</option>
                         <option value="C">C</option>
                         <option value="JAVA">JAVA</option>
@@ -105,7 +84,7 @@
                         <option value="SWIFT">SWIFT</option>
                     </select>
                     3.
-                    <select name="language" id="lang3" style="margin:13px;width:85px">
+                    <select name="language" id="lang3"style="margin:13px;width:85px">
                         <option value="null">없음</option>
                         <option value="C">C</option>
                         <option value="JAVA">JAVA</option>
@@ -120,38 +99,44 @@
                         <option value="SWIFT">SWIFT</option>
                     </select>
                 </div>
-                <div style="margin-bottom:40px;margin-top:20px">
-                    <label for="fieldd">Your field</label>
+                <div style="margin-bottom:40px;margin-top:30px">
+                    <label for="fieldd"style="font-weight:bold">Your field</label>
                     1.
-                    <select name="field" id="f1" style="margin:4px;width: 100px">
+                    <select name="field" id="f1" style="margin:4px;width:100px">
                         <option value="null">없음</option>
                         <option value="프론트엔드">프론트엔드</option>
                         <option value="백엔드">백엔드</option>
 
                     </select>
                     2.
-                    <select name="field" id="f2" style="margin:4px;width: 100px">
+                    <select name="field" id="f2" style="margin:4px;width:100px">
+                        <option value="null">없음</option>
+                        <option value="프론트엔드">프론트엔드</option>
+                        <option value="백엔드">백엔드</option>
+                    </select>
+                    3.
+                    <select name="field" id="f3" style="margin:4px;width:100px">
                         <option value="null">없음</option>
                         <option value="프론트엔드">프론트엔드</option>
                         <option value="백엔드">백엔드</option>
 
-                    </select>
-                    3.
-                    <select name="field" id="f3" style="margin:4px;width: 100px">
-                        <option value="null">없음</option>
-                        <option value="프론트엔드">프론트엔드</option>
-                        <option value="백엔드">백엔드</option>
                     </select>
                 </div>
 
                 <div>
                     <!-- 회원가입 -->
-                    <button type="submit" value="회원가입">회원가입</button>
+                    <input type="submit" style="cursor:pointer"id="sign_btn"value="회원가입">
                 </div>
+
             </div>
+
+
         </form>
+
+    </div>
+    <div style="background-color:Linen;height:200px">
+
     </div>
 </div>
-<script src="js/sign_up.js"></script>
 </body>
 </html>

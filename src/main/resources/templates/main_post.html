@@ -21,9 +21,10 @@
             <li><a href="/">공지사항</a></li>
             <li><a th:href="@{/question}" >문의게시판</a></li>
             <li><a href="/">랭킹</a></li>
-            <li><a>몰?루</a></li>
-            <li><a th:href="@{/mypage-profile}"><img src="/images/my_img.png" width="40" height="30"></a></li>
         </ul>
+   <a th:href="@{/mypage-profile}"><img src="/images/my_img.png" width="40" height="30"  style="margin-left:30px;border-radius:50%;border:none"></a>
+        &nbsp;
+
     </div>
 
     <span th:if="${username==null}">
@@ -35,13 +36,6 @@
         <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
                 style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
             </span>
-    <!--<button type="button" id="login" onclick="location.href='aa.html'"style="margin-right:50px; width:150px ;height:30px">로그인</button>
-    -->
-<!--    <span style="font-size:0.7em; color:gray; width:100px">성빈 님</span>-->
-<!--    <button type="button" id="logout" onclick="location.href='bb.html'"-->
-<!--            style="margin-right:50px; width:150px ;height:30px">로그아웃-->
-<!--    </button>-->
-
 
 </header>
 

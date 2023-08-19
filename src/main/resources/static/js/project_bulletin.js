@@ -146,8 +146,7 @@ var displayPage=5;
 //에러 : querySelector로 가져오는 배열은 항상 size 5 이하 but cur_page는 무한히 늘어남.
 //즉 pageLine을 고려하여 cur_page-5*pageLine을 해줘야 함
 let cur_pageIndex=cur_page-((cur_pageLine)*displayPage);
-console.log(cur_pageIndex)
-console.log(cur_pageLine)
+
 page_btn[cur_pageIndex].style.backgroundColor="cyan";
 page_btn[cur_pageIndex].style.color="black";
 

@@ -53,9 +53,7 @@ left_direction.addEventListener("click", function(){
 var right_direction=document.querySelector("#right_direction");
 
 var right_idx=0;
-console.log(right_direction);
 right_direction.addEventListener("click", function(){
-    console.log("dsssss");
     if(idx+1<small_pic.length-1){
         right_idx=idx+1;
     }else{

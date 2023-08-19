@@ -56,7 +56,7 @@ h2 {
 }
 
 .login_id input {
-    width: 100%;
+    width: 90%;
     height: 50px;
     border-radius: 30px;
     margin-top: 10px;
@@ -71,7 +71,7 @@ h2 {
 }
 
 .login_pw input {
-    width: 100%;
+    width: 90%;
     height: 50px;
     border-radius: 30px;
     margin-top: 10px;
