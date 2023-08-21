@@ -60,11 +60,6 @@
             <label for="floatingPassword">이름</label>
         </div>
 
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingAge" placeholder="age"
-                   name="age" th:value="${age}">
-            <label for="floatingPassword">나이</label>
-        </div>
         <select name="field" multiple>
             <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>
         </select> 분야
