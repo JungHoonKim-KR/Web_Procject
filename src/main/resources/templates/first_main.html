@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/first_main.css">
+
+</head>
+
+<body style="background-color:#13161c">
+
+<div class="child-page-listing" style="width:1500px">
+<!--    <img src="./images/프로젝트용병모집.jpg" class="donga" style="margin-left:48px"alt="이미지 불러오기 실패" width="200" height="45"  >-->
+
+    <h1 style="text-align:center;color:white;font-size:60px">SeongBin & Junghoon</h1>
+    <h3 style="text-align:center;color:white;font-size:15px">국내 1위 프로젝트 모집 사이트!</h3>
+    <a th:href="@{/main_post}">
+    <img src="./images/홈페이지사진.jpg" class="homepage" style="margin-left:1400px;border-radius:50%"alt="이미지 불러오기 실패" width="40" height="40"  >
+    </a>
+    <br><br>
+
+    <div class="grid-container" >
+
+        <article id="3685" class="location-listing">
+
+            <a class="location-title" href="#">
+                개발자 찾기          </a>
+
+            <div class="location-image">
+                <a href="#">
+
+                    <img width="700" height="500" src=" ./images/개발자참여사진.jpg" alt="san francisco">    </a>
+
+            </div>
+
+        </article>
+
+        <article id="3688" class="location-listing">
+
+            <a class="location-title" th:href="@{/project?page=0}">
+                프로젝트 찾기 </a>
+
+            <div class="location-image" >
+                    <img width="700" height="500" src="./images/프로젝트참여1.jfif" alt="london">
+
+            </div>
+
+        </article>
+
+
+
+    </div>
+    <!-- end grid container -->
+    <!--개발자모집사진 : https://blog.careerly.co.kr/engineer-account/-->
+    <!--프로젝트참여사진 : https://blog.careerly.co.kr/engineer-account/-->
+</div>
+<script src="js/first_main.js"></script>
+</body>
