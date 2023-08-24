@@ -1,0 +1,33 @@
+1. 상세페이지 : 말풍선 뾰족(희망사항) , 모집요강 white로 변경 시도 
+2. 로그인 & 회원가입 변경
+3. 배너 변경
+
+
+--- 문제점---
+1.검색 세션 처리 문제
+
+ if(session.getAttribute("field")!=null){
+            searchField = (String) session.getAttribute("field");
+        }
+        else {
+            session.setAttribute("field",field);
+            searchField = field;
+        }
+
+-> all과 search로 구분해서 all에서는 파라미터 상관없이 모든 데이터를 페이징만 하여 보여줌 이 때 페이지은 a태그
+    search에서는 페이징을 버튼 태그로 하여 버튼만 눌러도 checked된 데이터를 전달함. 
+
+즉 search에서는 기존의 a태그로 인한 페이징의 문제점이였던 파라미터: null 현상을 버튼 태그로 해결할 수 있음.
+but, 다 되지만 검색 후 다시 all을 보고 싶을 때가 문제임
+-> 사용자들은 대부분 모든 검색 조건을 해제한 후 검색버튼을 눌러버림 -> 결국 검색 조건이 없는 search를 함.
+ 이 때는 search이기 때문에 페이징이 버튼태그로 되어 findAll이 아닌 search(field,language)가 되기 때문에 어떠한 값도 가져오지 않음.
+
+
+
+--- 계획 --- 
+
+1. 상세 페이지 설계(프로젝트 소개 이미지 구성, 세부사항)
+
+2. 대화 시스템 (쪽지, 서버 구축 후 실시간 대화형으로 업그레이드 고려)
+
+3. 프로젝트 가입 신청 및 수락 시스템							
