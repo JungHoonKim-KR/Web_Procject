@@ -8,15 +8,18 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import post.study.dto.MemberDto;
 import post.study.service.PagingService;
 import post.study.dto.ProjectDto;
 import post.study.entity.*;
-import post.study.norm.field;
-import post.study.norm.language;
 import post.study.repository.ProjectRepository;
 import post.study.repository.QuestionRepository;
 import post.study.service.*;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,111 +29,83 @@ public class ProjectController {
     private final FieldLanguageService fieldLanguageService;
     private final ProjectRepository projectRepository;
     private final QuestionRepository questionRepository;
-    private final MemberService memberService;
     private final ProjectService projectService;
     private final ProjectMemberService projectMemberService;
     private final BookmarkProjectService BookmarkProjectService;
 
     @GetMapping("/project")
-    public String project(HttpSession session, Model model, @PageableDefault(size = 8, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String project(HttpSession session, Model model, @PageableDefault(size = 4, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable) {
         String type = "ALL";
         PagingService paging = new PagingService(fieldLanguageService, projectRepository, questionRepository, projectService);
         paging.setProjectPaging(null, null, type, pageable);
         if (paging.getProjectList() == null) {
-
             type = "NONE";
         }
-
         //로그인 정보
-        if (session.getAttribute("member") != null) {
-            Member testmember = (Member) session.getAttribute("member");
-            Member member = memberService.findMember(testmember.getEmailId());
+        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        if (memberDto != null) {
             //북마크 여부
             List<String> bookmarkImg = new ArrayList<>();
             if (type != "NONE")
-                bookmarkImg = BookmarkProjectService.bookmarkImg(member, paging.getProjectList());
-            model.addAttribute("username", member.getUsername());
+                bookmarkImg = BookmarkProjectService.bookmarkImg(memberDto, paging.getProjectList());
+            model.addAttribute("username", memberDto.getUsername());
             model.addAttribute("bList", bookmarkImg);
 
         }
 
 
         model.addAttribute("type", type);
-        model.addAttribute("pList", paging.getProjectList());
-        model.addAttribute("prevPage", paging.getPrevPage());
-        model.addAttribute("nextPage", paging.getNextPage());
-        model.addAttribute("startPage", paging.getStartPage());
-        model.addAttribute("endPage", paging.getEndPage());
+        model.addAttribute("paging", paging);
         model.addAttribute("page", pageable.getPageNumber());
-        model.addAttribute("totalPage", paging.getTotalPage());
-        model.addAttribute("pageLine", paging.getPageLine());
-        model.addAttribute("totalPageLine", paging.getTotalPageLine());
+        model.addAttribute("pList", paging.getProjectList());
 
         return "project-post/project_bulletin";
     }
 
     @GetMapping("/projectSearch")
-    public String projectSearch(HttpSession session, String language, String field, Model model, @PageableDefault(size = 8, sort = "createTime", direction = Sort.Direction.DESC) Pageable pageable) {
-        String type = "SEARCH";
-
-        if(session.getAttribute("field")==null && field==null)
-            session.setAttribute("field",null);
-        else if(field!=null)
-            session.setAttribute("field",field);
-
-        if(session.getAttribute("language")==null && language==null)
-            session.setAttribute("language",null);
-        else if(language!=null)
-            session.setAttribute("language",language);
-        System.out.println("필듸"+field);
-        System.out.println("언어: "+language);
-
-        String fields= (String) session.getAttribute("field");
-        String languages= (String) session.getAttribute("language");
-
-
-        PagingService paging = new PagingService(fieldLanguageService, projectRepository, questionRepository, projectService);
-        paging.setProjectPaging(fields, languages, type, pageable);
-
-        if (paging.getProjectList() == null) {
-
-            type = "NONE";
-
+    public String projectSearch(HttpSession session, String language, String field, Model model, @PageableDefault(size = 4, sort = "createTime", direction = Sort.Direction.ASC) Pageable pageable) throws UnsupportedEncodingException {
+        //검색 시 카테고리 선택 필수
+        if (field == null && language == null) {
+            model.addAttribute("msg", "카테고리를 선택해주세요");
+            model.addAttribute("url", "back");
+            return "popup";
         }
-        if (session.getAttribute("member") != null) {
-            Member testmember = (Member) session.getAttribute("member");
-            Member member = memberService.findMember(testmember.getEmailId());
-            model.addAttribute("username", member.getUsername());
+
+        String type = "SEARCH";
+        PagingService paging = new PagingService(fieldLanguageService, projectRepository, questionRepository, projectService);
+        paging.setProjectPaging(field, language, type, pageable);
+        if (paging.getProjectList() == null) {
+            type = "NONE";
+        }
+        //로그인 상태
+        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        if (memberDto != null) {
+            model.addAttribute("username", memberDto.getUsername());
 
             //북마크 여부
             if (paging.getProjectList() != null) {
-                List<String> bookmarkImg = BookmarkProjectService.bookmarkImg(member, paging.getProjectList());
+                List<String> bookmarkImg = BookmarkProjectService.bookmarkImg(memberDto, paging.getProjectList());
                 model.addAttribute("bList", bookmarkImg);
             }
 
         }
-        List<String> fieldList = fieldLanguageService.getFieldList(fields);
-        model.addAttribute("fList",fieldList);
-        model.addAttribute("searchField",fieldList);
 
-        List<String> languageList = fieldLanguageService.getLanguageList(languages);
-        model.addAttribute("lList",languageList);
-        model.addAttribute("searchLanguage",languageList);
+        // field & language List
+        List<String> fieldList = fieldLanguageService.getFieldList(field);
+        model.addAttribute("fList", fieldList);
+        model.addAttribute("searchField", fieldList);
 
-
-
-        System.out.println(paging.getProjectList());
-
+        List<String> languageList = fieldLanguageService.getLanguageList(language);
+        model.addAttribute("lList", languageList);
+        model.addAttribute("searchLanguage", languageList);
         model.addAttribute("type", type);
-        model.addAttribute("pList", paging.getProjectList());
-        model.addAttribute("prevPage", paging.getPrevPage());
-        model.addAttribute("nextPage", paging.getNextPage());
-        model.addAttribute("startPage", paging.getStartPage());
-        model.addAttribute("endPage", paging.getEndPage());
+        model.addAttribute("paging", paging);
         model.addAttribute("page", pageable.getPageNumber());
-        model.addAttribute("totalPage", paging.getTotalPage());
-        model.addAttribute("pageLine", paging.getPageLine());
-        model.addAttribute("totalPageLine", paging.getTotalPageLine());
+
+        if (paging.getProjectList().isEmpty())
+            model.addAttribute("pList", null);
+        else
+            model.addAttribute("pList", paging.getProjectList());
 
         return "project-post/project_bulletin";
 
@@ -139,8 +114,8 @@ public class ProjectController {
     //프로젝트 생성
     @GetMapping("/project-create")
     public String projectCreate(HttpSession session, Model model) {
-        Member member = (Member) session.getAttribute("member");
-        if (member == null) {
+        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        if (memberDto == null) {
             model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
             model.addAttribute("url", "back");
             return "popup";
@@ -156,17 +131,21 @@ public class ProjectController {
     }
 
     @PostMapping("/project-create")
-    public String projectCreateJudge(HttpSession session, ProjectDto projectDto, String language, String field, Model model) {
-        Member member = (Member) session.getAttribute("member");
-
-        Project project;
+    public String projectCreateJudge(HttpSession session, ProjectDto projectDto, String language, String field,MultipartFile mainFile, MultipartHttpServletRequest files,Model model) throws IOException {
+        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        List<MultipartFile> fileList = files.getFiles("files");
+        String mainImg = projectService.createMainImg(mainFile);
+        projectDto.setImg(mainImg);
         //프로젝트 생성 실패
-        if ((project = projectService.create(projectDto, language, field, member)) == null) {
+        Project project;
+        if ((project = projectService.create(projectDto, language, field, memberDto)) == null) {
             model.addAttribute("msg", "이미 존재하는 프로젝트 입니다.");
             model.addAttribute("url", "back");
         } else {
             //생성 후 멤버 설정
-            projectMemberService.joinProjectMember(project, member);
+            projectMemberService.joinProjectMember(projectService.projectToDto(project), memberDto);
+            projectService.createFile(fileList,project.getId());
+
             model.addAttribute("msg", "프로젝트가 생성되었습니다.");
             model.addAttribute("url", "/project?page=0");
 
@@ -178,19 +157,34 @@ public class ProjectController {
     @GetMapping("/project-bookmark")
     @ResponseBody
     public Boolean projectBookmark(HttpSession session, Long projectId, Model model) {
-        Member member = (Member) session.getAttribute("member");
+        MemberDto memberDto = (MemberDto) session.getAttribute("member");
         Project project = projectService.findProject(projectId);
-
-        Boolean result = BookmarkProjectService.updateBookmarkProject(member, project);
+        Boolean result = BookmarkProjectService.updateBookmarkProject(memberDto, projectService.projectToDto(project));
 
         return result;
     }
 
     @GetMapping("/project-introduce")
-    public String projectIntroduce(String projectName, Model model) {
+    public String projectIntroduce(HttpSession session, String projectName, Model model) {
+        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        if (memberDto != null) {
+            model.addAttribute("username", memberDto.getUsername());
+        }
         Project project = projectService.findProject(projectName);
-        model.addAttribute("project", project);
+        List<ProjectFile_Img> projectImg = projectService.findProjectImg(project.getId());
+        ProjectDto projectDto = projectService.projectToDto(project);
+        model.addAttribute("project",projectDto);
+        model.addAttribute("imgList",projectImg);
         return "project-post/project";
+    }
+
+    @GetMapping("/project-apply")
+    public String projectApply(HttpSession session, ProjectDto projectDto, Model model) {
+        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        projectMemberService.applyMemberToProject(projectDto, memberDto);
+        model.addAttribute("msg", "신청 완료");
+        model.addAttribute("url", "back");
+        return "popup";
     }
 
 

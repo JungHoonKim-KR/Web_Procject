@@ -13,28 +13,32 @@
 
 <body class="wrapper2" style="background-color:#13161c">
 <header id="contents_box" style="border-bottom: solid 1px white" >
-  <img src="./images/프로젝트용병모집.jpg" class="donga"alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="45"  >
+  <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집.jpg" id="donga"alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="45"></a>
   <div class="nav_items" style="margin-left:150px;">
     <ul>
-      <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
-      <li><a href="/"><span style="color:white">공지사항</span></a></li>
-      <li><a href="/" ><span style="color:white">문의게시판</span></a></li>
-      <li><a href="/"><span style="color:white">랭킹</span></a></li>
-
+      <li><a href="/">프로젝트 모집</a></li>
+      <li><a href="/">공지사항</a></li>
+      <li><a th:href="@{/question}" >문의게시판</a></li>
+      <li><a href="/">랭킹</a></li>
     </ul>
-    <img src="./images/my_img.png" class="donga"alt="이미지 불러오기 실패" width="30" height="30" style="margin-left:30px;border-radius:50%;border:none" >
+    <a th:href="@{/mypage-profile}"><img src="/images/my_img.png" width="40" height="30"  style="margin-left:30px;border-radius:50%;border:none"></a>
     &nbsp;
+
   </div>
 
-
-  <button type="button" id="login" onclick="location.href='login.html'"style="margin-right:50px; width:150px ;height:30px">로그인</button>
-
-  <!--  <span style="font-size:0.7em; color:gray; width:100px">성빈 님</span>
-  <button type="button" id="logout" onclick="location.href='bb.html'"style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
--->
+  <span th:if="${username==null}">
+        <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
+                style="margin-right:50px; width:150px ;height:30px">로그인</button>
+    </span>
+  <span th:unless="${username==null}">
+              <span th:text="${username}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
+        <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
+                style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
+            </span>
 </header>
 
 <div class="wrap2"  style=" width:1500px;height:1000px" >
+  <form action="/project-apply" method="GET">
   <br><br><br>
   <div >
     <span style="color:white;font-size:20px;font-weight:bold;margin-left:90px">프로젝트 > </span>
@@ -46,6 +50,13 @@
 
 
     <div class="main-container">
+        <input type="hidden" name="id" th:value="${project.getId()}">
+        <input type="hidden" name="projectName" th:value="${project.getProjectName()}"}>
+        <input type="hidden" name="projectLeader" th:value="${project.getProjectLeader()}">
+        <input type="hidden" name="scale" th:value="${project.getScale()}">
+        <input type="hidden" name="img" th:value="${project.getImg()}">
+        <input type="hidden" name="createTime" th:value="${project.getCreationTime()}">
+
       <div style="width:800px ">
         <img src="./images/왼쪽사진.jpg" id="left_direction" class="direction"alt="이미지 불러오기 실패" style="margin:16px;margin-bottom:180px" width="40" height="40"  >
 
@@ -97,7 +108,7 @@
         </fieldset>
         <br>
 
-        <button class="apply_btn" type="button">
+        <button class="apply_btn" type="submit" th:unless="${username==null}" th:onclick="|location.href='@{/project-apply}'|">
           프로젝트 신청하기
         </button>
 
@@ -134,11 +145,11 @@
         </div>
       </div>
 
-
     </div>
   </div>
 
 
+  </form>
 
 </div>
 

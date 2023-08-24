@@ -39,7 +39,7 @@
 <body class="text-center">
 
 <main class="form-signin">
-    <form action="/project-create" method="post">
+    <form action="/project-create" method="post" enctype="multipart/form-data">
         <img class="mb-4" src="css/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
         <h1 class="h3 mb-3 fw-normal">프로젝트 생성</h1>
 
@@ -69,9 +69,10 @@
         </div>
 
         <div class="form-floating">
-            <input type="text" class="form-control" id="floatingImg"
-                   name="img" th:value="${img}">
-            프로젝트 메인화면
+            대표 이미지 <input type="file" multiple="multiple" name="mainFile"><br>
+            프로젝트 소개 이미지 <input type="file" multiple="multiple" name="files"><br>
+            프로젝트 소개 이미지 <input type="file" multiple="multiple" name="files"><br>
+
         </div>
         <p>
         <p>

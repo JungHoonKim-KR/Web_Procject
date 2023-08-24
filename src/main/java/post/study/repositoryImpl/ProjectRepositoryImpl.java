@@ -1,6 +1,10 @@
 package post.study.repositoryImpl;
 
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.CollectionExpression;
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.SubQueryExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
@@ -25,10 +29,10 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
 
     @Override
     public Page<Project> searchProjectList(List<String> fieldList, List<String> languageList, Pageable pageable) {
-        List<Project> projectList = new ArrayList<>();
+        List<Project> projectList;
         int fieldSize = fieldList.size();
         int languageSize = languageList.size();
-        long total = 0;
+        long total;
         if (fieldSize == 0 && languageSize != 0) {
             QueryResults<Project> projectQueryResults = queryFactory.select(project)
                     .from(language_Project)
@@ -40,8 +44,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                     .orderBy(project.createTime.desc())
                     .fetchResults();
             total = projectQueryResults.getTotal();
-            System.out.println(projectQueryResults.getTotal());
             projectList = projectQueryResults.getResults();
+
         } else if (fieldSize != 0 && languageSize == 0) {
             QueryResults<Project> projectQueryResults = queryFactory.select(project)
                     .from(field_Project)
@@ -54,8 +58,10 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                     .fetchResults();
             total = projectQueryResults.getTotal();
             projectList = projectQueryResults.getResults();
+
         } else {
             List<Project> tempProjectList = new ArrayList<>();
+
             List<Long> languageQueryResults = queryFactory.select(project.id)
                     .from(language_Project)
                     .where(language_Project.language.in(languageList))
@@ -74,6 +80,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                         .fetchResults();
 
                 List<Project> field_searchList = fieldQueryResults.getResults();
+                //Empty 체크는 Language, Field 중 하나라도 결과가 없다면 작동을 멈추게 하기 위함이다.
                 if (!field_searchList.isEmpty()) {
                     for (Long l : languageQueryResults) {
                         for (Project f : field_searchList) {
@@ -86,6 +93,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                     }
                 }
             }
+
             if (tempProjectList.isEmpty())
                 return null;
             total=tempProjectList.size();
@@ -94,11 +102,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
 
             projectList = tempProjectList.subList(subStart,subEnd);
 
-
         }
-
-
-
         PageImpl<Project> projects = new PageImpl<>(projectList, pageable, total);
         return projects;
     }

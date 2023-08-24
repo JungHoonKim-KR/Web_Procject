@@ -19,7 +19,7 @@
 <input type="hidden" id="cur_pageLine" th:value="${paging.getPageLine()}">
     <header id="contents_box">
 
-        <img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="45">
+        <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="45"></a>
         <div class="nav_items" style="margin-left:150px;">
             <ul>
                 <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
@@ -27,8 +27,10 @@
                 <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
                 <li><a href="/"><span style="color:white">랭킹</span></a></li>
                 <li><a>몰?루</a></li>
-                <li><a th:href="@{/mypage-profile}"><img src="/images/my_img.png" width="40" height="30"></a></li>
             </ul>
+            <a th:href="@{/mypage-profile}"><img src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none"></a>
+            &nbsp;
+
         </div>
 
         <span th:if="${username==null}">
@@ -114,8 +116,8 @@
                     <a th:href=" '/project-introduce?projectName=' +${p.projectName}" class="proj"><span
                             class="thumb">
 <!--                        사용자가 따로 이미지를 지정하지 않았다면 디폴트 사진 적용-->
-                        <img class="posting" th:if="${p.img}==''" src="/images/개발자사진.jpg" width="200" height="150" alt="">
-                        <img class="posting" th:unless="${p.img}==''" th:src="${p.img}" width="200" height="150" alt="">
+                        <img class="posting" th:if="${p.img}==null" src="/images/개발자사진.jpg" width="200" height="150" alt="">
+                        <img class="posting" th:unless="${p.img}==null" th:src="${p.img}" width="200" height="150" alt="">
                         <em>프로젝트 소개 보기</em></span>
                         <strong th:text="${p.projectName}" style="color:white;width:200px">프로젝트 제목 </strong></a>
                     <p th:text="${p.introduction}">프로젝트 소개</p>
@@ -239,3 +241,4 @@
 </script>
 </body>
 </html>
+
