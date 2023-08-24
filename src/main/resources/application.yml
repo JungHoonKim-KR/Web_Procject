@@ -20,6 +20,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+    database: mysql
     defer-datasource-initialization: true
     database-platform=org.hibernate.dialect: MySQL5InnoDBDialect
   sql:
