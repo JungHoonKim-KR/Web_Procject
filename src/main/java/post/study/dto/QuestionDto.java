@@ -3,9 +3,6 @@ package post.study.dto;
 import lombok.Builder;
 import lombok.Data;
 import post.study.entity.Member;
-import post.study.entity.Question;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data

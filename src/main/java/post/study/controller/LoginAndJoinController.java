@@ -6,20 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 import post.study.dto.MemberDto;
-import post.study.entity.Field_Member;
 import post.study.entity.Member;
-import post.study.entity.ProjectFile_Img;
 import post.study.service.MemberService;
 import post.study.service.ProjectMemberService;
 import post.study.service.ProjectService;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor

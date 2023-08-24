@@ -12,7 +12,6 @@ import post.study.dto.MemberDto;
 import post.study.service.FieldLanguageService;
 import post.study.service.PagingService;
 import post.study.dto.QuestionDto;
-import post.study.entity.Member;
 import post.study.entity.Question;
 import post.study.repository.ProjectRepository;
 import post.study.repository.QuestionRepository;

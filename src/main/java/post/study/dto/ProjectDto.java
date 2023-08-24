@@ -2,12 +2,7 @@ package post.study.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.cglib.core.Local;
-import post.study.entity.Member;
-import post.study.entity.Project;
-
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 public class ProjectDto {
