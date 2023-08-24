@@ -10,6 +10,8 @@ import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import post.study.entity.*;
 import post.study.repositoryCustom.ProjectRepositoryCustom;
 
@@ -19,7 +21,8 @@ import java.util.List;
 import static post.study.entity.QField_Project.field_Project;
 import static post.study.entity.QLanguage_Project.language_Project;
 import static post.study.entity.QProject.project;
-
+@Repository
+@Transactional
 public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 

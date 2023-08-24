@@ -3,13 +3,16 @@ package post.study.repositoryImpl;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import post.study.entity.Project;
 import post.study.repositoryCustom.BookmarkProjectRepositoryCustom;
 
 import java.util.List;
 
 import static post.study.entity.QBookmarkProject.bookmarkProject;
-
+@Repository
+@Transactional
 public class BookmarkProjectRepositoryImpl implements BookmarkProjectRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
