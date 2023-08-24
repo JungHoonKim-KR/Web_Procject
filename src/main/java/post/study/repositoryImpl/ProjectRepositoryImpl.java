@@ -1,10 +1,7 @@
 package post.study.repositoryImpl;
 
 import com.querydsl.core.QueryResults;
-import com.querydsl.core.types.CollectionExpression;
-import com.querydsl.core.types.Expression;
-import com.querydsl.core.types.SubQueryExpression;
-import com.querydsl.jpa.impl.JPAQuery;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
