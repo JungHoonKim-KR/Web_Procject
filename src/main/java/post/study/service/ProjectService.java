@@ -40,12 +40,6 @@ public class ProjectService {
                 .introduction(projectDto.getIntroduction())
                 .createTime(projectDto.getCreationTime())
                 .build();
-//        Project project = new Project();
-//        project.setProjectName(projectDto.getProjectName());
-//        project.setProjectLeader(leaderName);
-//        project.setScale(projectDto.getScale());
-//        project.setIntroduction(projectDto.getIntroduction());
-//        project.setImg(projectDto.getImg());
     }
     public ProjectDto projectToDto(Project project){
         return ProjectDto.builder()
