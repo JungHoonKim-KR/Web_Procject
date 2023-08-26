@@ -123,13 +123,5 @@ public class MypageController {
 
     }
 
-//    @PostMapping("/mypage-project/reject")
-//    public String rejecting(ProjectDto projectDto, MemberDto memberDto, Model model) {
-//        projectMemberService.deleteApplicant(projectDto, memberDto);
-//        model.addAttribute("msg", "거부하였습니다.");
-//        model.addAttribute("url", "/");
-//
-//        return "popup";
-//    }
 
 }
