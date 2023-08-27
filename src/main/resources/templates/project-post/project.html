@@ -116,7 +116,9 @@
       <div style="margin-top:180px;margin-left:60px ;border-bottom:1px solid white;">
         <div style="white-space:nowrap; overflow:auto;  width:570px; height:120px;">
           <span type="hidden" th:each="i:${imgList}" >
-            <img th:src="@{|/project_img/${i.getFilename()}${i.getFileExtension()}|}" class="small_pic" style="margin-top:20px" width="50" height="50">
+<!--              로컬 버전-->
+<!--            <img th:src="@{|/project_img/${i.getFilename()}${i.getFileExtension()}|}" class="small_pic" style="margin-top:20px" width="50" height="50">-->
+            <img th:src="${i.getFileUrl()}" class="small_pic" style="margin-top:20px" width="50" height="50">
 
           </span>
 
