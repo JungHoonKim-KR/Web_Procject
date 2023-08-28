@@ -1,10 +1,16 @@
 package post.study.service;
 
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import post.study.config.S3Config;
 import post.study.dto.MemberDto;
 import post.study.dto.ProjectDto;
 import post.study.entity.*;
@@ -15,11 +21,11 @@ import post.study.repository.ProjectRepository;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-@Builder
 @Transactional
 @RequiredArgsConstructor
 public class ProjectService {
@@ -28,7 +34,15 @@ public class ProjectService {
     private final LanguageProjectRepository languageProjectRepository;
     private final FieldProjectRepository fieldProjectRepository;
     private final ProjectFile_ImgRepository projectFileImgRepository;
+    private final S3Config s3Config;
 
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
+
+
+
+
+    @Builder
     public Project projectToEntity(ProjectDto projectDto){
 
         return Project.builder()
@@ -41,6 +55,7 @@ public class ProjectService {
                 .createTime(projectDto.getCreationTime())
                 .build();
     }
+    @Builder
     public ProjectDto projectToDto(Project project){
         return ProjectDto.builder()
                 .id(project.getId())
@@ -65,33 +80,49 @@ public class ProjectService {
             return null;
         String fileOriginalName = file.getOriginalFilename();
         String fileExtension = file.getOriginalFilename().substring(fileOriginalName.lastIndexOf("."), fileOriginalName.length());
-        String uploadPath = "C:\\Users\\PC\\Desktop\\ProjectMember Matching\\study\\src\\main\\resources\\static\\project_mainImg";
-        UUID uuid = UUID.randomUUID();
-        String realPath=uploadPath + "\\" + uuid.toString() + fileExtension;
-        File file_server = new File(realPath);
-        file.transferTo(file_server);
-        return "/project_mainImg/"+uuid.toString()+fileExtension;
+        String uuid = String.valueOf(UUID.randomUUID());
+
+        InputStream inputStream = file.getInputStream();
+        File localFile = File.createTempFile(uuid, fileExtension);
+
+        FileUtils.copyInputStreamToFile(inputStream, localFile);
+//        File localFile = new File(localPath); 로컬 전용
+//        file.transferTo(localFile);
+
+        s3Config.amazonS3Client().putObject(new PutObjectRequest(bucket, uuid+fileExtension, localFile)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+        String fileUrl = s3Config.amazonS3Client().getUrl(bucket, uuid+fileExtension).toString();
+
+        return fileUrl;
     }
 
+    @Builder
     public void createFile(List<MultipartFile> fileList, Long projectId) throws IOException {
         String fileOriginalName;
-        String uploadPath;
         String fileExtension;
 
-        UUID uuid;
+        String uuid;
         for(MultipartFile f:fileList) {
             if(f!=null) {
                 fileOriginalName = f.getOriginalFilename();
                 fileExtension = f.getOriginalFilename().substring(fileOriginalName.lastIndexOf("."), fileOriginalName.length());
-                uploadPath = "C:\\Users\\PC\\Desktop\\ProjectMember Matching\\study\\src\\main\\resources\\static\\project_img";
-                uuid = UUID.randomUUID();
-                File file_server = new File(uploadPath + "\\" + uuid.toString() + fileExtension);
-                f.transferTo(file_server);
+                uuid = String.valueOf(UUID.randomUUID());
+
+                InputStream inputStream = f.getInputStream();
+                File localFile = File.createTempFile(uuid, fileExtension);
+                FileUtils.copyInputStreamToFile(inputStream, localFile);
+//                File localFile = new File(localPath); 로컬 전용
+//                f.transferTo(localFile);
+
+                s3Config.amazonS3Client().putObject(new PutObjectRequest(bucket, uuid+fileExtension, localFile)
+                        .withCannedAcl(CannedAccessControlList.PublicRead));
+                String fileUrl = s3Config.amazonS3Client().getUrl(bucket, uuid+fileExtension).toString();
+
 
                 ProjectFile_Img file_db = new ProjectFile_Img().builder()
                         .projectId(projectId)
                         .filename(uuid.toString())
-                        .fileUrl(uploadPath)
+                        .fileUrl(fileUrl)
                         .fileOriginName(fileOriginalName)
                         .fileExtension(fileExtension)
                         .build();
