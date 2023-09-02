@@ -67,7 +67,6 @@ public class MemberService {
         Member findMember = memberRepository.findByemailId(emailId);
         if(findMember==null)
             return true;
-
         else return false;
     }
     public Member findMember(String emailId) {

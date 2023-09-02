@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import post.study.dto.MemberDto;
 import post.study.dto.ProjectDto;
 import post.study.entity.*;
@@ -43,7 +45,7 @@ public class MypageController {
     }
 
     @PostMapping("/mypage-profile")
-    public String profileUpdate(MemberDto memberDto, String language, String field, Model model) {
+    public String profileUpdate(MemberDto memberDto, String language, String field,MultipartFile mainFile, MultipartHttpServletRequest files,Model model) {
 
         memberService.profileUpdate(memberDto, language, field);
         model.addAttribute("msg", "변경되었습니다.");
@@ -115,10 +117,6 @@ public class MypageController {
 
         }
         projectMemberService.deleteApplicant(projectDto, memberDto);
-        System.out.println("value: "+value);
-        System.out.println(value.equals("승인"));
-        System.out.println("projectDto = " + projectDto);
-        System.out.println("memberDto = " + memberDto);
         return value;
 
     }
