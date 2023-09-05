@@ -1,5 +1,4 @@
 package post.study.service;
-
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import jakarta.transaction.Transactional;
@@ -18,6 +17,7 @@ import post.study.repository.FieldProjectRepository;
 import post.study.repository.LanguageProjectRepository;
 import post.study.repository.ProjectFile_ImgRepository;
 import post.study.repository.ProjectRepository;
+import post.study.service.FieldLanguageService;
 
 import java.io.File;
 import java.io.IOException;
@@ -141,7 +141,7 @@ public class ProjectService {
     public Project create(ProjectDto projectDto,String language,String field, MemberDto memberDto) {
         if (search(projectDto) == false) {
             Project project = new Project();
-            project.setProjectLeader(projectDto.getProjectLeader());
+            project.setProjectLeader(memberDto.getUsername());
             project.setProjectName(projectDto.getProjectName());
             project.setScale(projectDto.getScale());
             project.setIntroduction(projectDto.getIntroduction());
