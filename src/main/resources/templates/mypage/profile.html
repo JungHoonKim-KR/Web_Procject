@@ -1,91 +1,169 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <title>Signin Template · Bootstrap v5.1</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
-
-
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-
-
-    <!-- Custom styles for this template -->
-    <link href="css/signin.css" rel="stylesheet">
-    <script src="../../../../../../../IdeaProjects/Wep-pro/main/js/main_post.js"></script>
+    <link rel="stylesheet" href="/css/new_my_page.css">
 </head>
-<body class="text-center">
+<body class="wrapper1" style="background-color:Linen;height:1200px">
+<br> <br> <br> <br>
+<div style="margin-left:380px; display: flex;
+    align-items: center;
+    justify-content: center;
+    ">
+    <button class="my_page_options"
+            style="width:80px;height:30px;margin-top:20px;background-color:white;border-radius:20px;background-color:#13161c;color:white;font-weight:bold"
+            th:onclick="|location.href='@{/mypage-profile}'|">프로필
+    </button>
+    <button class="my_page_options" type="button"
+            style="width:110px;height:30px;margin-left:10px;margin-top:20px;background-color:white;border-radius:20px;font-weight:bold"
+            th:onclick="|location.href='@{/mypage-projectList}'|">프로젝트 관리
+    </button>
+    <button class="my_page_options" type="button"
+            style="width:80px;height:30px;;margin-left:10px;margin-top:20px;background-color:white;border-radius:20px;font-weight:bold"
+            th:onclick="|location.href='@{/mypage-bookmarkProjectList}'|">북마크
+    </button>
 
-<main class="form-signin">
-    <form action="/mypage-profile" method="post">
-        <img class="mb-4" src="css/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-        <h1 class="h3 mb-3 fw-normal">프로필 설정</h1>
-
-        <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-                   name="emailId" th:value="${emailId}" >
-            <label for="floatingInput">아이디</label>
-        </div>
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingPassword" placeholder="Password"
-                   name="password" th:value="${password}">
-            <label for="floatingPassword">패스워드</label>
-        </div>
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingName" placeholder="name"
-                   name="username" th:value="${username}">
-            <label for="floatingPassword">이름</label>
-        </div>
-
-        <select name="field" multiple>
-            <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>
-        </select> 분야
-
-        <select name="language" multiple>
-            <option th:each="l:${lList}" th:value="${l}" th:text="${l}"></option>
-        </select> 언어
-        대표 이미지 <input type="file" multiple="multiple" name="mainFile">
-        프로젝트 소개 이미지 <input type="file" multiple="multiple" name="files"><br>
-        프로젝트 소개 이미지 <input type="file" multiple="multiple" name="files"><br>
-        <p>
-        <p>
-        <p>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">변경</button>
-    </form>
-
-</main>
-
-<div class="list-group">
-    <a th:href="@{/mypage-profile}" class="list-group-item list-group-item-action active">프로필 설정</a>
-    <a th:href="@{/mypage-projectList}" class="list-group-item list-group-item-action ">프로젝트 설정</a>
-    <a th:href="@{/mypage-bookmarkProjectList}" class="list-group-item list-group-item-action">북마크 설정</a>
 </div>
-<a class="btn btn-primary" th:href="@{/}">메인으로 이동</a>
-</body>
-<script th:inline="javascript">
+<div class="wrap">
 
-</script>
-</html>
+    <fieldset style="margin-top:20px;width:700px;height:900px;background-color:white;border:none;border-radius:20px">
+        <br>
+        <span style="margin-left:20px;font-weight:bold;font-size:18px">
+                프로필
+            </span>
+        <br> <br>
+        <button class="changing_profile"
+                style="width:150px;height:40px;margin-top:0px;margin-left:505px;background-color:white;border-radius:20px">
+            프로필 사진 변경
+        </button>
+
+        <img src="./images/my_img.png" class="donga" alt="이미지 불러오기 실패" width="100" height="100"
+             style="margin-bottom:15px;margin-left:100px;border-radius:50%;border:none">
+        <br>
+        <span style="font-weight:bold;margin-left:60px;">Roniebin</span> 님 반갑습니다.<br>
+        <span class="counting" th:onclick="|location.href='@{/mypage-projectList}'|"
+              style="margin-left:120px;font-size:0.8em;color:gray;font-weight:bold"><span
+                style="font-size:1.2em;font-weight:bold">5</span> projects</span>
+        <hr style="width:650px">
+        <br><br>
+        <div class="inform_container">
+            <fieldset style="border-radius:20px;margin-left:30px;width:600px;height:225px">
+                <span style="font-size:15px;font-weight:bold;margin-bottom:5px">개인정보</span>
+                <div style="margin-top:30px ;font-size:14px">
+                    <hr style="margin-top:10px;margin-bottom:10px">
+                    <span style="margin-left:20px">
+                            닉네임 <span style="margin-left:44px">:</span>
+                            <span style="margin-left:50px" th:text="${username}">Roniebin</span>
+                        </span>
+                    <hr style="margin-top:13.5px;margin-bottom:10px">
+
+                    <span style="margin-left:20px">
+                            E-Mail <span style="margin-left:46px">:</span>
+                            <span style="margin-left:50px" th:text="${emailId}">1923986@donga.ac.kr</span>
+                        </span>
+                    <hr style="margin-top:13.5px;margin-bottom:10px">
+
+                    <span style="margin-left:20px">
+                            전화번호 <span style="margin-left:30px">:</span>
+                            <span style="margin-left:50px">01028129123</span>
+                        </span>
+                    <hr style="margin-top:13.5px;margin-bottom:10px">
+                    <span style="margin-left:20px"> 비밀번호 <span style="margin-left:30px">:</span>
+                        <span style="margin-left:50px" th:text="${password}">*********</span>
+                        </span>
+                    <hr style="margin-top:13.5px;margin-bottom:10px">
+                </div>
+            </fieldset>
+            <br><br>
+            <fieldset style="border-radius:20px;margin-left:30px;width:600px;height:135px">
+                <span style="font-size:15px;font-weight:bold;margin-bottom:5px">전공</span>
+                <div style="margin-top:30px ;font-size:14px">
+                    <hr>
+                    <span style="margin-left:20px">
+                            분야 <span style="margin-left:30px">:</span>
+                            <span style="margin-left:50px" th:text="${fList}">프론트엔드</span>
+                        </span>
+                    <hr style="margin-top:13.3px;margin-bottom:10px">
+
+                    <span style="margin-left:20px">
+                            언어 <span style="margin-left:30px">:</span>
+                            <span style="margin-left:50px" th:text="${lList}">JavaScript</span>
+                        </span>
+                    <hr style="margin-top:13.3px;margin-bottom:10px">
+                </div>
+            </fieldset>
+            <br><br>
+            <hr style="width:650px">
+
+            <button class="edit" style="margin-left:300px;margin-top:20px;width:90px;height:40px">수정하기</button>
+
+            <button class="remove_account" style="margin-left:180px">계정 탈퇴</button>
+
+        </div>
+        <!--        수정 태그-->
+        <div class="edit_inform_container">
+            <form action="/mypage-profile" method="POST">
+                <fieldset style="border-radius:20px;margin-left:30px;width:600px;height:225px">
+                    <span style="font-size:15px;font-weight:bold;margin-bottom:5px">개인정보</span>
+                    <div style="margin-top:30px ;font-size:14px">
+                        <hr style="margin-top:10px;margin-bottom:10px">
+                        <span style="margin-left:20px">
+                        닉네임 <span style="margin-left:44px">:</span>
+                        <input type="text" style="margin-left:50px" name="username" th:value="${username}">
+
+                    </span>
+                        <hr style="margin-top:10px;margin-bottom:10px">
+
+                        <span style="margin-left:20px">
+                        E-Mail <span style="margin-left:46px">:</span>
+                        <input type="text" style="margin-left:50px" name="emailId" th:value="${emailId}">
+                    </span>
+                        <hr style="margin-top:10px;margin-bottom:10px">
+
+                        <span style="margin-left:20px">
+                        전화번호 <span style="margin-left:30px">:</span>
+                        <input type="text" style="margin-left:50px" value="01028129123">
+                    </span>
+                        <hr style="margin-top:10px;margin-bottom:10px">
+                        <span style="margin-left:20px"> 비밀번호 <span style="margin-left:30px">:</span>
+                    <input type="password" style="margin-left:50px" name="password" th:value="${password}">
+                <hr style="margin-top:10px;margin-bottom:10px">
+          </span>
+                    </div>
+                </fieldset>
+                <br><br>
+                <fieldset style="border-radius:20px;margin-left:30px;width:600px;height:135px">
+                    <span style="font-size:15px;font-weight:bold;margin-bottom:5px">전공</span>
+                    <div style="margin-top:30px ;font-size:14px">
+                        <hr>
+                        <span style="margin-left:20px">
+                        분야 <span style="margin-left:30px">:</span>
+                        <input type="text" style="margin-left:50px" name="fList" th:value="${fList}">
+                    </span>
+                        <hr style="margin-top:10px;margin-bottom:10px">
+
+                        <span style="margin-left:20px">
+                        언어 <span style="margin-left:30px">:</span>
+                        <input type="text" style="margin-left:50px" name="lList" th:value="${lList}">
+                    </span>
+                        <hr style="margin-top:10px;margin-bottom:10px">
+                    </div>
+                </fieldset>
+                <br><br>
+                <hr style="width:650px">
+                <button class="edit_save" style="margin-left:250px;margin-top:20px;width:90px;height:40px">저장</button>
+                <button class="edit_cancle" type="button" th:onclick="|location.href='@{/mypage-profile}'|" style="margin-top:20px;width:90px;height:40px">취소</button>
+
+            </form>
+
+        </div>
+    </fieldset>
+
+</div>
+<script src="/js/new_my_page.js?ver=2"></script>
+</body>

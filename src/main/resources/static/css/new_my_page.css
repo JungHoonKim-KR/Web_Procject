@@ -1,0 +1,30 @@
+.wrap {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.counting:hover{
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+
+.my_projects{
+    height:22px;
+    margin-top:5px;
+
+
+}
+.my_projects:hover{
+    background-color: #F2F2F2;
+    cursor:pointer;
+}
+
+.edit_my_bookmarks{
+    height:22px;
+    margin-top:5px;
+
+}
