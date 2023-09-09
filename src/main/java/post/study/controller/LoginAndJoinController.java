@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import post.study.dto.MemberDto;
 import post.study.entity.Member;
+import post.study.service.FieldLanguageService;
 import post.study.service.MemberService;
 import post.study.service.ProjectMemberService;
 import post.study.service.ProjectService;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoginAndJoinController {
     private final MemberService memberService;
+    private final FieldLanguageService fieldLanguageService;
     private final ProjectMemberService projectMemberService;
     private final ProjectService projectService;
 
@@ -63,8 +65,9 @@ public class LoginAndJoinController {
 
     @GetMapping("/join")
     public String join(Model model) {
-        List<String> fieldList = projectMemberService.fieldList();
-        List<String> languageList = projectMemberService.languageList();
+
+        List<String> fieldList = fieldLanguageService.fieldList();
+        List<String> languageList = fieldLanguageService.languageList();
 
         model.addAttribute("fList", fieldList);
         model.addAttribute("lList", languageList);
