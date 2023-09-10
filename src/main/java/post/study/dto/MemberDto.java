@@ -10,15 +10,13 @@ public class MemberDto {
     private String emailId;
     private String username;
     private String password;
-    private String position;
-
+    private String phoneNumber;
     @Builder
-    public MemberDto(Long id,String emailId, String username, String password, String position) {
+    public MemberDto(Long id,String emailId, String username, String password,String phoneNumber) {
         this.id=id;
         this.emailId = emailId;
         this.username = username;
         this.password = password;
-        this.position = position;
-
+        this.phoneNumber=phoneNumber;
     }
 }
