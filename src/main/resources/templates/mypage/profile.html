@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/css/new_my_page.css">
 </head>
 <body class="wrapper1" style="background-color:Linen;height:1200px">
-<br> <br> <br> <br>
+
 <div style="margin-left:380px; display: flex;
     align-items: center;
     justify-content: center;
@@ -37,11 +37,11 @@
                 프로필
             </span>
         <br> <br>
-        <button class="changing_profile"
-                style="width:150px;height:40px;margin-top:0px;margin-left:505px;background-color:white;border-radius:20px">
+        <input type="file" class="changing_profile" name="imgFIle"
+                style="width:150px;height:40px;margin-top:0px;margin-left:505px;background-color:white;border-radius:20px;visibility:hidden">
             프로필 사진 변경
-        </button>
-
+        </input>
+        <div style="margin-left:200px">
         <img src="./images/my_img.png" class="donga" alt="이미지 불러오기 실패" width="100" height="100"
              style="margin-bottom:15px;margin-left:100px;border-radius:50%;border:none">
         <br>
@@ -49,6 +49,7 @@
         <span class="counting" th:onclick="|location.href='@{/mypage-projectList}'|"
               style="margin-left:120px;font-size:0.8em;color:gray;font-weight:bold"><span
                 style="font-size:1.2em;font-weight:bold">5</span> projects</span>
+        </div>
         <hr style="width:650px">
         <br><br>
         <div class="inform_container">
@@ -86,13 +87,13 @@
                     <hr>
                     <span style="margin-left:20px">
                             분야 <span style="margin-left:30px">:</span>
-                            <span style="margin-left:50px" th:text="${fList}">프론트엔드</span>
+                            <span style="margin-left:50px" th:text="${myFList}">프론트엔드</span>
                         </span>
                     <hr style="margin-top:13.3px;margin-bottom:10px">
 
                     <span style="margin-left:20px">
                             언어 <span style="margin-left:30px">:</span>
-                            <span style="margin-left:50px" th:text="${lList}">JavaScript</span>
+                            <span style="margin-left:50px" th:text="${myLList}">JavaScript</span>
                         </span>
                     <hr style="margin-top:13.3px;margin-bottom:10px">
                 </div>
@@ -107,7 +108,7 @@
         </div>
         <!--        수정 태그-->
         <div class="edit_inform_container">
-            <form action="/mypage-profile" method="POST">
+            <form action="/mypage-profile" method="POST" enctype="multipart/form-data">
                 <fieldset style="border-radius:20px;margin-left:30px;width:600px;height:225px">
                     <span style="font-size:15px;font-weight:bold;margin-bottom:5px">개인정보</span>
                     <div style="margin-top:30px ;font-size:14px">
@@ -137,19 +138,28 @@
                     </div>
                 </fieldset>
                 <br><br>
-                <fieldset style="border-radius:20px;margin-left:30px;width:600px;height:135px">
+                <fieldset  style="border-radius:20px;margin-left:30px;width:600px;height:135px">
                     <span style="font-size:15px;font-weight:bold;margin-bottom:5px">전공</span>
                     <div style="margin-top:30px ;font-size:14px">
                         <hr>
                         <span style="margin-left:20px">
                         분야 <span style="margin-left:30px">:</span>
-                        <input type="text" style="margin-left:50px" name="fList" th:value="${fList}">
+
+                        <select th:each="mf:${myFList}" name="field" style="margin-left:40px;width:100px">
+                            <option th:value="${mf}" th:text="${mf}" selected></option>
+                            <option value="null">없음</option>
+                            <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>
+                        </select>
                     </span>
                         <hr style="margin-top:10px;margin-bottom:10px">
 
                         <span style="margin-left:20px">
                         언어 <span style="margin-left:30px">:</span>
-                        <input type="text" style="margin-left:50px" name="lList" th:value="${lList}">
+                        <select th:each="ml:${myLList}" name="language" style="margin-left:40px;width:100px">
+                            <option th:value="${ml}" th:text="${ml}" selected></option>
+                            <option value="null">없음</option>
+                            <option th:each="l:${lList}" th:value="${l}" th:text="${l}"></option>
+                        </select>
                     </span>
                         <hr style="margin-top:10px;margin-bottom:10px">
                     </div>
@@ -165,5 +175,5 @@
     </fieldset>
 
 </div>
-<script src="/js/new_my_page.js?ver=2"></script>
+<script src="/js/new_my_page.js?ver=3"></script>
 </body>

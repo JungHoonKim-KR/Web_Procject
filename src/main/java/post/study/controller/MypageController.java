@@ -14,6 +14,7 @@ import post.study.dto.ProjectDto;
 import post.study.entity.*;
 import post.study.service.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,19 +34,36 @@ public class MypageController {
             model.addAttribute("url", "back");
             return "popup";
         }
-        List<String> fieldList = projectMemberService.fieldList();
-        List<String> languageList = projectMemberService.languageList();
+        List<String> myLanguage = memberService.findMyLanguage(memberDto);
+        List<String> myField = memberService.findMyField(memberDto);
+
+        List<String> fieldList = fieldLanguageService.fieldList();
+        List<String> languageList = fieldLanguageService.languageList();
+
+        for(String s: myField){
+            System.out.println("Dwad: "+s);
+        }
+
+        for(String s:myLanguage){
+            System.out.println("wwww: "+s);
+        }
+
         model.addAttribute("emailId", memberDto.getEmailId());
         model.addAttribute("password", memberDto.getPassword());
         model.addAttribute("username", memberDto.getUsername());
-        model.addAttribute("fList", fieldList);
-        model.addAttribute("lList", languageList);
+        model.addAttribute("myFList",myField);
+        model.addAttribute("myLList",myLanguage);
+        model.addAttribute("fList",fieldList);
+        model.addAttribute("lList",languageList);
+
+//        model.addAttribute("fList", String.join(",",myField));
+//        model.addAttribute("lList", String.join(",",myLanguage));
 
         return "mypage/profile";
     }
 
     @PostMapping("/mypage-profile")
-    public String profileUpdate(MemberDto memberDto, String language, String field,MultipartFile mainFile, MultipartHttpServletRequest files,Model model) {
+    public String profileUpdate(MemberDto memberDto, String language, String field, MultipartFile imgFile, MultipartHttpServletRequest files, Model model) {
 
         memberService.profileUpdate(memberDto, language, field);
         model.addAttribute("msg", "변경되었습니다.");
@@ -58,6 +76,7 @@ public class MypageController {
         MemberDto memberDto = (MemberDto) session.getAttribute("member");
         Member member = memberService.memberToEntity(memberDto);
         List<ProjectMember> myProjectList = projectMemberService.findMyProjectList(member);
+        model.addAttribute("username",memberDto);
         model.addAttribute("pList", myProjectList);
         return "mypage/projectList";
 
@@ -66,6 +85,7 @@ public class MypageController {
     @GetMapping("/mypage-project")
     public String project(String projectName, Model model) {
         Project project = projectService.findProject(projectName);
+        List<ProjectFile_Img> projectImg = projectService.findProjectImg(project.getId());
         ProjectDto projectDto = projectService.projectToDto(project);
         List<Applicant> applicantList = projectMemberService.findApplicant(projectDto);
         List<String> fieldList = fieldLanguageService.fieldList();
@@ -73,6 +93,7 @@ public class MypageController {
         model.addAttribute("project", projectDto);
         model.addAttribute("fList", fieldList);
         model.addAttribute("lList", languageList);
+        model.addAttribute("imgList", projectImg);
 
         return "mypage/project";
 
@@ -110,10 +131,10 @@ public class MypageController {
 
     @GetMapping("/mypage-project/approve")
     @ResponseBody
-    public String approving(String value,ProjectDto projectDto, MemberDto memberDto, Model model) {
-        if(value.equals("승인")) {
+    public String approving(String value, ProjectDto projectDto, MemberDto memberDto, Model model) {
+        if (value.equals("승인")) {
             projectMemberService.joinProjectMember(projectDto, memberDto);
-            System.out.println("value: "+value);
+            System.out.println("value: " + value);
 
         }
         projectMemberService.deleteApplicant(projectDto, memberDto);
