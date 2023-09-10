@@ -13,6 +13,7 @@ slide_circles.forEach(function (item, index) {
     });
 
 });
+
 slide_circles[0].addEventListener("click", function (e) {
     project_pic.src = "./images/프로젝트사진1.jpg"
     slide_circles[0].style.backgroundColor = "black"
@@ -128,8 +129,10 @@ heart.forEach(function (item, index) {
                 .then(data => {
                     if (data === "true") {
                         heart[index].src = "./images/하트모양(빨강).jpg";
+                        alert("북마크가 추가되었습니다.")
                     } else {
                         heart[index].src = "./images/하트모양(회색).jpg";
+                        alert("북마크가 해제되었습니다.")
                     }
                 })
                 .catch(error => {
