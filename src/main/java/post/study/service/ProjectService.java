@@ -152,6 +152,8 @@ public class ProjectService {
             project.setScale(projectDto.getScale());
             project.setIntroduction(projectDto.getIntroduction());
             project.setImg(projectDto.getImg());
+            project.setComment(projectDto.getComment());
+            project.setTotalHeadcount(projectDto.getTotalHeadcount());
 
             if(language!=null) {
                 List<String> languageList = fieldLanguageService.getLanguageList(language);

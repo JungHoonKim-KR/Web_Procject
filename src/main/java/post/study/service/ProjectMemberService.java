@@ -32,24 +32,28 @@ public class ProjectMemberService {
     public void joinProjectMember(ProjectDto projectDto, MemberDto memberDto) {
         Member member = memberService.findMember(memberDto.getEmailId());
         Project project = projectService.findProject(projectDto.getId());
-        project.setCurHeadcount(project.getCurHeadcount()+1);
+        if (project.getCurHeadcount() == null)
+            project.setCurHeadcount(1);
+        else
+            project.setCurHeadcount(project.getCurHeadcount() + 1);
+
         ProjectMember projectMember = new ProjectMember();
         projectMember.setProjectMember(member, project);
         projectMemberRepository.save(projectMember);
     }
 
-    public void deleteApplicant(ProjectDto projectDto, MemberDto memberDto){
+    public void deleteApplicant(ProjectDto projectDto, MemberDto memberDto) {
         Member member = memberService.findMember(memberDto.getEmailId());
-        applicationRepository.deleteApplicant(projectDto.getId(),member.getId());
+        applicationRepository.deleteApplicant(projectDto.getId(), member.getId());
     }
 
-    public Boolean applyMemberToProject(ProjectDto projectDto,MemberDto memberDto){
+    public Boolean applyMemberToProject(ProjectDto projectDto, MemberDto memberDto) {
         Member member = memberRepository.findByemailId(memberDto.getEmailId());
         Project project = projectService.projectToEntity(projectDto);
 
-        if(projectMemberRepository.findProjectByMember_id(project.getId(),member.getId())==null){
+        if (projectMemberRepository.findProjectByMember_id(project.getId(), member.getId()) == null) {
             Applicant applicant = new Applicant();
-            applicant.setApplicant(member,project);
+            applicant.setApplicant(member, project);
             applicationRepository.save(applicant);
             return true;
         }
@@ -98,8 +102,8 @@ public class ProjectMemberService {
         return memberRepository.findMember(list);
     }
 
-    public List<Applicant> findApplicant(ProjectDto projectDto){
-       return applicationRepository.findAllByProjectId(projectDto.getId());
+    public List<Applicant> findApplicant(ProjectDto projectDto) {
+        return applicationRepository.findAllByProjectId(projectDto.getId());
     }
 
 }
