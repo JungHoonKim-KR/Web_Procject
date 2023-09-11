@@ -13,10 +13,12 @@ public class ProjectDto {
     private String img;
     private String introduction;
     private String comment;
+    private Integer curHeadcount;
+    private Integer totalHeadcount;
     private LocalDateTime creationTime;
 
     @Builder
-    public ProjectDto(Long id,String projectName, String projectLeader, String scale, String img, String introduction,String comment,LocalDateTime creationTime) {
+    public ProjectDto(Long id,String projectName, String projectLeader, String scale, String img, String introduction,String comment,Integer curHeadcount,Integer totalHeadcount,LocalDateTime creationTime) {
         this.id=id;
         this.projectName = projectName;
         this.projectLeader = projectLeader;
@@ -24,6 +26,8 @@ public class ProjectDto {
         this.img = img;
         this.introduction = introduction;
         this.comment=comment;
+        this.curHeadcount=curHeadcount;
+        this.totalHeadcount=totalHeadcount;
         this.creationTime=creationTime;
     }
 }

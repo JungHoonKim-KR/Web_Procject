@@ -53,6 +53,8 @@ public class ProjectService {
                 .img(projectDto.getImg())
                 .introduction(projectDto.getIntroduction())
                 .comment(projectDto.getComment())
+                .curHeadcount(projectDto.getCurHeadcount())
+                .totalHeadcount(projectDto.getTotalHeadcount())
                 .createTime(projectDto.getCreationTime())
                 .build();
     }
@@ -66,6 +68,8 @@ public class ProjectService {
                 .img(project.getImg())
                 .introduction(project.getIntroduction())
                 .comment(project.getComment())
+                .curHeadcount(project.getCurHeadcount())
+                .totalHeadcount(project.getTotalHeadcount())
                 .creationTime(project.getCreateTime())
                 .build();
     }

@@ -32,7 +32,7 @@ public class ProjectMemberService {
     public void joinProjectMember(ProjectDto projectDto, MemberDto memberDto) {
         Member member = memberService.findMember(memberDto.getEmailId());
         Project project = projectService.findProject(projectDto.getId());
-//        Project project = projectService.projectToEntity(projectDto);
+        project.setCurHeadcount(project.getCurHeadcount()+1);
         ProjectMember projectMember = new ProjectMember();
         projectMember.setProjectMember(member, project);
         projectMemberRepository.save(projectMember);
@@ -43,19 +43,23 @@ public class ProjectMemberService {
         applicationRepository.deleteApplicant(projectDto.getId(),member.getId());
     }
 
-    public void applyMemberToProject(ProjectDto projectDto,MemberDto memberDto){
+    public Boolean applyMemberToProject(ProjectDto projectDto,MemberDto memberDto){
         Member member = memberRepository.findByemailId(memberDto.getEmailId());
         Project project = projectService.projectToEntity(projectDto);
 
-        Applicant applicant = new Applicant();
-        applicant.setApplicant(member,project);
-        applicationRepository.save(applicant);
+        if(projectMemberRepository.findProjectByMember_id(project.getId(),member.getId())==null){
+            Applicant applicant = new Applicant();
+            applicant.setApplicant(member,project);
+            applicationRepository.save(applicant);
+            return true;
+        }
 
+        return false;
     }
 
     //로컬에서 확인하기 위한 메소드 내일 api용 메소드 만들 예쩡
     public List<String> findMyProject(Member member) {
-        List<ProjectMember> allProject = projectMemberRepository.findProject_idByMember_id(member.getId());
+        List<ProjectMember> allProject = projectMemberRepository.findProjectListByMember_id(member.getId());
         List<String> tempProject = new ArrayList<>();
         for (ProjectMember projectMember : allProject)
             tempProject.add(projectMember.getProject().getProjectName());
@@ -63,7 +67,7 @@ public class ProjectMemberService {
     }
 
     public List<ProjectMember> findMyProjectList(Member member) {
-        List<ProjectMember> projectIdByMemberId = projectMemberRepository.findProject_idByMember_id(member.getId());
+        List<ProjectMember> projectIdByMemberId = projectMemberRepository.findProjectListByMember_id(member.getId());
         return projectIdByMemberId;
     }
 

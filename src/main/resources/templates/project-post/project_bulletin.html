@@ -17,32 +17,33 @@
 <input type="hidden" id="urlParam" th:value="${urlParam}">
 <input type="hidden" id="paging" th:value="${paging}">
 <input type="hidden" id="cur_pageLine" th:value="${paging.getPageLine()}">
-    <header id="contents_box">
+<header id="contents_box" style="border-bottom:solid 1px white">
 
-        <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="45"></a>
-        <div class="nav_items" style="margin-left:150px;">
-            <ul>
-                <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
-                <li><a href="/"><span style="color:white">공지사항</span></a></li>
-                <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
-                <li><a href="/"><span style="color:white">랭킹</span></a></li>
-                <li><a>몰?루</a></li>
-            </ul>
-            <a th:href="@{/mypage-profile}"><img src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none"></a>
-            &nbsp;
+    <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
+                                    width="200" height="45"></a>
+    <div class="nav_items" style="margin-left:150px;">
+        <ul>
+            <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
+            <li><a href="/"><span style="color:white">공지사항</span></a></li>
+            <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
+            <li><a href="/"><span style="color:white">랭킹</span></a></li>
+        </ul>
+        <a th:href="@{/mypage-profile}"><img src="/images/my_img.png" width="40" height="30"
+                                             style="margin-left:30px;border-radius:50%;border:none"></a>
+        &nbsp;
 
-        </div>
+    </div>
 
-        <span th:if="${username==null}">
+    <span th:if="${username==null}">
             <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
                     style="margin-right:50px; width:150px ;height:30px">로그인</button>
         </span>
-        <span th:unless="${username==null}">
+    <span th:unless="${username==null}">
                   <span th:text="${username}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
             <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
                     style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
                 </span>
-    </header>
+</header>
 
 <div class="wrap2" style=" width:1500px;height:2000px">
 
@@ -106,7 +107,7 @@
         </form>
         <a th:href="@{/project-create}">프로젝트 생성</a>
 
-        <span th:if="${pList==null}" style="color:white; align-content: center" >검색 결과가 없습니다</span>
+        <span th:if="${pList==null}" style="color:white; align-content: center">검색 결과가 없습니다</span>
         <div th:unless="${pList==null}" style="height:670px">
             <ul style="margin-left:70px; margin-top: -100px">
                 <li style="margin-top:150px" th:each="p:${paging.getProjectList()}">
@@ -116,11 +117,13 @@
                     <a th:href=" '/project-introduce?projectName=' +${p.projectName}" class="proj"><span
                             class="thumb">
 <!--                        사용자가 따로 이미지를 지정하지 않았다면 디폴트 사진 적용-->
-                        <img class="posting" th:if="${p.img}==null" src="/images/개발자사진.jpg" width="200" height="150" alt="">
-                        <img class="posting" th:unless="${p.img}==null" th:src="${p.img}" width="200" height="150" alt="">
+                        <img class="posting" th:if="${p.img}==null" src="/images/개발자사진.jpg" width="200" height="150"
+                             alt="">
+                        <img class="posting" th:unless="${p.img}==null" th:src="${p.img}" width="200" height="150"
+                             alt="">
                         <em>프로젝트 소개 보기</em></span>
                         <strong th:text="${p.projectName}" style="color:white;width:200px">프로젝트 제목 </strong></a>
-                    <p th:text="${p.introduction}">프로젝트 소개</p>
+                    <span th:text="'('+${p.getCurHeadcount()}+'/'+${p.getTotalHeadcount()}+')'" style="color:white"></span><br>
                     <span th:each="f:${p.getFieldList()}">
                         <text style="color: gray" th:text="${f.getField()}"></text>
                     </span>
@@ -134,81 +137,97 @@
 
         <div th:unless="${pList==null}" style="border-bottom:1px solid white">
             <div class="pagination-container" style="color:white;margin-top: 100px">
-<!--                현재 페이지 넘버-->
+                <!--                현재 페이지 넘버-->
                 <span th:if="${type=='ALL'}">
 
-                <button class="first-button"  th:onclick="|location.href='@{/project(page=0)}'|" style="color:white;margin-left:100px;"><span>처음</span></button>
+                <button class="first-button" th:onclick="|location.href='@{/project(page=0)}'|"
+                        style="color:white;margin-left:100px;"><span>처음</span></button>
 
-                <button class="prev-button"  th:if="${paging.getPageLine()}>0" style="color:white;margin-left: 20px"
-                   th:onclick="|location.href='@{/project(page=${paging.getPrevPage()})}'|"><span>이전</span></button>
+                <button class="prev-button" th:if="${paging.getPageLine()}>0" style="color:white;margin-left: 20px"
+                        th:onclick="|location.href='@{/project(page=${paging.getPrevPage()})}'|"><span>이전</span></button>
 
-                <span th:id="currentPage+${page}" th:each="page: ${#numbers.sequence(paging.getStartPage(), paging.getEndPage())}">
+                <span th:id="currentPage+${page}"
+                      th:each="page: ${#numbers.sequence(paging.getStartPage(), paging.getEndPage())}">
                  <button class="number-button " th:text="${page+1}" style="color:white;margin-left:20px;"
-                    th:onclick="|location.href='@{/project(page=${page})}'|"></button>
+                         th:onclick="|location.href='@{/project(page=${page})}'|"></button>
                     </span>
 
-            <button class="next-button" th:if="${paging.getPageLine()}<${paging.getTotalPageLine()}" style="color:white; margin-left: 20px"
-               th:onclick="|location.href='@{/project(page=${paging.getNextPage()})}'|"><span>다음</span></button>
+            <button class="next-button" th:if="${paging.getPageLine()}<${paging.getTotalPageLine()}"
+                    style="color:white; margin-left: 20px"
+                    th:onclick="|location.href='@{/project(page=${paging.getNextPage()})}'|"><span>다음</span></button>
 
-                <button class="last-button" th:onclick="|location.href='@{/project(page=${paging.getTotalPage()})}'|" style="color:white;margin-left:20px;"><span>마지막</span></button>
+                <button class="last-button" th:onclick="|location.href='@{/project(page=${paging.getTotalPage()})}'|"
+                        style="color:white;margin-left:20px;"><span>마지막</span></button>
 
                 </span>
 
                 <span type="hidden" th:if="${type=='SEARCH'}">
                 <span type="hidden" th:if="${searchField}==null">
-                <button class="first-button" th:onclick="|location.href='@{/projectSearch(page=0,language=${searchLanguage})}'|"
-                   style="color:white;margin-left:100px;"><span>처음</span></button>
+                <button class="first-button"
+                        th:onclick="|location.href='@{/projectSearch(page=0,language=${searchLanguage})}'|"
+                        style="color:white;margin-left:100px;"><span>처음</span></button>
 
                 <button class="prev-button" th:if="${paging.getPageLine()}>0" style="color:white; margin-left: 20px"
-                   th:onclick="|location.href='@{/projectSearch(page=${paging.getPrevPage()}, language=${searchLanguage})}'|"><span>이전</span></button>
-                <span class="currentPage" th:each="page: ${#numbers.sequence(paging.getStartPage(), paging.getEndPage())}">
-         <button class=" number-button"  th:text="${page+1}" style="color:white;margin-left:20px;"
-            th:onclick="|location.href='@{/projectSearch(page=${page},language=${searchLanguage})}'|"></button>
+                        th:onclick="|location.href='@{/projectSearch(page=${paging.getPrevPage()}, language=${searchLanguage})}'|"><span>이전</span></button>
+                <span class="currentPage"
+                      th:each="page: ${#numbers.sequence(paging.getStartPage(), paging.getEndPage())}">
+         <button class=" number-button" th:text="${page+1}" style="color:white;margin-left:20px;"
+                 th:onclick="|location.href='@{/projectSearch(page=${page},language=${searchLanguage})}'|"></button>
                     </span>
 
-                <button class="next-button" th:if="${paging.getPageLine()}<${paging.getTotalPageLine()}" style="color:white; margin-left: 20px"
-                   th:onclick="|location.href='@{/projectSearch(page=${paging.getNextPage()},language=${searchLanguage})}'|"><span>다음</span></button>
+                <button class="next-button" th:if="${paging.getPageLine()}<${paging.getTotalPageLine()}"
+                        style="color:white; margin-left: 20px"
+                        th:onclick="|location.href='@{/projectSearch(page=${paging.getNextPage()},language=${searchLanguage})}'|"><span>다음</span></button>
 
-                <button class="last-button" th:onclick="|location.href='@{/projectSearch(page=${paging.getTotalPage()},language=${searchLanguage})}'|"
-                   style="color:white;margin-left:20px;"><span>마지막</span></button>
+                <button class="last-button"
+                        th:onclick="|location.href='@{/projectSearch(page=${paging.getTotalPage()},language=${searchLanguage})}'|"
+                        style="color:white;margin-left:20px;"><span>마지막</span></button>
 
                 </span>
 
                 <span type="hidden" th:if="${searchLanguage}==null">
-                <button class="first-button" th:onclick="|location.href='@{/projectSearch(page=0,field=${searchField})}'|"
-                   style="color:white;margin-left:100px;"><span>처음</span></button>
+                <button class="first-button"
+                        th:onclick="|location.href='@{/projectSearch(page=0,field=${searchField})}'|"
+                        style="color:white;margin-left:100px;"><span>처음</span></button>
 
                 <button class="prev-button" th:if="${paging.getPageLine()}>0" style="color:white; margin-left: 20px"
-                   th:onclick="|location.href='@{/projectSearch(page=${paging.getPrevPage()}, field=${searchField})}'|"><span>이전</span></button>
-                <span class="currentPage" th:each="page: ${#numbers.sequence(paging.getStartPage(), paging.getEndPage())}">
+                        th:onclick="|location.href='@{/projectSearch(page=${paging.getPrevPage()}, field=${searchField})}'|"><span>이전</span></button>
+                <span class="currentPage"
+                      th:each="page: ${#numbers.sequence(paging.getStartPage(), paging.getEndPage())}">
          <button class="number-button " th:text="${page+1}" style="color:white;margin-left:20px;"
-            th:onclick="|location.href='@{/projectSearch(page=${page},field=${searchField})}'|"></button>
+                 th:onclick="|location.href='@{/projectSearch(page=${page},field=${searchField})}'|"></button>
                     </span>
 
-                <button class="next-button" th:if="${paging.getPageLine()}<${paging.getTotalPageLine()}" style="color:white; margin-left: 20px"
-                   th:onclick="|location.href='@{/projectSearch(page=${paging.getNextPage()},field=${searchField})}'|"><span>다음</span></button>
+                <button class="next-button" th:if="${paging.getPageLine()}<${paging.getTotalPageLine()}"
+                        style="color:white; margin-left: 20px"
+                        th:onclick="|location.href='@{/projectSearch(page=${paging.getNextPage()},field=${searchField})}'|"><span>다음</span></button>
 
-                <button class="last-button" th:onclick="|location.href='@{/projectSearch(page=${paging.getTotalPage()},field=${searchField})}'|"
-                   style="color:white;margin-left:20px;"><span>마지막</span></button>
+                <button class="last-button"
+                        th:onclick="|location.href='@{/projectSearch(page=${paging.getTotalPage()},field=${searchField})}'|"
+                        style="color:white;margin-left:20px;"><span>마지막</span></button>
 
                 </span>
 
                 <span type="hidden" th:if="${searchLanguage}!=null and ${searchField}!=null">
-                <button class="first-button" th:onclick="|location.href='@{/projectSearch(page=0,field=${searchField},language=${searchLanguage})}'|"
-                   style="color:white;margin-left:100px;"><span>처음</span></button>
+                <button class="first-button"
+                        th:onclick="|location.href='@{/projectSearch(page=0,field=${searchField},language=${searchLanguage})}'|"
+                        style="color:white;margin-left:100px;"><span>처음</span></button>
 
                 <button class="prev-button" th:if="${paging.getPageLine()}>0" style="color:white; margin-left: 20px"
-                   th:onclick="|location.href='@{/projectSearch(page=${paging.getPrevPage()}, field=${searchField},language=${searchLanguage})}'|"><span>이전</span></button>
-                <span class="currentPage" th:each="page: ${#numbers.sequence(paging.getStartPage(), paging.getEndPage())}">
+                        th:onclick="|location.href='@{/projectSearch(page=${paging.getPrevPage()}, field=${searchField},language=${searchLanguage})}'|"><span>이전</span></button>
+                <span class="currentPage"
+                      th:each="page: ${#numbers.sequence(paging.getStartPage(), paging.getEndPage())}">
          <button class="number-button" th:text="${page+1}" style="color:white;margin-left:20px;"
-            th:onclick="|location.href='@{/projectSearch(page=${page},field=${searchField},language=${searchLanguage})}'|"></button>
+                 th:onclick="|location.href='@{/projectSearch(page=${page},field=${searchField},language=${searchLanguage})}'|"></button>
                     </span>
 
-                <button class="next-button" th:if="${paging.getPageLine()}<${paging.getTotalPageLine()}" style="color:white; margin-left: 20px"
-                   th:onclick="|location.href='@{/projectSearch(page=${paging.getNextPage()},field=${searchField},language=${searchLanguage})}'|"><span>다음</span></button>
+                <button class="next-button" th:if="${paging.getPageLine()}<${paging.getTotalPageLine()}"
+                        style="color:white; margin-left: 20px"
+                        th:onclick="|location.href='@{/projectSearch(page=${paging.getNextPage()},field=${searchField},language=${searchLanguage})}'|"><span>다음</span></button>
 
-                <button class="last-button" th:onclick="|location.href='@{/projectSearch(page=${paging.getTotalPage()},field=${searchField},language=${searchLanguage})}'|"
-                   style="color:white;margin-left:20px;"><span>마지막</span></button>
+                <button class="last-button"
+                        th:onclick="|location.href='@{/projectSearch(page=${paging.getTotalPage()},field=${searchField},language=${searchLanguage})}'|"
+                        style="color:white;margin-left:20px;"><span>마지막</span></button>
                 </span>
                 </span>
             </div>
@@ -237,7 +256,7 @@
 </div>
 
 
-<script th:inline="javascript" type="text/javascript" src="/js/project_bulletin.js">
+<script th:inline="javascript" type="text/javascript" src="/js/project_bulletin.js?ver=1">
 </script>
 </body>
 </html>

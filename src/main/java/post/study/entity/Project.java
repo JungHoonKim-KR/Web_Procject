@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,9 @@ public class Project {
     private String img;
     private String introduction;
     private String comment;
+    @ColumnDefault("1")
+    private Integer curHeadcount;
+    private Integer totalHeadcount;
     private LocalDateTime createTime = LocalDateTime.now();
 
 
@@ -42,7 +46,7 @@ public class Project {
 
 
     @Builder
-    public Project(Long id,String projectName, String projectLeader, String scale, String img, String introduction,String comment,LocalDateTime createTime) {
+    public Project(Long id,String projectName, String projectLeader, String scale, String img, String introduction,String comment,Integer curHeadcount,Integer totalHeadcount,LocalDateTime createTime) {
         this.id=id;
         this.projectName = projectName;
         this.projectLeader = projectLeader;
@@ -50,6 +54,8 @@ public class Project {
         this.img = img;
         this.introduction = introduction;
         this.comment=comment;
+        this.curHeadcount=curHeadcount;
+        this.totalHeadcount=totalHeadcount;
         this.createTime=createTime;
     }
 

@@ -11,8 +11,9 @@ import java.util.List;
 
 @Repository
 public interface ProjectMemberRepository extends JpaRepository<ProjectMember,Long> {
-
-    List<ProjectMember> findProject_idByMember_id(Long id);
+    @Query("select p from ProjectMember p where p.project.id=:projectId and p.member.id=:memberId")
+    ProjectMember findProjectByMember_id(@Param("projectId")Long projectId,@Param("memberId") Long memberId);
+    List<ProjectMember> findProjectListByMember_id(Long id);
     List<ProjectMember> findMember_idByProject_id(Long id);
     @Query("select m from ProjectMember m where m.member.id=:id")
     List<ProjectMember> findprojectMemberList(@Param("id")Long id);

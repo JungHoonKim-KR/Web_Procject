@@ -171,18 +171,25 @@ public class ProjectController {
             model.addAttribute("username", memberDto.getUsername());
         }
         Project project = projectService.findProject(projectName);
+        List<String> fList = projectService.findAllFieldString(project);
+        List<String> lList = projectService.findAllLanguageString(project);
+
         List<ProjectFile_Img> projectImg = projectService.findProjectImg(project.getId());
         ProjectDto projectDto = projectService.projectToDto(project);
         model.addAttribute("project",projectDto);
         model.addAttribute("imgList",projectImg);
+        model.addAttribute("fList",fList);
+        model.addAttribute("lList",lList);
         return "project-post/project";
     }
 
     @GetMapping("/project-apply")
     public String projectApply(HttpSession session, ProjectDto projectDto, Model model) {
         MemberDto memberDto = (MemberDto) session.getAttribute("member");
-        projectMemberService.applyMemberToProject(projectDto, memberDto);
-        model.addAttribute("msg", "신청 완료");
+        if(projectMemberService.applyMemberToProject(projectDto, memberDto)==true) {
+            model.addAttribute("msg", "신청 완료");
+        }
+        else model.addAttribute("msg","이미 가입되어 있습니다.");
         model.addAttribute("url", "back");
         return "popup";
     }
