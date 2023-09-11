@@ -28,6 +28,7 @@ public class MemberService {
                 .username(member.getUsername())
                 .password(member.getPassword())
                 .phoneNumber(member.getPhoneNumber())
+                .profileImg(member.getProfileImg())
                 .build();
     }
 
@@ -38,6 +39,7 @@ public class MemberService {
                 .username(memberDto.getUsername())
                 .password(memberDto.getPassword())
                 .phoneNumber(memberDto.getPhoneNumber())
+                .profileImg(memberDto.getProfileImg())
                 .build();
     }
 

@@ -20,6 +20,7 @@ public class Member {
     private String username;
     private String password;
     private String phoneNumber;
+    private String profileImg;
 
     @OneToMany(mappedBy = "member") //멤버의 질문
     private List<Question> questionList = new ArrayList<>();
@@ -43,12 +44,13 @@ public class Member {
     }
 
     @Builder
-    public Member(Long id,String emailId, String username, String password,String phoneNumber) {
+    public Member(Long id,String emailId, String username, String password,String phoneNumber,String profileImg) {
         this.id=id;
         this.emailId = emailId;
         this.username = username;
         this.password = password;
         this.phoneNumber=phoneNumber;
+        this.profileImg=profileImg;
     }
 
     public void addBookmarkProjectList(BookmarkProject bookmarkProject) {
