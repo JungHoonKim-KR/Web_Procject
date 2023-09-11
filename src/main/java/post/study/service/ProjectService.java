@@ -52,6 +52,7 @@ public class ProjectService {
                 .scale(projectDto.getScale())
                 .img(projectDto.getImg())
                 .introduction(projectDto.getIntroduction())
+                .comment(projectDto.getComment())
                 .createTime(projectDto.getCreationTime())
                 .build();
     }
@@ -64,6 +65,7 @@ public class ProjectService {
                 .scale(project.getScale())
                 .img(project.getImg())
                 .introduction(project.getIntroduction())
+                .comment(project.getComment())
                 .creationTime(project.getCreateTime())
                 .build();
     }
@@ -232,6 +234,13 @@ public class ProjectService {
     public List<Field_Project> findAllField(Project project){
         List<Field_Project> allById = projectRepository.findFieldById(project.getId());
         return allById;
+    }
+
+    public List<String> findAllFieldString(Project project){
+        return projectRepository.findFieldByIdVerString(project.getId());
+    }
+    public List<String> findAllLanguageString(Project project){
+        return projectRepository.findLanguageByIdVerString(project.getId());
     }
 
 

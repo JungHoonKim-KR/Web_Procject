@@ -24,6 +24,8 @@ public class QProject extends EntityPathBase<Project> {
 
     public final ListPath<BookmarkProject, QBookmarkProject> bookmarkProjectList = this.<BookmarkProject, QBookmarkProject>createList("bookmarkProjectList", BookmarkProject.class, QBookmarkProject.class, PathInits.DIRECT2);
 
+    public final StringPath comment = createString("comment");
+
     public final DateTimePath<java.time.LocalDateTime> createTime = createDateTime("createTime", java.time.LocalDateTime.class);
 
     public final ListPath<Field_Project, QField_Project> fieldList = this.<Field_Project, QField_Project>createList("fieldList", Field_Project.class, QField_Project.class, PathInits.DIRECT2);

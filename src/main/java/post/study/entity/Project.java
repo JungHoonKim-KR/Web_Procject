@@ -23,6 +23,7 @@ public class Project {
     private String scale;
     private String img;
     private String introduction;
+    private String comment;
     private LocalDateTime createTime = LocalDateTime.now();
 
 
@@ -41,13 +42,14 @@ public class Project {
 
 
     @Builder
-    public Project(Long id,String projectName, String projectLeader, String scale, String img, String introduction,LocalDateTime createTime) {
+    public Project(Long id,String projectName, String projectLeader, String scale, String img, String introduction,String comment,LocalDateTime createTime) {
         this.id=id;
         this.projectName = projectName;
         this.projectLeader = projectLeader;
         this.scale = scale;
         this.img = img;
         this.introduction = introduction;
+        this.comment=comment;
         this.createTime=createTime;
     }
 

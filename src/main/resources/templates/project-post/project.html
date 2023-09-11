@@ -16,10 +16,10 @@
   <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집.jpg" id="donga"alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="45"></a>
   <div class="nav_items" style="margin-left:150px;">
     <ul>
-      <li><a href="/">프로젝트 모집</a></li>
-      <li><a href="/">공지사항</a></li>
-      <li><a th:href="@{/question}" >문의게시판</a></li>
-      <li><a href="/">랭킹</a></li>
+      <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
+      <li><a href="/"><span style="color:white">공지사항</span></a></li>
+      <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
+      <li><a href="/"><span style="color:white">랭킹</span></a></li>
     </ul>
     <a th:href="@{/mypage-profile}"><img src="/images/my_img.png" width="40" height="30"  style="margin-left:30px;border-radius:50%;border:none"></a>
     &nbsp;
@@ -70,38 +70,38 @@
         <fieldset style=" background-color: white;
                     color: black;
                     width:600px;height:850px;text-align:left;border-radius:5%">
-          <span style="font-weight:bold;font-size:20px">프로젝트 명 : 개발자 구인 사이트</span>
+            프로젝트 명 : <span style="font-weight:bold;font-size:20px" th:text="${project.getProjectName()}"> 개발자 구인 사이트</span>
 
           <br><br><br>
-          <span style="font-weight:bold;">* 프로젝트 종류 : 웹사이트 개발</span>
+<!--          <span style="font-weight:bold;">* 프로젝트 종류 : 웹사이트 개발</span>-->
 
+<!--          <br><br>-->
+            * 프로젝트 규모 : <span style="font-weight:bold;" th:text="${project.getScale()}"> 상</span>
+          <br>
+<!--          <span style="font-weight:bold">* 모집 인원 : 4명 </span>-->
+<!--          <br><br>-->
+            * 프로젝트 리더 : <span style="font-weight:bold" th:text="${project.getProjectLeader()}"> 김정훈 </span>
           <br><br>
-          <span style="font-weight:bold;">* 난이도 : 상</span>
+            * 모집 분야 : <span style="font-weight:bold"th:text="${fList}+${lList}"> 프론트엔드 ,백엔드</span>
+          <br><br>
+            &lt소개글&gt<br><br>
+            <span style="font-weight:bold" th:text="${project.getIntroduction()}"></span>
+<!--          <span>-->
+<!--                            프로젝트를 시작하려는 개발자를 모집하고, 프로젝트를 할 수 있도록 지원하는 사이트입니다<br>-->
+<!--                            <br>-->
+<!--                            * 서든어택 용병시스템과 유사 <br>-->
+<!--                            * 자기소개서를 등록하는 게시판이라고 생각하면 됨 <br>-->
+<!--                            <br>-->
+<!--                            <span style="font-weight:bold;">기능 구현</span>-->
+<!--                            <br>-->
+<!--                            * 매칭 시스템 : 인원을 모집하는데 있어서 소통하는 매체를 1대1 쪽지로 선택<br>-->
+<!--                            * 랭킹 : 현재 개발자 기여 점수를 통한 랭킹 표시!<br>-->
+<!--                            * 프로젝트 생성 : 나만의 프로젝트를 생성하여 자신만의 프로젝트 실행<br>-->
+<!--                            * 프로필 생성 : 프로필을 통해 주요언어 , 분야 표시 가능 <br>-->
+<!--                            <br>-->
 
-          <br><br>
-          <span style="font-weight:bold">* 모집 인원 : 4명 </span>
-          <br><br>
-          <span style="font-weight:bold">* 프로젝트 리더 : 김정훈 </span>
-          <br><br>
-          <span style="font-weight:bold">* 모집 분야 : 프론트엔드 ,백엔드</span>
-          <br><br>
-          <span style="font-weight:bold">&lt소개글&gt</span><br><br>
-          <span>
-                            프로젝트를 시작하려는 개발자를 모집하고, 프로젝트를 할 수 있도록 지원하는 사이트입니다<br>
-                            <br>
-                            * 서든어택 용병시스템과 유사 <br>
-                            * 자기소개서를 등록하는 게시판이라고 생각하면 됨 <br>
-                            <br>
-                            <span style="font-weight:bold;">기능 구현</span>
-                            <br>
-                            * 매칭 시스템 : 인원을 모집하는데 있어서 소통하는 매체를 1대1 쪽지로 선택<br>
-                            * 랭킹 : 현재 개발자 기여 점수를 통한 랭킹 표시!<br>
-                            * 프로젝트 생성 : 나만의 프로젝트를 생성하여 자신만의 프로젝트 실행<br>
-                            * 프로필 생성 : 프로필을 통해 주요언어 , 분야 표시 가능 <br>
-                            <br>
 
-
-                        </span>
+<!--                        </span>-->
           <br><br><br>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
           <canvas id="bar-chart" width="200" height="100"></canvas>
@@ -115,7 +115,8 @@
       </div>
       <div style="margin-top:180px;margin-left:60px ;border-bottom:1px solid white;">
         <div style="white-space:nowrap; overflow:auto;  width:570px; height:120px;">
-          <span type="hidden" th:each="i:${imgList}" >
+          <span type="hidden" th:each="i:${imgList}">
+              <span type="hidden" th:value="${imgList.indexOf(i)}"></span>
 <!--              로컬 버전-->
 <!--            <img th:src="@{|/project_img/${i.getFilename()}${i.getFileExtension()}|}" class="small_pic" style="margin-top:20px" width="50" height="50">-->
             <img th:src="${i.getFileUrl()}" class="small_pic" style="margin-top:20px" width="50" height="50">
@@ -136,12 +137,12 @@
           <span style="font-weight:bold;font-size:30px;color:white;margin-left:60px">리더가 남긴 말</span><br><br>
           <div style="height:500px;width:670px">
             <img src="./images/my_img.png" class="donga"alt="이미지 불러오기 실패" width="30" height="30" style="margin-left:60px;border-radius:50%;border:none" >
-            <span style="color:white;font-size:25px;margin-left:10px">Roniebin</span>
+            <span style="color:white;font-size:25px;margin-left:10px" th:text="${project.getProjectLeader()}">리더</span>
             <div class="pull" >
-
-              화목한 프로젝트 진행을 원합니다. <br><br>
-              실력 상관없이 누구나 할수있는 프로젝트입니다. <br>
-              프로젝트하면서 꾸준히 공부할 수있는 그런 인재 모집합니다!<br>
+              <text th:text="${project.getComment()}"></text>
+<!--              화목한 프로젝트 진행을 원합니다. <br><br>-->
+<!--              실력 상관없이 누구나 할수있는 프로젝트입니다. <br>-->
+<!--              프로젝트하면서 꾸준히 공부할 수있는 그런 인재 모집합니다!<br>-->
             </div>
           </div>
         </div>
@@ -161,7 +162,6 @@
 
 
 
-<script src="js/project_bulletin.js"></script>
 <script src="js/project.js"></script>
 </body>
 <!--사진출처 해커 뒷모습:https://kr.freepik.com/premium-photo/hacker-working-behind-computer-monitors-illustration-generative-ai_39743109.htm#page=2&query=%ED%95%B4%EC%BB%A4%20%EB%92%B7%EB%AA%A8%EC%8A%B5&position=39&from_view=search&track=ais-->
