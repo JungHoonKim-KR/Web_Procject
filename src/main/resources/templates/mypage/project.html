@@ -1,91 +1,92 @@
 <!doctype html>
 <html lang="en" xmlns:th>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-  <meta name="generator" content="Hugo 0.88.1">
-  <title>Signin Template · Bootstrap v5.1</title>
-  <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Signin Template · Bootstrap v5.1</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 
-  <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
-
-
-
-  <!-- Bootstrap core CSS -->
-  <link href="css/css/bootstrap.min.css" rel="stylesheet">
-
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
 
 
-  <!-- Custom styles for this template -->
-  <link href="css/signin.css" rel="stylesheet">
-  <script src="/js/main_post.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="css/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
+    <script src="/js/main_post.js"></script>
 </head>
 <body class="text-center">
 
 <main class="form-signin">
-  <form action="/mypage-project" method="post">
-    <img class="mb-4" src="css/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">프로젝트 설정</h1>
+    <form action="/mypage-project" method="post">
+        <img class="mb-4" src="css/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        <h1 class="h3 mb-3 fw-normal">프로젝트 설정</h1>
 
-    <div class="form-floating">
-      <input type="text" class="form-control" id="floatingInput"
-             name="projectName" th:value="${project.getProjectName()}" >
-      <label for="floatingInput">프로젝트명</label>
-    </div>
-    <div class="form-floating">
-      <input type="text" class="form-control" id="floatingPassword" placeholder="Password"
-             name="projectLeader" th:value="${project.getProjectLeader()}">
-      <label for="floatingPassword">프로젝트 리더</label>
-    </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingInput"
+                   name="projectName" th:value="${project.getProjectName()}">
+            <label for="floatingInput">프로젝트명</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingPassword" placeholder="Password"
+                   name="projectLeader" th:value="${project.getProjectLeader()}">
+            <label for="floatingPassword">프로젝트 리더</label>
+        </div>
+
+        <select name="field" multiple>
+            <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>
+        </select> 분야
+
+        <select name="language" multiple>
+            <option th:each="l:${lList}" th:value="${l}" th:text="${l}"></option>
+        </select> 언어
+
+        대표 이미지 <button type="button">수정하기</button> <br>
+        <text th:text="${project.getImg()}"></text><br>
+        소개 이미지 <br>
+        <span type="hidden" th:each="i:${imgList}">
+              <span type="hidden" th:value="${imgList.indexOf(i)}"></span>
+            <text th:text="${i.getFileOriginName()}"></text><br>
+          </span>
+        <p>
+        <p>
+        <p>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">변경</button>
 
 
-    <div class="form-floating">
-      <input type="text" class="form-control" id="floatingAge" placeholder="age"
-             name="age">
-      <label for="floatingPassword">초대</label>
-    </div>
-    <select name="field" multiple>
-      <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>
-    </select> 분야
-
-    <select name="language" multiple>
-      <option th:each="l:${lList}" th:value="${l}" th:text="${l}"></option>
-    </select> 언어
-    <p>
-    <p>
-    <p>
-      <button class="w-100 btn btn-lg btn-primary" type="submit">변경</button>
-
-
-  </form>
-<form action="/mypage-project/apply" method="Get">
-  <input type="hidden" name="id" th:value="${project.getId()}">
-  <button type="submit" th:onclick="|location.href='@{/mypage-project/apply}'|" >가입 신청자 관리</button>
-</form>
+    </form>
+    <form action="/mypage-project/apply" method="Get">
+        <input type="hidden" name="id" th:value="${project.getId()}">
+        <button type="submit" th:onclick="|location.href='@{/mypage-project/apply}'|">가입 신청자 관리</button>
+    </form>
 
 </main>
 
 <div class="list-group">
-  <a th:href="@{/mypage-profile}" class="list-group-item list-group-item-action ">프로필 설정</a>
-  <a th:href="@{/mypage-project}" class="list-group-item list-group-item-action active">프로젝트 설정</a>
-  <a th:href="@{/mypage-bookmarkProjectList}" class="list-group-item list-group-item-action">북마크 설정</a>
+    <a th:href="@{/mypage-profile}" class="list-group-item list-group-item-action ">프로필 설정</a>
+    <a th:href="@{/mypage-project}" class="list-group-item list-group-item-action active">프로젝트 설정</a>
+    <a th:href="@{/mypage-bookmarkProjectList}" class="list-group-item list-group-item-action">북마크 설정</a>
 </div>
 <a class="btn btn-primary" href="javascript:history.back()">뒤로가기</a>
 

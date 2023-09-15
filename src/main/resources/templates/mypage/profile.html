@@ -7,10 +7,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="/css/new_my_page.css">
+    <link rel="stylesheet" href="/css/new_my_page.css?ver=2">
 </head>
+
 <body class="wrapper1" style="background-color:Linen;height:1200px">
 
+<header id="contents_box">
+
+    <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
+                                    width="200" height="45"></a>
+    <div class="nav_items" style="margin-left:150px;">
+        <ul>
+            <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
+            <li><a href="/"><span style="color:white">공지사항</span></a></li>
+            <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
+            <li><a href="/"><span style="color:white">랭킹</span></a></li>
+        </ul>
+        <a th:href="@{/mypage-profile}">
+            <img th:if="${member==null}" src="/images/my_img.png" width="40" height="30"
+                 style="margin-left:30px;border-radius:50%;border:none">
+            <img th:unless="${member==null}" th:src="${member.getProfileImg()}" width="40" height="30"
+                 style="margin-left:30px;border-radius:50%;border:none">
+
+        </a>
+        &nbsp;
+
+    </div>
+
+    <span th:if="${member==null}">
+            <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
+                    style="margin-right:50px; width:150px ;height:30px">로그인</button>
+        </span>
+    <span th:unless="${member==null}">
+                  <span th:text="${member.getUsername()}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
+            <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
+                    style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
+                </span>
+</header>
 <div style="margin-left:380px; display: flex;
     align-items: center;
     justify-content: center;
@@ -37,18 +70,26 @@
                 프로필
             </span>
         <br> <br>
-        <input type="file" class="changing_profile" name="imgFIle"
-                style="width:150px;height:40px;margin-top:0px;margin-left:505px;background-color:white;border-radius:20px;visibility:hidden">
-            프로필 사진 변경
-        </input>
+        <!--        <div class="changing_profile" style="visibility:hidden">-->
+        <!--            <label for="file" style="margin-left:500px;margin-top:0px">-->
+        <!--                <div class="btn-upload">프로필 사진 변경</div>-->
+        <!--            </label>-->
+        <!--            <input type="file" name="imgFile" id="file" value="null">-->
+        <!--        </div>-->
+
         <div style="margin-left:200px">
-        <img src="./images/my_img.png" class="donga" alt="이미지 불러오기 실패" width="100" height="100"
-             style="margin-bottom:15px;margin-left:100px;border-radius:50%;border:none">
-        <br>
-        <span style="font-weight:bold;margin-left:60px;">Roniebin</span> 님 반갑습니다.<br>
-        <span class="counting" th:onclick="|location.href='@{/mypage-projectList}'|"
-              style="margin-left:120px;font-size:0.8em;color:gray;font-weight:bold"><span
-                style="font-size:1.2em;font-weight:bold">5</span> projects</span>
+            <!--        <img src="./images/my_img.png" class="donga" alt="이미지 불러오기 실패" width="100" height="100"-->
+            <!--             style="margin-bottom:15px;margin-left:100px;border-radius:50%;border:none">-->
+            <img th:if="${member==null}" src="/images/my_img.png" width="100" height="100"
+                 style="margin-bottom:15px;margin-left:100px;border-radius:50%;border:none">
+            <img th:unless="${member==null}" th:src="${member.getProfileImg()}" width="100" height="100"
+                 style="margin-bottom:15px;margin-left:100px;border-radius:50%;border:none">
+
+            <br>
+            <span th:text="${member.getUsername()}" style="font-weight:bold;margin-left:60px;"></span> 님 반갑습니다.<br>
+            <span class="counting" th:onclick="|location.href='@{/mypage-projectList}'|"
+                  style="margin-left:120px;font-size:0.8em;color:gray;font-weight:bold"><span
+                    style="font-size:1.2em;font-weight:bold"></span>MyProjects</span>
         </div>
         <hr style="width:650px">
         <br><br>
@@ -59,23 +100,23 @@
                     <hr style="margin-top:10px;margin-bottom:10px">
                     <span style="margin-left:20px">
                             닉네임 <span style="margin-left:44px">:</span>
-                            <span style="margin-left:50px" th:text="${username}">Roniebin</span>
+                            <span style="margin-left:50px" th:text="${member.getUsername()}">Roniebin</span>
                         </span>
                     <hr style="margin-top:13.5px;margin-bottom:10px">
 
                     <span style="margin-left:20px">
                             E-Mail <span style="margin-left:46px">:</span>
-                            <span style="margin-left:50px" th:text="${emailId}">1923986@donga.ac.kr</span>
+                            <span style="margin-left:50px" th:text="${member.getEmailId()}">1923986@donga.ac.kr</span>
                         </span>
                     <hr style="margin-top:13.5px;margin-bottom:10px">
 
                     <span style="margin-left:20px">
                             전화번호 <span style="margin-left:30px">:</span>
-                            <span style="margin-left:50px">01028129123</span>
+                            <span style="margin-left:50px" th:text="${member.getPhoneNumber()}">01028129123</span>
                         </span>
                     <hr style="margin-top:13.5px;margin-bottom:10px">
                     <span style="margin-left:20px"> 비밀번호 <span style="margin-left:30px">:</span>
-                        <span style="margin-left:50px" th:text="${password}">*********</span>
+                        <span style="margin-left:50px" th:text="${member.getPassword()}">*********</span>
                         </span>
                     <hr style="margin-top:13.5px;margin-bottom:10px">
                 </div>
@@ -103,42 +144,49 @@
 
             <button class="edit" style="margin-left:300px;margin-top:20px;width:90px;height:40px">수정하기</button>
 
-            <button class="remove_account" style="margin-left:180px">계정 탈퇴</button>
+            <!--            <button class="remove_account" style="margin-left:180px">계정 탈퇴</button>-->
 
         </div>
         <!--        수정 태그-->
         <div class="edit_inform_container">
             <form action="/mypage-profile" method="POST" enctype="multipart/form-data">
+                <div class="changing_profile" style="visibility:hidden">
+                    <label for="file" style="margin-left:500px;margin-top:0px">
+                        <div class="btn-upload">프로필 사진 변경</div>
+                    </label>
+                    <input type="file" name="imgFile" id="file">
+                </div>
                 <fieldset style="border-radius:20px;margin-left:30px;width:600px;height:225px">
                     <span style="font-size:15px;font-weight:bold;margin-bottom:5px">개인정보</span>
                     <div style="margin-top:30px ;font-size:14px">
                         <hr style="margin-top:10px;margin-bottom:10px">
                         <span style="margin-left:20px">
                         닉네임 <span style="margin-left:44px">:</span>
-                        <input type="text" style="margin-left:50px" name="username" th:value="${username}">
+                        <input type="text" style="margin-left:50px" name="username" th:value="${member.getUsername()}">
 
                     </span>
                         <hr style="margin-top:10px;margin-bottom:10px">
 
                         <span style="margin-left:20px">
                         E-Mail <span style="margin-left:46px">:</span>
-                        <input type="text" style="margin-left:50px" name="emailId" th:value="${emailId}">
+                        <input type="text" style="margin-left:50px" name="emailId" th:value="${member.getEmailId()}">
                     </span>
                         <hr style="margin-top:10px;margin-bottom:10px">
 
                         <span style="margin-left:20px">
                         전화번호 <span style="margin-left:30px">:</span>
-                        <input type="text" style="margin-left:50px" value="01028129123">
+                        <input type="text" style="margin-left:50px" name="phoneNumber"
+                               th:value="${member.getPhoneNumber()}">
                     </span>
                         <hr style="margin-top:10px;margin-bottom:10px">
                         <span style="margin-left:20px"> 비밀번호 <span style="margin-left:30px">:</span>
-                    <input type="password" style="margin-left:50px" name="password" th:value="${password}">
+                    <input type="password" style="margin-left:50px" name="password" th:value="${member.getPassword()}">
                 <hr style="margin-top:10px;margin-bottom:10px">
           </span>
                     </div>
                 </fieldset>
                 <br><br>
-                <fieldset  style="border-radius:20px;margin-left:30px;width:600px;height:135px">
+                <fieldset style="border-radius:20px;margin-left:30px;width:600px;height:135px">
                     <span style="font-size:15px;font-weight:bold;margin-bottom:5px">전공</span>
                     <div style="margin-top:30px ;font-size:14px">
                         <hr>
@@ -167,7 +215,9 @@
                 <br><br>
                 <hr style="width:650px">
                 <button class="edit_save" style="margin-left:250px;margin-top:20px;width:90px;height:40px">저장</button>
-                <button class="edit_cancle" type="button" th:onclick="|location.href='@{/mypage-profile}'|" style="margin-top:20px;width:90px;height:40px">취소</button>
+                <button class="edit_cancle" type="button" th:onclick="|location.href='@{/mypage-profile}'|"
+                        style="margin-top:20px;width:90px;height:40px">취소
+                </button>
 
             </form>
 

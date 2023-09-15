@@ -1,9 +1,63 @@
 .wrap {
 
+    width: 100%;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
+}
+.wrapper1{
+    display: grid;
+    grid-template-rows: 50px 100px 1000px ;
+
+    place-items: center;
+    min-height: 100vh;
+}
+#contents_box{
+
+    width: 1500px;
+    height: 50px;
+    display: flex;
+    align-items: center; /* 하위 요소들 수직 가운데정렬 */
+    position: relative;
+}
+
+/* a 태그 이벤트 정의*/
+a {
+    text-decoration: none; /* 기본 밑줄을 제거합니다 */
+    color: black;
+}
+a:hover {
+    text-decoration: underline; /* 마우스 커서가 올라갔을 때 밑줄을 생성합니다*/
+}
+header > nav {
+    width: 100%;
+    height: 45px;
+    position: absolute;
+    bottom: 0;
+
+}
+.nav_items {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    font-weight: bold;
+
+}
+.nav_items ul > li {
+    display: inline-block;
+    margin-left: 70px;
+}
+.nav_items ul > li:nth-child(-n + 7) > a { /* <ul>하위 7번째 <li>까지 각각 내부의 <a> 태그 접근 */
+    color: black;
+}
+.nav_items ul > li > a {
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .counting:hover{
@@ -27,4 +81,113 @@
     height:22px;
     margin-top:5px;
 
+}
+.changing_profile{
+    position: absolute;
+    top:230px;
+}
+.changing_profile input[type="file"] {
+
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+.changing_profile label {
+    margin-top:-48px;
+    display: inline-block;
+    padding: .5em .75em;
+    color: #999;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+}
+
+/* named upload */
+.changing_profile .upload-name {
+    margin-left:400px;
+    margin-top:-48px;
+    display: inline-block;
+    padding: .5em .75em;  /* label의 패딩값과 일치 */
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+    -webkit-appearance: none; /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+
+.btn-upload {
+    width: 150px;
+    height: 30px;
+    background: #fff;
+    border: 1px solid rgb(77,77,77);
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border:none;
+    color:black;
+
+}
+
+#login,#logout{
+    font-size: 15px;
+    background-color: #00B0F0;
+    color: white;
+    font-weight:bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+
+#file {
+
+    display: none;
+}
+
+.my_pic{
+    cursor:pointer;
+}
+.edit{
+
+    background-color:white;
+    border:1px solid black;
+    cursor:pointer;
+    border-radius:20px;
+
+}
+
+.edit:hover{
+
+    background-color:black;
+    color:white;
+}
+
+.remove_account
+{
+    background-color:white;
+    color:red;
+    border-radius:0px;
+    border:1px solid black;
+    cursor:pointer;
 }
