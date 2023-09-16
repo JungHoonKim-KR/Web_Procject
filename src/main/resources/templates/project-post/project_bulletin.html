@@ -17,7 +17,7 @@
 <input type="hidden" id="urlParam" th:value="${urlParam}">
 <input type="hidden" id="paging" th:value="${paging}">
 <input type="hidden" id="cur_pageLine" th:value="${paging.getPageLine()}">
-<header id="contents_box" style="border-bottom:solid 1px white">
+<header id="contents_box" >
 
     <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
                                     width="200" height="45"></a>
@@ -28,18 +28,21 @@
             <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
             <li><a href="/"><span style="color:white">랭킹</span></a></li>
         </ul>
-        <a th:href="@{/mypage-profile}"><img src="/images/my_img.png" width="40" height="30"
-                                             style="margin-left:30px;border-radius:50%;border:none"></a>
+        <a th:href="@{/mypage-profile}">
+            <img th:if="${member==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+            <img th:unless="${member==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+
+        </a>
         &nbsp;
 
     </div>
 
-    <span th:if="${username==null}">
+    <span th:if="${member==null}">
             <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
                     style="margin-right:50px; width:150px ;height:30px">로그인</button>
         </span>
-    <span th:unless="${username==null}">
-                  <span th:text="${username}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
+    <span th:unless="${member==null}">
+                  <span th:text="${member.getUsername()}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
             <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
                     style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
                 </span>
@@ -57,7 +60,8 @@
         <form th:action="@{/projectSearch(urlParam=${urlParam})}" method="get">
             <!--히든-->
             <input type="hidden" id="bookmarkImg" th:value="${bList}">
-            <input type="hidden" id="username" th:value="${username}">
+            <input th:if="${member==null}" type="hidden" id="username" th:value="null">
+            <input th:unless="${member==null}" type="hidden" id="username" th:value="${member.getUsername()}">
             <input type="hidden" id="searchField" th:value="${fList}">
             <input type="hidden" id="searchLanguage" th:value="${lList}">
 
@@ -96,7 +100,7 @@
                     style="color:white;">SWIFT</span>
             </div>
             <br>
-            <div style="border-bottom:1px solid white ;width:1500px;height:150px">
+            <div style="width:1500px;height:150px">
                 <button class="w-btn w-btn-gra2 w-btn-gra-anim" id="search_btn"
                         style="margin-left:680px;width:150px;font-size:15px"
                         type="submit">
@@ -235,7 +239,7 @@
         </div>
     </div>
 
-    <div id="advertisement" style=" border-bottom: solid 2px white;background-color:#13161c;height:1000px">
+    <div id="advertisement" style=" background-color:#13161c;height:1000px">
         <div id="banner_comments">
             <br><br><br>
             <h1 style="color:white; text-align:center;font-size:40px">지금 여러분이 할 수있는 최고의 선택!</h1><br><br>
