@@ -13,14 +13,14 @@
 
 <header id="contents_box" >
 
-    <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
+    <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집(메인).jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
                                     width="200" height="45"></a>
     <div class="nav_items" style="margin-left:150px;">
         <ul>
-            <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
-            <li><a href="/"><span style="color:white">공지사항</span></a></li>
-            <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
-            <li><a href="/"><span style="color:white">랭킹</span></a></li>
+            <li><a href="/">프로젝트 모집</a></li>
+            <li><a href="/">공지사항</a></li>
+            <li><a th:href="@{/question}">문의게시판</a></li>
+            <li><a href="/">랭킹</a></li>
         </ul>
         <a th:href="@{/mypage-profile}">
             <img th:if="${member==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
@@ -89,8 +89,8 @@
                 <hr>
                 <div class="my_projects" >
                         <span style="width:600px" th:each="p:${pList}">
-                        <span th:if="${username==p.getProject().getProjectLeader()}" style="margin-bottom:20px;margin-left:100px" >리더</span>
-                        <span th:unless="${username==p.getProject().getProjectLeader()}" style="margin-bottom:20px;margin-left:100px" >회원</span>
+                        <span th:if="${member.getUsername()==p.getProject().getProjectLeader()}" style="margin-bottom:20px;margin-left:100px" >리더</span>
+                        <span th:unless="${member.getUsername()==p.getProject().getProjectLeader()}" style="margin-bottom:20px;margin-left:100px" >회원</span>
                         <span type="submit"th:text="${p.getProject().getProjectName()}"  th:onclick="|location.href='@{/mypage-project(projectName=${p.getProject().getProjectName()})}'|" style="margin-left:130px"></span>
                         <br>
                         </span>

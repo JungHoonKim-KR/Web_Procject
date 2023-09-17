@@ -1,32 +1,147 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
-
-
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="/css/new_my_page.css?ver=0">
 </head>
-<body class="text-center">
-<form action="/mypage-project">
-    <tr th:each="b:${bList}" class="list-group">
-        <li>
-            <button type="submit" th:onclick="|location.href='@{/project-introduce}'|" class="list-group-item list-group-item-action " name="projectName" th:value="${b.getProject().getProjectName()}" th:text="${b.getProject().getProjectName()}">프로필 설정</button>
+<body class="wrapper1" style="background-color:Linen;height:1200px">
 
-        </li>
-    </tr>
-</form>
-<a  class="btn btn-primary" th:href="@{/}">메인으로 이동</a>
-<div class="list-group">
-    <a th:href="@{/mypage-profile}" class="list-group-item list-group-item-action ">프로필 설정</a>
-    <a th:href="@{/mypage-projectList}" class="list-group-item list-group-item-action ">프로젝트 설정</a>
-    <a th:href="@{/mypage-bookmarkProjectList}" class="list-group-item list-group-item-action active">북마크 설정</a>
+<header id="contents_box" >
+
+    <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집(메인).jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
+                                    width="200" height="45"></a>
+    <div class="nav_items" style="margin-left:150px;">
+        <ul>
+            <li><a href="/">프로젝트 모집</a></li>
+            <li><a href="/">공지사항</a></li>
+            <li><a th:href="@{/question}">문의게시판</a></li>
+            <li><a href="/">랭킹</a></li>
+        </ul>
+        <a th:href="@{/mypage-profile}">
+            <img th:if="${member==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+            <img th:unless="${member==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+
+        </a>
+        &nbsp;
+
+    </div>
+
+    <span th:if="${member==null}">
+            <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
+                    style="margin-right:50px; width:150px ;height:30px">로그인</button>
+        </span>
+    <span th:unless="${member==null}">
+                  <span th:text="${member.getUsername()}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
+            <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
+                    style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
+                </span>
+</header>
+<div style="margin-left:380px; display: flex;
+    align-items: center;
+    justify-content: center;
+    ">
+    <button class="my_page_options"
+            style="width:80px;height:30px;margin-top:20px;background-color:white;border-radius:20px;background-color:white;font-weight:bold"
+            th:onclick="|location.href='@{/mypage-profile}'|">프로필
+    </button>
+    <button class="my_page_options" type="button"
+            style="width:110px;height:30px;margin-left:10px;margin-top:20px;background-color:white;border-radius:20px;font-weight:bold"
+            th:onclick="|location.href='@{/mypage-projectList}'|">프로젝트 관리
+    </button>
+    <button class="my_page_options" type="button"
+            style="width:80px;height:30px;;margin-left:10px;margin-top:20px;background-color:#13161c;color:white;border-radius:20px;font-weight:bold"
+            th:onclick="|location.href='@{/mypage-bookmarkProjectList}'|">북마크
+    </button>
+
 </div>
+<div class="wrap">
+
+    <fieldset style="margin-top:-380px;width:700px;height:550px;background-color:white;border:none;border-radius:20px">
+        <br>
+        <span style="margin-left:20px;font-weight:bold;font-size:18px">
+                북마크 관리
+            </span>
+        <br>
+        <span class="counting" style="margin-left:40px;font-size:0.8em;color:gray;font-weight:bold"><span
+                style="font-size:1.2em;font-weight:bold">5</span> projects</span>
+<!--        <span style="font-size:12px;color:gray;margin-left:370px">북마크는 최대 10개까지 가능합니다.</span>-->
+
+
+        <hr>
+        <br><br>
+        <div class="bookmark_container">
+            <fieldset style="border-radius:20px;margin-left:100px;width:450px;height:350px">
+                <span style="font-size:15px;font-weight:bold;margin-bottom:5px">내 북마크</span><br>
+                <span style="font-size:10px;color:gray;margin-left:250px">자세한 사항은 프로젝트를 클릭해주세요!</span>
+                <div style="margin-top:10px ;font-size:14px">
+                    <hr style="margin-top:10px;margin-bottom:10px">
+
+                    <span style="font-weight:bold;margin-left:180px">
+                            북마크
+                        </span>
+                    <hr>
+                    <div class="my_projects">
+
+                        <span th:each="b:${bList}">
+                            <img th:if="${b.getProject().getImg()==null}" src="/images/개발자사진.jpg"
+                                 style="float:left;border-radius:50%;margin-left:150px" width="20" height="20">
+                        <img th:unless="${b.getProject().getImg()==null}" th:src="${b.getProject().getImg()}"
+                             style="float:left;border-radius:50%;margin-left:150px" alt="이미지 불러오기 실패" width="20"
+                             height="20">
+                        <span type="submit"th:text="${b.getProject().getProjectName()}"  th:onclick="|location.href='@{/project-introduce(projectName=${b.getProject().getProjectName()})}'|" style="float:left;margin-left:15px"></span>
+
+                        <br><br>
+                        </span>
+                    </div>
+
+                </div>
+            </fieldset>
+            <button class="edit" style="margin-top:20px;margin-left:300px">북마크 수정</button>
+
+        </div>
+
+        <div class="edit_bookmark_container">
+            <fieldset style="border-radius:20px;margin-left:100px;width:450px;height:350px">
+                <span style="font-size:15px;font-weight:bold;margin-bottom:5px">내 북마크</span><br>
+                <span style="font-size:10px;color:gray;margin-left:330px">클릭 시 북마크 제거</span>
+                <div style="margin-top:10px ;font-size:14px">
+                    <hr style="margin-top:10px;margin-bottom:10px">
+
+                    <span style="font-weight:bold;margin-left:180px">
+                            북마크
+                        </span>
+                    <hr>
+                    <div class="edit_my_bookmarks">
+                             <span th:each="b:${bList}">
+                            <img th:if="${b.getProject().getImg()==null}" src="/images/개발자사진.jpg"
+                                 style="float:left;border-radius:50%;margin-left:150px" width="20" height="20">
+                        <img th:unless="${b.getProject().getImg()==null}" th:src="${b.getProject().getImg()}"
+                             style="float:left;border-radius:50%;margin-left:150px" alt="이미지 불러오기 실패" width="20"
+                             height="20">
+                        <span th:text="${b.getProject().getProjectName()}" style="float:left;margin-left:15px">개발자 구인 사이트</span>
+                        <img src="/images/휴지통사진.jpeg" style="border-radius:50%;margin-left:153px" alt="이미지 불러오기 실패" width="20" height="20">
+
+                        <br><br>
+                        </span>
+
+                    </div>
+
+
+                </div>
+            </fieldset>
+            <button class="edit_save" style="margin-left:270px;margin-top:20px;width:70px;height:20px">저장</button>
+            <button class="edit_cancle" style="margin-top:20px;width:70px;height:20px">취소</button>
+
+        </div>
+
+    </fieldset>
+
+</div>
+<!--휴지통사진 출처 : https://ko.silhouette-ac.com/silhouette/129134/%ED%9C%B4%EC%A7%80%ED%86%B5-->
+<script src="/js/new_my_page_bookmark.js"></script>
 </body>
-</html>
