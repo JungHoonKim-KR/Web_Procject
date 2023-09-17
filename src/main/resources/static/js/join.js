@@ -10,7 +10,7 @@ function goform() {
 
 
     if (userName == "") {
-        alert("이름을 입력해주세요");
+        alert("닉네임을 입력해주세요");
         return false;
 
     }//if userName reg
