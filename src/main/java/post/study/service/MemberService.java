@@ -3,12 +3,14 @@ package post.study.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import post.study.dto.MemberDto;
 import post.study.entity.*;
 import post.study.repository.FieldMemberRepository;
 import post.study.repository.LanguageMemberRepository;
 import post.study.repository.MemberRepository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final LanguageMemberRepository languageMemberRepository;
     private final FieldMemberRepository fieldMemberRepository;
+    private final ProjectService projectService;
 
     public MemberDto memberToDto(Member member) {
         return MemberDto.builder()
@@ -43,12 +46,12 @@ public class MemberService {
                 .build();
     }
 
-    public Boolean loginValidateByemailId(MemberDto memberDto, String password) {
+    public Boolean loginValidate(MemberDto memberDto) {
 
         Member findMember = memberRepository.findByemailId(memberDto.getEmailId());
         if (findMember == null)
             return false;
-        if (!findMember.getPassword().equals(password)) {
+        if (!findMember.getPassword().equals(memberDto.getPassword())) {
             return false;
         }
 
@@ -67,13 +70,13 @@ public class MemberService {
      * 회원가입
      */
     public Member join(MemberDto memberDto, String language, String field) {
-        if (joinValidateByEmailId(memberDto.getEmailId()) == false)
+        if (joinValidate(memberDto.getEmailId(),memberDto.getUsername()) == false)
             return null;
         else return save(memberDto, language, field);
     }
 
-    public Boolean joinValidateByEmailId(String emailId) {
-        Member findMember = memberRepository.findByemailId(emailId);
+    public Boolean joinValidate(String emailId, String username) {
+        Member findMember = memberRepository.findByEmailIdOrUsername(emailId,username);
         if (findMember == null)
             return true;
         else return false;
@@ -115,11 +118,14 @@ public class MemberService {
 
     }
 
-    public Member profileUpdate(MemberDto memberDto, String language, String field) {
+    public Member profileUpdate(MemberDto memberDto, String language, String field, String imgFile) throws IOException {
         Member member = memberRepository.findByemailId(memberDto.getEmailId());
         member.setPassword(memberDto.getPassword());
         member.setUsername(memberDto.getUsername());
         member.setPhoneNumber(memberDto.getPhoneNumber());
+        if(imgFile!=null){
+            member.setProfileImg(imgFile);
+        }
 
 
         if (language != null) {

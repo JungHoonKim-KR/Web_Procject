@@ -32,9 +32,9 @@ public class LoginAndJoinController {
     public String main(HttpSession session, Model model) {
         MemberDto memberDto = (MemberDto) session.getAttribute("member");
         if (memberDto == null) {
-            model.addAttribute("username", null);
+            model.addAttribute("member", null);
         } else {
-            model.addAttribute("username", memberDto.getUsername());
+            model.addAttribute("member", memberDto);
         }
 
         return "main_post";
@@ -47,7 +47,7 @@ public class LoginAndJoinController {
 
     @PostMapping("/login-judge")
     public String judge(HttpSession session, MemberDto memberDto, Model model) {
-        Boolean aBoolean = memberService.loginValidateByemailId(memberDto, memberDto.getPassword());
+        Boolean aBoolean = memberService.loginValidate(memberDto);
 
         if (aBoolean.equals(false)) {
             model.addAttribute("msg", "존재하지 않는 회원입니다.");
@@ -76,10 +76,8 @@ public class LoginAndJoinController {
 
     @PostMapping("/join")
     public String save(MemberDto memberDto, String language, String field, Model model) {
-        System.out.println(language);
-        System.out.println(field);
         if (memberService.join(memberDto, language, field) == null) {
-            model.addAttribute("msg", "이미 가입된 회원입니다.");
+            model.addAttribute("msg", "아이디 혹은 닉네임 중복입니다.");
             model.addAttribute("url", "back");
         } else {
             model.addAttribute("msg", "회원가입 되었습니다.");
