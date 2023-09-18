@@ -65,6 +65,9 @@ header > nav {
     cursor:pointer;
 }
 
+.my_option{
+    cursor:pointer;
+}
 
 .my_projects{
     height:22px;
@@ -80,6 +83,7 @@ header > nav {
 .edit_my_bookmarks{
     height:22px;
     margin-top:5px;
+    cursor:pointer;
 
 }
 .changing_profile{
