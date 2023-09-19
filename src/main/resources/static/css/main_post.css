@@ -5,18 +5,20 @@
 
 }
 
-#login, #logout {
+#login,#logout{
     font-size: 15px;
     background-color: #00B0F0;
     color: white;
-    font-weight: bold;
+    font-weight:bold;
     border: none;
     cursor: pointer;
     border-radius: 20px;
 }
-
+.up_direction,.down_direction:hover{
+    cursor:pointer;
+}
 /*컨텐츠 박스에서의 css----------------------------------------------*/
-#contents_box {
+#contents_box{
 
     width: 1500px;
     height: 50px;
@@ -30,11 +32,9 @@ a {
     text-decoration: none; /* 기본 밑줄을 제거합니다 */
     color: black;
 }
-
 a:hover {
     text-decoration: underline; /* 마우스 커서가 올라갔을 때 밑줄을 생성합니다*/
 }
-
 header > nav {
     width: 100%;
     height: 45px;
@@ -42,7 +42,6 @@ header > nav {
     bottom: 0;
 
 }
-
 .nav_items {
     width: 100%;
     height: 100%;
@@ -53,16 +52,13 @@ header > nav {
     font-weight: bold;
 
 }
-
 .nav_items ul > li {
     display: inline-block;
     margin-left: 70px;
 }
-
 .nav_items ul > li:nth-child(-n + 7) > a { /* <ul>하위 7번째 <li>까지 각각 내부의 <a> 태그 접근 */
     color: black;
 }
-
 .nav_items ul > li > a {
     text-decoration: none;
     cursor: pointer;
@@ -71,65 +67,62 @@ header > nav {
 /*---------------------------------------------------------------------*/
 
 
-/*main 문 크기*/
-
 
 /*광고밑에 버튼-----------------------------------------------------------*/
-.circle {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: white;
-    font-size: 16px;
+.circle{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:white;
+    font-size:16px;
     border: none;
-    text-align: center;
-    margin-left: 30px;
+    text-align:center;
+    margin-left:30px;
 }
-
 /*------------------------------------------------------------------------*/
 
 /*커리큘럼 파트 버튼-------------------------------------------------------*/
-.step {
-    width: 230px;
-    height: 230px;
-    border-radius: 50%;
-    background: orange;
-    font-size: 16px;
+.step{
+    width:230px;
+    height:230px;
+    border-radius:50%;
+    background:orange;
+    font-size:16px;
     border: none;
-    margin-top: 10px;
+    margin-top:10px;
     margin-right: 100px;
     margin-left: 100px;
-    margin-bottom: 50px;
-    text-align: center;
-    color: white;
+    margin-bottom:50px;
+    text-align:center;
+    color:white;
 }
 
-.step_b {
-    width: 230px;
-    height: 230px;
-    border-radius: 50%;
-    border-color: cyan;
+.step_b{
+    width:230px;
+    height:230px;
+    border-radius:50%;
+    border-color:  cyan;
 
-    background-color: black;
-    font-size: 16px;
+    background-color:black;
+    font-size:16px;
 
-    margin-top: 10px;
+    margin-top:10px;
     margin-right: 100px;
     margin-left: 100px;
-    margin-bottom: 50px;
-    text-align: center;
-    color: white;
+    margin-bottom:50px;
+    text-align:center;
+    color:white;
 }
 
 /*fieldset -------------------------------------------------------------*/
-fieldset {
-    width: 800px;
-    padding: 20px;
-    text-align: center;
-    padding-bottom: 30px;
-    padding-right: 30px;
-    padding-left: 30px;
-    border: 3px solid black;
+fieldset{
+    width:800px;
+    padding:20px;
+    text-align:center;
+    padding-bottom:30px;
+    padding-right:30px;
+    padding-left:30px;
+    border:3px solid black;
 }
 
 
@@ -139,12 +132,11 @@ input[class="interests_item"] + label {
     height: 20px;
     border: 2px solid #bcbcbc;
     cursor: pointer;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-left:20px;
+    margin-right:20px;
+    margin-bottom:20px;
+    margin-top:20px;
 }
-
 input[class="interests_item"]:checked + label {
     background-color: black;
 
@@ -156,18 +148,17 @@ input[class="interests_item"] {
 
 /*개발자를 찾으시나요 ?? 파트 버튼 -----------------------------------------*/
 
-#welcome {
+#welcome{
     display: flex;
 
     align-items: center; /* 하위 요소들 수직 가운데정렬 */
     position: relative;
 }
-
 .w-btn-neon2 {
     position: relative;
     border: none;
-    font-size: 17px;
-    margin-left: 120px;
+    font-size:17px;
+    margin-left:120px;
     min-width: 200px;
     min-height: 70px;
     background: linear-gradient(
@@ -200,7 +191,6 @@ input[class="interests_item"] {
     transform: translate(-50%, -50%);
     animation: ring 1.5s infinite;
 }
-
 @keyframes ring {
     0% {
         width: 30px;
@@ -214,24 +204,23 @@ input[class="interests_item"] {
     }
 }
 
-.li_m::marker {
-    color: white
+.li_m::marker{
+    color:white
 }
 
 /*step1 회원가입 -----------------------------------------------------*/
 
 
-.step:hover {
-    background: #e77331;
-    cursor: pointer;
+.step:hover{
+    background:#e77331;
+    cursor:pointer;
 }
 
-#no_hard1:hover {
+#no_hard1:hover{
     text-decoration: underline;
     cursor: pointer;
 }
-
-#no_hard2:hover {
+#no_hard2:hover{
     text-decoration: underline;
     cursor: pointer;
 }
