@@ -54,6 +54,13 @@
                    name="scale" th:value="${scale}">
             프로젝트 규모
         </div>
+
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingName"
+                   name="totalHeadcount" th:value="${totalHeadcount}">
+            프로젝트 인원수
+        </div>
+
         <select name="field" multiple>
             <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>
         </select> 분야
@@ -67,7 +74,11 @@
                    name="introduction" th:value="${introduction}">
             프로젝트 소개글
         </div>
-
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingIntroduce"
+                   name="comment" th:value="${comment}">
+            하고 싶은 말
+        </div>
         <div class="form-floating">
 
             대표 이미지 <input type="file" id="ff" multiple="multiple" name="mainFile" ><br>

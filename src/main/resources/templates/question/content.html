@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Title</title>
-    <link rel="stylesheet" href="css/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/css/bootstrap.css">
 </head>
 <body>
 
 <div class="container">
     <h2>글</h2>
     <br>
-    <form action="/question-update" method="get">
+    <form action="/question/update" method="get">
         <span><strong>제목</strong></span><br>
         <span th:text="${question.getId}"></span>
         <input type="hidden" name="id" th:value="${question.getId()}">
@@ -19,13 +19,13 @@
         <p>
         <hr>
         <span><strong>내용</strong></span><br>
-        <span th:text="${question.getContent()}"></span>
+        <textarea class="form-control"th:text="${question.getContent()}" readonly></textarea>
         <input type="hidden" name="content" th:value="${question.getContent()}">
 
         <p>
             <button type="button" class="w-25 btn btn-primary" onclick="location.href='/question'">글 목록</button> &nbsp;
-            <button th:if="${userId}==${question.getMember().getId()}" type="submit" class="w-25 btn btn-primary" onclick="location.href='/question-update'">글 수정</button> &nbsp;
-            <button th:if="${userId}==${question.getMember().getId()}" type="button" class="w-25 btn btn-primary" onclick="location.href='/question-delete?'">글 삭제</button>
+            <button th:if="${userId}==${question.getMember().getId()}" type="submit" class="w-25 btn btn-primary" onclick="location.href='/question/update'">글 수정</button> &nbsp;
+            <button th:if="${userId}==${question.getMember().getId()}" type="button" class="w-25 btn btn-primary" onclick="location.href='/question/delete?'">글 삭제</button>
     </form>
 </div>
 
