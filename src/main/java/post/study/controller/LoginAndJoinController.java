@@ -2,6 +2,7 @@ package post.study.controller;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +46,7 @@ public class LoginAndJoinController {
         return "sign-in/login";
     }
 
-    @PostMapping("/login-judge")
+    @PostMapping("/login/judge")
     public String judge(HttpSession session, MemberDto memberDto, Model model) {
         Boolean aBoolean = memberService.loginValidate(memberDto);
 
