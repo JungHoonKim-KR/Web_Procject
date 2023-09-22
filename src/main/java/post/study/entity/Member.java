@@ -39,6 +39,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Applicant> applicantList=new ArrayList<>();
+
+//    @OneToMany(mappedBy = "member")
+//    private List<ChatRoomMember> chatRoomMemberList=new ArrayList<>();
     public Member() {
 
     }
@@ -58,6 +61,10 @@ public class Member {
 
 
     }
+
+//    public void addChatRoomMemberList(ChatRoomMember chatRoomMember){
+//        chatRoomMemberList.add(chatRoomMember);
+//    }
 
     public void addProjectMemberList(ProjectMember projectMember) {
         projectMemberList.add(projectMember);
@@ -79,4 +86,6 @@ public class Member {
     }
 
 
+    public void addChatRoomMemberList(ChatRoomMember chatRoomMember) {
+    }
 }
