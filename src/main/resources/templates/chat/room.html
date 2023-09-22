@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="hidden" id="roomId" th:value="${roomId}">
+<input type="hidden" id="writer" th:value="${member.getUsername()}">
+<div id="contentList" th:unless="${messageList==null}">
+<span th:each="m:${messageList}">
+    <span th:text="${m.getWriter()}"></span><br>
+    <span th:text="${m.message}"></span><br>
+</span>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<input type="text" id="messageElement">
+<button type="button" onclick="sendMessage()">전송</button>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    var stompClient;
+    var messageElement = document.getElementById("messageElement")
+    var roomId = document.getElementById("roomId").value
+    var writer = document.getElementById("writer").value
+    var contentList = document.getElementById("contentList")
+
+
+    function connect() {
+        let socket = new SockJS("/ws/chat");
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, onConnected, onError)
+
+    }
+
+    //입장 시 connect
+    connect();
+
+    function onConnected() {
+        stompClient.subscribe("/sub/chat/room" + roomId, showMessage)
+        let message = {
+            type: "ENTER",
+            roomId: roomId,
+            writer: writer,
+            message: ""
+        }
+        stompClient.send("/pub/chat/enter", {}, JSON.stringify(message))
+    }
+
+    function showMessage(payload) {
+        let chat = JSON.parse(payload.body);
+        console.log(chat.type)
+        if (chat.type === 'ENTER' || chat.type === 'TALK') {
+            contentList.appendChild(document.createElement("br"));
+            let htmlSpanElement1 = document.createElement("span");
+            htmlSpanElement1.innerHTML = chat.writer
+            contentList.appendChild(htmlSpanElement1)
+            contentList.appendChild(document.createElement("br"));
+            let htmlSpanElement2 = document.createElement("span");
+            htmlSpanElement2.innerHTML = chat.message
+            contentList.appendChild(htmlSpanElement2)
+            if (chat.type === 'ENTER') {
+                contentList.appendChild(document.createElement("br"));
+            }
+        }
+
+    }
+
+    function onError(error) {
+        // connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+        // connectingElement.style.color = 'red';
+    }
+
+    function sendMessage(event) {
+
+        //messageInput은 입력창의 text값
+        let messageContent = messageElement.value.trim();
+
+        if (messageContent && stompClient) {
+            let chatMessage = {
+                type: 'TALK',
+                roomId: roomId,
+                writer: writer,
+                message: messageElement.value
+            };
+
+            stompClient.send("/pub/chat/message", {}, JSON.stringify(chatMessage));
+            messageElement.value = '';
+            showMessage;
+        }
+    }
+</script>
+
+</body>
+</html>
