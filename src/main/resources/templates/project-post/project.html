@@ -12,8 +12,10 @@
 </head>
 
 <body class="wrapper2" style="background-color:#13161c">
-<header id="contents_box" style="border-bottom: solid 1px white" >
-  <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집.jpg" id="donga"alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="45"></a>
+<header id="contents_box" >
+
+  <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
+                                  width="200" height="45"></a>
   <div class="nav_items" style="margin-left:150px;">
     <ul>
       <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
@@ -21,35 +23,39 @@
       <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
       <li><a href="/"><span style="color:white">랭킹</span></a></li>
     </ul>
-    <a th:href="@{/mypage-profile}"><img src="/images/my_img.png" width="40" height="30"  style="margin-left:30px;border-radius:50%;border:none"></a>
+    <a th:href="@{/mypage-profile}">
+      <img th:if="${member==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+      <img th:unless="${member==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+
+    </a>
     &nbsp;
 
   </div>
 
-  <span th:if="${username==null}">
-        <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
-                style="margin-right:50px; width:150px ;height:30px">로그인</button>
-    </span>
-  <span th:unless="${username==null}">
-              <span th:text="${username}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
-        <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
-                style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
-            </span>
+  <span th:if="${member==null}">
+            <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
+                    style="margin-right:50px; width:150px ;height:30px">로그인</button>
+        </span>
+  <span th:unless="${member==null}">
+                  <span th:text="${member.getUsername()}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
+            <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
+                    style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
+                </span>
 </header>
 
 <div class="wrap2"  style=" width:1500px;height:1000px" >
   <form action="/project-apply" method="GET">
-  <br><br><br>
-  <div >
-    <span style="color:white;font-size:20px;font-weight:bold;margin-left:90px">프로젝트 > </span>
-    <span style="color:white;font-size:20px;font-weight:bold;margin-top:50px;color:yellowgreen">프로젝트 구인 사이트</span>
+    <br><br><br>
+    <div >
+      <span style="color:white;font-size:20px;font-weight:bold;margin-left:90px">프로젝트 > </span>
+      <span style="color:white;font-size:20px;font-weight:bold;margin-top:50px;color:yellowgreen">프로젝트 구인 사이트</span>
 
 
-    <span style="color:white;font-size:40px;font-weight:bold;margin-top:50px;margin-left:410px;">모집요강</span><br><br>
+      <span style="color:white;font-size:40px;font-weight:bold;margin-top:50px;margin-left:410px;">모집요강</span><br><br>
 
 
 
-    <div class="main-container">
+      <div class="main-container">
         <input type="hidden" name="id" th:value="${project.getId()}">
         <input type="hidden" name="projectName" th:value="${project.getProjectName()}"}>
         <input type="hidden" name="projectLeader" th:value="${project.getProjectLeader()}">
@@ -57,99 +63,104 @@
         <input type="hidden" name="img" th:value="${project.getImg()}">
         <input type="hidden" name="createTime" th:value="${project.getCreationTime()}">
 
-      <div style="width:800px ">
-        <img src="./images/왼쪽사진.jpg" id="left_direction" class="direction"alt="이미지 불러오기 실패" style="margin:16px;margin-bottom:180px" width="40" height="40"  >
+        <div style="width:800px ">
+          <img src="./images/왼쪽사진.jpg" id="left_direction" class="direction"alt="이미지 불러오기 실패" style="margin:16px;margin-bottom:180px" width="40" height="40"  >
 
 
-        <img src="" class="donga big_pic" style="border-radius:5%"alt="이미지 불러오기 실패"  width="550" height="370"  >
+          <img src="" class="donga big_pic" style="border-radius:5%"alt="이미지 불러오기 실패"  width="550" height="370"  >
 
-        <img src="./images/오른쪽사진.jpg" id="right_direction"  class="direction" alt="이미지 불러오기 실패" style="margin:16px;margin-bottom:180px;margin-left:14px;" width="40" height="40"  >
-      </div>
+          <img src="./images/오른쪽사진.jpg" id="right_direction"  class="direction" alt="이미지 불러오기 실패" style="margin:16px;margin-bottom:180px;margin-left:14px;" width="40" height="40"  >
+        </div>
 
-      <div style="width:800px;margin-left:150px">
-        <fieldset style=" background-color: white;
+        <div style="width:800px;margin-left:150px">
+          <fieldset style=" background-color: white;
                     color: black;
                     width:600px;height:850px;text-align:left;border-radius:5%">
             프로젝트 명 : <span style="font-weight:bold;font-size:20px" th:text="${project.getProjectName()}"> 개발자 구인 사이트</span>
 
-          <br><br><br>
-<!--          <span style="font-weight:bold;">* 프로젝트 종류 : 웹사이트 개발</span>-->
+            <br><br><br>
+            <!--          <span style="font-weight:bold;">* 프로젝트 종류 : 웹사이트 개발</span>-->
 
-<!--          <br><br>-->
+            <!--          <br><br>-->
             * 프로젝트 규모 : <span style="font-weight:bold;" th:text="${project.getScale()}"> 상</span>
-          <br>
-<!--          <span style="font-weight:bold">* 모집 인원 : 4명 </span>-->
-<!--          <br><br>-->
+            <br>
+            <!--          <span style="font-weight:bold">* 모집 인원 : 4명 </span>-->
+            <!--          <br><br>-->
             * 프로젝트 리더 : <span style="font-weight:bold" th:text="${project.getProjectLeader()}"> 김정훈 </span>
-          <br><br>
+            <br><br>
             * 모집 분야 : <span style="font-weight:bold"th:text="${fList}+${lList}"> 프론트엔드 ,백엔드</span>
-          <br><br>
+            <br><br>
             &lt소개글&gt<br><br>
             <span style="font-weight:bold" th:text="${project.getIntroduction()}"></span>
-<!--          <span>-->
-<!--                            프로젝트를 시작하려는 개발자를 모집하고, 프로젝트를 할 수 있도록 지원하는 사이트입니다<br>-->
-<!--                            <br>-->
-<!--                            * 서든어택 용병시스템과 유사 <br>-->
-<!--                            * 자기소개서를 등록하는 게시판이라고 생각하면 됨 <br>-->
-<!--                            <br>-->
-<!--                            <span style="font-weight:bold;">기능 구현</span>-->
-<!--                            <br>-->
-<!--                            * 매칭 시스템 : 인원을 모집하는데 있어서 소통하는 매체를 1대1 쪽지로 선택<br>-->
-<!--                            * 랭킹 : 현재 개발자 기여 점수를 통한 랭킹 표시!<br>-->
-<!--                            * 프로젝트 생성 : 나만의 프로젝트를 생성하여 자신만의 프로젝트 실행<br>-->
-<!--                            * 프로필 생성 : 프로필을 통해 주요언어 , 분야 표시 가능 <br>-->
-<!--                            <br>-->
+            <!--          <span>-->
+            <!--                            프로젝트를 시작하려는 개발자를 모집하고, 프로젝트를 할 수 있도록 지원하는 사이트입니다<br>-->
+            <!--                            <br>-->
+            <!--                            * 서든어택 용병시스템과 유사 <br>-->
+            <!--                            * 자기소개서를 등록하는 게시판이라고 생각하면 됨 <br>-->
+            <!--                            <br>-->
+            <!--                            <span style="font-weight:bold;">기능 구현</span>-->
+            <!--                            <br>-->
+            <!--                            * 매칭 시스템 : 인원을 모집하는데 있어서 소통하는 매체를 1대1 쪽지로 선택<br>-->
+            <!--                            * 랭킹 : 현재 개발자 기여 점수를 통한 랭킹 표시!<br>-->
+            <!--                            * 프로젝트 생성 : 나만의 프로젝트를 생성하여 자신만의 프로젝트 실행<br>-->
+            <!--                            * 프로필 생성 : 프로필을 통해 주요언어 , 분야 표시 가능 <br>-->
+            <!--                            <br>-->
 
 
-<!--                        </span>-->
-          <br><br><br>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-          <canvas id="bar-chart" width="200" height="100"></canvas>
-        </fieldset>
-        <br>
+            <!--                        </span>-->
+            <br><br><br>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+            <canvas id="bar-chart" width="200" height="100"></canvas>
+          </fieldset>
+          <br>
 
-        <button class="apply_btn" type="submit" th:unless="${username==null}" th:onclick="|location.href='@{/project-apply}'|">
-          프로젝트 신청하기
-        </button>
+          <button class="apply_btn" type="submit"
+                  th:unless="${member==null} or ${project.getCurHeadcount()==project.getTotalHeadcount()}"
+                  th:onclick="|location.href='@{/project-apply}'|">
+            프로젝트 신청하기
+          </button>
 
-      </div>
-      <div style="margin-top:180px;margin-left:60px ;border-bottom:1px solid white;">
-        <div style="white-space:nowrap; overflow:auto;  width:570px; height:120px;">
+        </div>
+        <div style="margin-top:180px;margin-left:60px ;border-bottom:1px solid white;">
+          <div style="white-space:nowrap; overflow:auto;  width:570px; height:120px;">
           <span type="hidden" th:each="i:${imgList}">
               <span type="hidden" th:value="${imgList.indexOf(i)}"></span>
-<!--              로컬 버전-->
-<!--            <img th:src="@{|/project_img/${i.getFilename()}${i.getFileExtension()}|}" class="small_pic" style="margin-top:20px" width="50" height="50">-->
+            <!--              로컬 버전-->
+            <!--            <img th:src="@{|/project_img/${i.getFilename()}${i.getFileExtension()}|}" class="small_pic" style="margin-top:20px" width="50" height="50">-->
             <img th:src="${i.getFileUrl()}" class="small_pic" style="margin-top:20px" width="50" height="50">
 
           </span>
 
+          </div>
+
         </div>
 
-      </div>
 
+        <div>
+          <span type="hidden" th:unless="${member==null}">
+          <button th:if="${member.getUsername()==project.getProjectLeader()}" id ="add_pic"
+                  th:onclick="|location.href='@{/mypage-project(projectName=${project.getProjectName()})}'|">+</button>
+          </span>
+        </div>
+        <div>
 
-      <div>
-        <button id ="add_pic">+</button>
-      </div>
-      <div>
-
-        <div class="box" style="height:500px;width:500px;padding:30px">
-          <span style="font-weight:bold;font-size:30px;color:white;margin-left:60px">리더가 남긴 말</span><br><br>
-          <div style="height:500px;width:670px">
-            <img src="./images/my_img.png" class="donga"alt="이미지 불러오기 실패" width="30" height="30" style="margin-left:60px;border-radius:50%;border:none" >
-            <span style="color:white;font-size:25px;margin-left:10px" th:text="${project.getProjectLeader()}">리더</span>
-            <div class="pull" >
-              <text th:text="${project.getComment()}"></text>
-<!--              화목한 프로젝트 진행을 원합니다. <br><br>-->
-<!--              실력 상관없이 누구나 할수있는 프로젝트입니다. <br>-->
-<!--              프로젝트하면서 꾸준히 공부할 수있는 그런 인재 모집합니다!<br>-->
+          <div class="box" style="height:500px;width:500px;padding:30px">
+            <span style="font-weight:bold;font-size:30px;color:white;margin-left:60px">리더가 남긴 말</span><br><br>
+            <div style="height:500px;width:670px">
+              <img src="./images/my_img.png" class="donga"alt="이미지 불러오기 실패" width="30" height="30" style="margin-left:60px;border-radius:50%;border:none" >
+              <span style="color:white;font-size:25px;margin-left:10px" th:text="${project.getProjectLeader()}">리더</span>
+              <div class="pull" >
+                <text th:text="${project.getComment()}"></text>
+                <!--              화목한 프로젝트 진행을 원합니다. <br><br>-->
+                <!--              실력 상관없이 누구나 할수있는 프로젝트입니다. <br>-->
+                <!--              프로젝트하면서 꾸준히 공부할 수있는 그런 인재 모집합니다!<br>-->
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
-  </div>
 
 
   </form>
@@ -162,7 +173,7 @@
 
 
 
-<script src="js/project.js"></script>
+<script src="js/project.js?ver=0"></script>
 </body>
 <!--사진출처 해커 뒷모습:https://kr.freepik.com/premium-photo/hacker-working-behind-computer-monitors-illustration-generative-ai_39743109.htm#page=2&query=%ED%95%B4%EC%BB%A4%20%EB%92%B7%EB%AA%A8%EC%8A%B5&position=39&from_view=search&track=ais-->
 </html>
