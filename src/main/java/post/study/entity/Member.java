@@ -40,8 +40,10 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Applicant> applicantList=new ArrayList<>();
 
-//    @OneToMany(mappedBy = "member")
-//    private List<ChatRoomMember> chatRoomMemberList=new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<ChatInvitation> chatInviteeList=new ArrayList<>();
+
+
     public Member() {
 
     }
@@ -62,9 +64,6 @@ public class Member {
 
     }
 
-//    public void addChatRoomMemberList(ChatRoomMember chatRoomMember){
-//        chatRoomMemberList.add(chatRoomMember);
-//    }
 
     public void addProjectMemberList(ProjectMember projectMember) {
         projectMemberList.add(projectMember);
@@ -73,7 +72,9 @@ public class Member {
     public void addApplicantList(Applicant applicant){
         applicantList.add(applicant);
     }
-
+    public void addChatInviteeList(ChatInvitation chatInvitee){
+        chatInviteeList.add(chatInvitee);
+    }
     public void addLanguage(Language_Member language) {
         languageList.add(language);
         language.setMember(this);
@@ -86,6 +87,4 @@ public class Member {
     }
 
 
-    public void addChatRoomMemberList(ChatRoomMember chatRoomMember) {
-    }
 }

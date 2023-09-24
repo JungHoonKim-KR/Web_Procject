@@ -56,7 +56,6 @@ public class LoginAndJoinController {
         } else {
             Member findMember = memberService.findMember(memberDto.getEmailId());
             session.setAttribute("member", memberService.memberToDto(findMember));
-//            projectService.createFile(fileList,0L);
             model.addAttribute("msg", "로그인 되었습니다.");
             model.addAttribute("url", "/");
 
@@ -66,7 +65,6 @@ public class LoginAndJoinController {
 
     @GetMapping("/join")
     public String join(Model model) {
-
         List<String> fieldList = fieldLanguageService.fieldList();
         List<String> languageList = fieldLanguageService.languageList();
 
@@ -84,9 +82,7 @@ public class LoginAndJoinController {
             model.addAttribute("msg", "회원가입 되었습니다.");
             model.addAttribute("url", "/");
         }
-
         return "popup";
-
     }
 
 }

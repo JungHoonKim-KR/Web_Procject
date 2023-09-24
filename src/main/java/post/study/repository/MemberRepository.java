@@ -32,4 +32,6 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     @Query("select l.language from Language_Member l where l.member.id=:id")
     List<String> findLanguageByIdVerString(@Param("id") Long id);
 
+    Member findMemberByUsername(String username);
+
 }
