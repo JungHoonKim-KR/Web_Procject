@@ -14,6 +14,7 @@ import post.study.dto.ProjectDto;
 import post.study.entity.*;
 import post.study.service.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +35,8 @@ public class MypageController {
             model.addAttribute("url", "back");
             return "popup";
         }
-        List<String> myLanguage = memberService.findMyLanguage(memberDto);
-        List<String> myField = memberService.findMyField(memberDto);
+        List<String> myLanguage = memberService.findMyLanguageString(memberDto);
+        List<String> myField = memberService.findMyFieldString(memberDto);
 
         List<String> fieldList = fieldLanguageService.fieldList();
         List<String> languageList = fieldLanguageService.languageList();
@@ -48,9 +49,7 @@ public class MypageController {
             System.out.println("wwww: "+s);
         }
 
-        model.addAttribute("emailId", memberDto.getEmailId());
-        model.addAttribute("password", memberDto.getPassword());
-        model.addAttribute("username", memberDto.getUsername());
+        model.addAttribute("member",memberDto);
         model.addAttribute("myFList",myField);
         model.addAttribute("myLList",myLanguage);
         model.addAttribute("fList",fieldList);
@@ -63,9 +62,19 @@ public class MypageController {
     }
 
     @PostMapping("/mypage-profile")
-    public String profileUpdate(MemberDto memberDto, String language, String field, MultipartFile imgFile, MultipartHttpServletRequest files, Model model) {
+    public String profileUpdate(HttpSession session,MemberDto memberDto, String language, String field, MultipartFile imgFile,  Model model) throws IOException {
+        if(imgFile.getOriginalFilename()!="") {
+            String mainImg = projectService.createMainImg(imgFile);
+            memberService.profileUpdate(memberDto, language, field, mainImg);
+            MemberDto member = (MemberDto) session.getAttribute("member");
+            member.setProfileImg(mainImg);
+            session.setAttribute("member", member);
+        }
+        else{
+            memberService.profileUpdate(memberDto,language,field,null);
+        }
 
-        memberService.profileUpdate(memberDto, language, field);
+
         model.addAttribute("msg", "변경되었습니다.");
         model.addAttribute("url", "/");
         return "popup";
@@ -76,7 +85,7 @@ public class MypageController {
         MemberDto memberDto = (MemberDto) session.getAttribute("member");
         Member member = memberService.memberToEntity(memberDto);
         List<ProjectMember> myProjectList = projectMemberService.findMyProjectList(member);
-        model.addAttribute("username",memberDto);
+        model.addAttribute("member",memberDto);
         model.addAttribute("pList", myProjectList);
         return "mypage/projectList";
 
@@ -117,6 +126,7 @@ public class MypageController {
     public String bookmarProjectkList(HttpSession session, Model model) {
         MemberDto memberDto = (MemberDto) session.getAttribute("member");
         List<BookmarkProject> bookmarkList = bookmarkProjectService.findBookmarkList(memberDto);
+        model.addAttribute("member",memberDto);
         model.addAttribute("bList", bookmarkList);
         return "mypage/bookmarkProjectList";
     }
@@ -134,8 +144,6 @@ public class MypageController {
     public String approving(String value, ProjectDto projectDto, MemberDto memberDto, Model model) {
         if (value.equals("승인")) {
             projectMemberService.joinProjectMember(projectDto, memberDto);
-            System.out.println("value: " + value);
-
         }
         projectMemberService.deleteApplicant(projectDto, memberDto);
         return value;
