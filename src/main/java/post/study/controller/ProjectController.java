@@ -48,7 +48,7 @@ public class ProjectController {
             List<String> bookmarkImg = new ArrayList<>();
             if (type != "NONE")
                 bookmarkImg = BookmarkProjectService.bookmarkImg(memberDto, paging.getProjectList());
-            model.addAttribute("username", memberDto.getUsername());
+            model.addAttribute("member", memberDto);
             model.addAttribute("bList", bookmarkImg);
 
         }
@@ -168,7 +168,7 @@ public class ProjectController {
     public String projectIntroduce(HttpSession session, String projectName, Model model) {
         MemberDto memberDto = (MemberDto) session.getAttribute("member");
         if (memberDto != null) {
-            model.addAttribute("username", memberDto.getUsername());
+            model.addAttribute("member", memberDto);
         }
         Project project = projectService.findProject(projectName);
         List<String> fList = projectService.findAllFieldString(project);

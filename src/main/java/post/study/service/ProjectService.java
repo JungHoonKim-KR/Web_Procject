@@ -40,9 +40,6 @@ public class ProjectService {
     private String bucket;
 
 
-
-
-    @Builder
     public Project projectToEntity(ProjectDto projectDto){
 
         return Project.builder()
@@ -58,7 +55,6 @@ public class ProjectService {
                 .createTime(projectDto.getCreationTime())
                 .build();
     }
-    @Builder
     public ProjectDto projectToDto(Project project){
         return ProjectDto.builder()
                 .id(project.getId())
@@ -82,7 +78,7 @@ public class ProjectService {
     }
 
     public String createMainImg(MultipartFile file) throws IOException {
-        if(file==null)
+        if(file.getOriginalFilename()=="")
             return null;
         String fileOriginalName = file.getOriginalFilename();
         String fileExtension = file.getOriginalFilename().substring(fileOriginalName.lastIndexOf("."), fileOriginalName.length());
@@ -102,7 +98,6 @@ public class ProjectService {
         return fileUrl;
     }
 
-    @Builder
     public void createFile(List<MultipartFile> fileList, Long projectId) throws IOException {
         String fileOriginalName;
         String fileExtension;
