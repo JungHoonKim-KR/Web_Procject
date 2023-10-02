@@ -16,8 +16,6 @@ public class ChatRoom {
 //    private Set<WebSocketSession> sessions = new HashSet<>();
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     private String roomId = String.valueOf(UUID.randomUUID());
     private String roomName;
 
@@ -25,6 +23,8 @@ public class ChatRoom {
 //    private List<ChatMessage> messageList = new ArrayList<>();
     @OneToMany(mappedBy = "chatRoom")
     private List<ChatRoomMember> chatRoomMemberList = new ArrayList<>();
+    @OneToMany(mappedBy = "chatRoom")
+    private List<ChatInvitation> chatInviteeList=new ArrayList<>();
 
 
 
@@ -39,6 +39,10 @@ public class ChatRoom {
 
     public void addChatRoomMember(ChatRoomMember chatRoomMember) {
         chatRoomMemberList.add(chatRoomMember);
+    }
+
+    public void addChatInvitee(ChatInvitation chatInvitee){
+        chatInviteeList.add(chatInvitee);
     }
 
 //    public void addMessage(ChatMessage message) {

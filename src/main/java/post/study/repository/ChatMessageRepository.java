@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ChatMessageRepository extends JpaRepository<ChatMessage,Long> {
-    @Query("select m from ChatMessage m where m.roomId=:roomId")
+    @Query("select m from ChatMessage m where m.roomId=:roomId order by m.createTime asc" )
     List<ChatMessage> findAllById(@Param("roomId") String roomId);
 }

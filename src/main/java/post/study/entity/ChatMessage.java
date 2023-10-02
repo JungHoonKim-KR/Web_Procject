@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import post.study.entity.Member;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 //@Entity
 @Getter
@@ -23,15 +25,10 @@ public class ChatMessage {
     private String writer;
     private String message;
     private LocalDateTime createTime = LocalDateTime.now();
+    private String messageDate= LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd HH:mm"));
 
 //   메세지에는 Writer의 이름와 roomId만 있으면 된다고 판단하여 연관성 매핑을 하지 않았음.
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id")
-//    private ChatMember chatMember;
-////
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "chatRoom_id")
-//    private ChatRoom chatRoom;
+
 
 //    public void addChatMessage(ChatRoom chatRoom, )
 

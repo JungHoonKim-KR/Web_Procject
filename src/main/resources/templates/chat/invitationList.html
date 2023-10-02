@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="hidden" id="id" th:value="${member.getId()}">
+<input type="hidden" id="username" th:value="${member.getUsername()}">
+<span th:each="i:${invitationList}">
+  <input type="hidden" id="roomId" th:value="${i.getChatRoom().getRoomId()}">
+  <span th:text="${i.getChatRoom().getRoomName()}"></span>
+    <button class="approve_btn" value="승인">승인</button> &nbsp;
+            <button class="refuse_btn" value="거절">거절</button>
+</span>
+<script>
+    var approve_btn = document.querySelectorAll(".approve_btn");
+    var refuse_btn=document.querySelectorAll(".refuse_btn");
+    var memberId = document.getElementById("id");
+    var username = document.getElementById("username");
+    var roomId = document.querySelectorAll("#roomId");
+    approve_btn.forEach(function (item,index) {
+        item.addEventListener("click", function () {
+            console.log(index)
+            console.log(roomId[index].value)
+            var url = "/chat/approve";
+            var param1 = "value=" + encodeURIComponent("승인");
+            var param2 = "memberId=" + encodeURIComponent(memberId.value);
+            var param3 = "username=" + encodeURIComponent(username.value);
+            var param4 = "roomId=" + encodeURIComponent(roomId[index].value);
+
+            fetch(url + '?' + param1 + "&" + param2 + "&" + param3 + "&" + param4, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data)
+
+                    if(data=="승인")
+                        alert("승인하였습니다.")
+                    else alert("오류")
+                });
+            setTimeout(function () {
+                location.reload();
+            }, 300);
+
+        })
+
+    })
+
+    refuse_btn.forEach(function (item,index) {
+        item.addEventListener("click", function () {
+            console.log(index)
+            console.log(roomId[index].value)
+            var url = "/chat/approve";
+            var param1 = "value=" + encodeURIComponent("거절");
+            var param2 = "memberId=" + encodeURIComponent(memberId.value);
+            var param3 = "username=" + encodeURIComponent(username.value);
+            var param4 = "roomId=" + encodeURIComponent(roomId[index].value);
+
+            fetch(url + '?' + param1 + "&" + param2 + "&" + param3 + "&" + param4, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data)
+                    if(data=="거절")
+                        alert("거절하였습니다.")
+                    else alert("오류")
+                });
+            setTimeout(function () {
+                location.reload();
+            }, 300);
+
+        })
+
+    })
+
+</script>
+</body>
+</html>

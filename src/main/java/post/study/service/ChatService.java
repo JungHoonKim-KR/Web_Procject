@@ -2,23 +2,16 @@ package post.study.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import post.study.entity.ChatMember;
-import post.study.entity.ChatMessage;
-import post.study.entity.ChatRoom;
-import post.study.entity.ChatRoomMember;
-import post.study.repository.ChatMemberRepository;
-import post.study.repository.ChatMessageRepository;
-import post.study.repository.ChatRoomMemberRepository;
-import post.study.repository.ChatRoomRepository;
+import post.study.dto.MemberDto;
+import post.study.entity.*;
+import post.study.repository.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +23,8 @@ public class ChatService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomMemberRepository chatRoomMemberRepository;
     private final ChatMemberRepository chatMemberRepository;
+    private final ChatInvitationRepository chatInvitationRepository;
+    private final MemberRepository memberRepository;
 //    private Map<String, ChatRoom> msgRooms;
 //
 //
@@ -67,13 +62,12 @@ public class ChatService {
         }
     }
 
-    public List<ChatRoom> findAllRoom(){
+    public List<ChatRoom> findAllRoomById(Long id){
         return chatRoomRepository.findAll();
     }
 
     public void saveMessage(ChatMessage message){
         ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setType(message.getType());
         chatMessage.setType(message.getType());
         chatMessage.setRoomId(message.getRoomId());
         chatMessage.setWriter(message.getWriter());
@@ -92,5 +86,41 @@ public class ChatService {
 
     public List<ChatMember> findAllMember(String roomId){
         return chatRoomMemberRepository.findChatMemberByRoomId(roomId);
+    }
+
+    public List<ChatRoom> findAllChatRoom(Long memberId){
+        return chatRoomMemberRepository.findChatRoomByMemberId(memberId);
+    }
+
+    public ChatInvitation chatInvite(String roomId, String username){
+        Member member = memberRepository.findMemberByUsername(username);
+        if(member==null)
+            return null;
+        ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId);
+        ChatInvitation chatInvitation = new ChatInvitation();
+        chatInvitation.setInvitation(member,chatRoom);
+        chatInvitationRepository.save(chatInvitation);
+        return chatInvitation;
+    }
+
+    public List<ChatInvitation> findAllChatInvitation(MemberDto member){
+        return chatInvitationRepository.findChatInvitation(member.getId());
+    }
+
+    public void applyInvitation(ChatRoom chatRoomDto, Long memberId,String username){
+        ChatMember chatMember = new ChatMember();
+        chatMember.setMemberId(memberId);
+        chatMember.setUsername(username);
+
+        ChatRoom chatRoom = chatRoomRepository.findByRoomId(chatRoomDto.getRoomId());
+        ChatRoomMember chatRoomMember=new ChatRoomMember();
+        chatRoomMember.setChatRoomMemberList(chatMember,chatRoom);
+
+        chatMemberRepository.save(chatMember);
+        chatRoomMemberRepository.save(chatRoomMember);
+    }
+
+    public void deleteInvitation(ChatRoom chatRoom,Long memberId){
+        chatInvitationRepository.deleteChatInvitation(chatRoom.getRoomId(),memberId);
     }
 }
