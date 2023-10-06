@@ -2,19 +2,14 @@ package post.study.controller;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import post.study.dto.MemberDto;
 import post.study.entity.Member;
 import post.study.service.FieldLanguageService;
 import post.study.service.MemberService;
-import post.study.service.ProjectMemberService;
-import post.study.service.ProjectService;
-
 import java.util.List;
 
 @Controller
@@ -22,11 +17,10 @@ import java.util.List;
 public class LoginAndJoinController {
     private final MemberService memberService;
     private final FieldLanguageService fieldLanguageService;
-    private final ProjectMemberService projectMemberService;
-    private final ProjectService projectService;
 
     @GetMapping("/")
-    public String firstMain(){
+    public String firstMain()
+    {
         return "first_main";
     }
     @GetMapping("/main_post")
