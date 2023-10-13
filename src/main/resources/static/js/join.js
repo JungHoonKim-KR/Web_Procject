@@ -3,7 +3,7 @@ function goform() {
     let email = document.querySelector("#emailId").value;
     let password = document.querySelector("#password").value;
     let phoneNumber = document.querySelector("#phoneNumber").value;
-
+    let regUsername= /^.{2,6}$/
     let regEmailId = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     let regPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/i;
     let regPhoneNumber =/^01([0|1|6|7|8|9])-?([0-9]{4})-?([0-9]{4})$/;
@@ -13,7 +13,10 @@ function goform() {
         alert("닉네임을 입력해주세요");
         return false;
 
-    }//if userName reg
+    }else if(userName.length<2 || userName.length>6){
+        alert("이름은 2~6글자 사이만 가능합니다.")
+    }
+    //if userName reg
 
     if (email == "") {
         alert("이메일을 입력해주세요.");
