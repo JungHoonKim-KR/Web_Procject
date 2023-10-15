@@ -24,8 +24,8 @@
 
         </ul>
         <a th:href="@{/mypage-profile}">
-            <img th:if="${member==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
-            <img th:unless="${member==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+            <img th:if="${member==null} or ${member.getProgileImg()}==null" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+            <img th:unless="${member==null} or ${member.getProgileImg()==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
         </a>
         &nbsp;
     </div>
