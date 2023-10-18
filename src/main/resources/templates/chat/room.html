@@ -2,24 +2,169 @@
 <html lang="en" xmlns:th>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <style>
+        .chat-room {
+            border: 1px solid #000;
+            background-color: #fff;
+            border: 1px solid #e5e5ea;
+            border-radius: 0.25rem;
+            display: flex;
+            flex-direction: column;
+            font-family: "SanFrancisco";
+            font-size: 1.25rem;
+            margin: 0 auto 1rem;
+            width: 80%;
+            padding: 0.5rem 1.5rem;
+            height: 500px;
+            overflow-y: auto;
+        }
+        #messageSection{
+
+        }
+        p{
+            margin: 0;
+        }
+        .chat-room p {
+            border-radius: 1.15rem;
+            line-height: 1.25;
+            max-width: 75%;
+            padding: 0.5rem 0.875rem;
+            position: relative;
+            word-wrap: break-word;
+        }
+        /*말풍선 꼬리*/
+        .chat-room p::before,
+        .chat-room p::after {
+            bottom: -0.1rem;
+            content: "";
+            height: 1rem;
+            position: absolute;
+        }
+
+        /* 상대방 */
+       .name-them{
+            float: left;
+        }
+      .from-them {
+            /*float: left; 얘를 쓰면 이상해짐 이유 모름*/
+            background-color: #e5e5ea;
+            color: #000;
+            width: fit-content;
+        }
+       .from-them::after {
+            background-color: #fff;
+            border-bottom-right-radius: 0.5rem;
+            left: 20px;
+            transform: translate(-30px, -2px);
+            width: 10px;
+        }
+       .from-them::before {
+            border-bottom-right-radius: 0.8rem 0.7rem;
+            border-left: 1rem solid #e5e5ea;
+            left: -0.35rem;
+            transform: translate(0, -0.1rem);
+        }
+
+        /* 나 */
+       .name-me{
+          float: right;
+        }
+        .from-me {
+            float: right;
+            background-color: #248bf5;
+            color: #fff;
+            clear:both;
+        }
+        .chat-room p.from-me::after {
+            background-color: #fff;
+            border-bottom-left-radius: 0.5rem;
+            right: -40px;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     transform: translate(-30px, -2px);
+            width: 10px;
+        }
+        .chat-room p.from-me::before {
+            border-bottom-left-radius: 0.8rem 0.7rem;
+            border-right: 1rem solid #248bf5;
+            right: -0.35rem;
+            transform: translate(0, -0.1rem);
+        }
+
+
+        #inviteDiv{
+            display: flex;
+        }
+        #messageElement{
+            width: 400px;
+            height: 32px;
+            font-size: 15px;
+            border: 0;
+            border-radius: 15px;
+            background-color: rgb(233, 233, 233);
+        }
+        #inviteElement{
+            width: 400px;
+            height: 32px;
+            font-size: 15px;
+            border: 0;
+            border-radius: 15px;
+            background-color: rgb(233, 233, 233);
+        }
+        #sendBtn, #inviteBtn,#inviteOK{
+            width: 75px;
+            height: 32px;
+            border-radius: 10px;
+            border: 0;
+        }
+        .wrap{
+            display: flex;
+            margin: 0 auto 1rem;
+            width: 40%;
+            height: 1000px;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .name-them, .name-me{
+            font-size: small;
+        }
+       span{
+           height: 75px;
+       }
+    </style>
 </head>
 <body>
 <input type="hidden" id="roomId" th:value="${roomId}">
 <input type="hidden" id="writer" th:value="${member.getUsername()}">
-<div id="contentList" th:unless="${messageList==null}">
-<span th:each="m:${messageList}">
-    <span th:text="${m.getWriter()}"></span><br>
-    <span th:text="${m.message}"></span><br>
-</span>
-</div>
+<div class="wrap">
+    <div class="chat-room contentList"th:unless="${messageList==null}">
+    <span th:each="m:${messageList}">
+        <p th:if="${m.getWriter()==member.getUsername()}" class="name-me" th:text="${m.getWriter()}"></p>
+        <p th:if="${m.getWriter()==member.getUsername()}" class="name-me" th:text="${m.getMessageDate()}"></p>
+        <br th:if="${m.getWriter()==member.getUsername()}">
+        <p th:if="${m.getWriter()==member.getUsername()}" class="from-me" th:text="${m.getMessage()}"></p>
+        <p th:unless="${m.getWriter()==member.getUsername()}" class="name-them" th:text="${m.getWriter()}"></p>
+        <p th:unless="${m.getWriter()==member.getUsername()}" class="name-them" th:text="${m.getMessageDate()}"></p>
+        <br th:unless="${m.getWriter()==member.getUsername()}">
+        <p th:unless="${m.getWriter()==member.getUsername()}" class="from-them" th:text="${m.getMessage()}"></p>
+         </span>
 
-<br>
-<br>
-<br>
-<br>
-<input type="text" id="messageElement">
-<button type="button" onclick="sendMessage()">전송</button>
+    </div>
+
+
+    <div id="messageSection">
+    <input type="text" id="messageElement">
+    <button type="button" id="sendBtn" onclick="sendMessage()">전송</button>
+    <button type="button" id="inviteBtn" onclick="showInvite()">초대</button>
+        <br><br>
+    <div id="inviteDiv" style="visibility: hidden">
+        <input type="text" id="inviteElement">
+        <button type="button" id="inviteOK" th:value="${roomId}" onclick="sendInvite()">확인</button>
+    </div>
+    </div>
+
+</div>
+<button onclick="history.back()">뒤로 가기</button>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script>
@@ -27,7 +172,9 @@
     var messageElement = document.getElementById("messageElement")
     var roomId = document.getElementById("roomId").value
     var writer = document.getElementById("writer").value
-    var contentList = document.getElementById("contentList")
+    var contentList = document.querySelector(".contentList")
+    var inviteDiv = document.getElementById("inviteDiv");
+    var inviteElement = document.getElementById("inviteElement").value;
 
 
     function connect() {
@@ -53,20 +200,39 @@
 
     function showMessage(payload) {
         let chat = JSON.parse(payload.body);
-        console.log(chat.type)
-        if (chat.type === 'ENTER' || chat.type === 'TALK') {
-            contentList.appendChild(document.createElement("br"));
-            let htmlSpanElement1 = document.createElement("span");
-            htmlSpanElement1.innerHTML = chat.writer
-            contentList.appendChild(htmlSpanElement1)
-            contentList.appendChild(document.createElement("br"));
-            let htmlSpanElement2 = document.createElement("span");
-            htmlSpanElement2.innerHTML = chat.message
-            contentList.appendChild(htmlSpanElement2)
-            if (chat.type === 'ENTER') {
-                contentList.appendChild(document.createElement("br"));
-            }
+         if(chat.type==="ENTER"){
+            let enterElement=document.createElement("p");
+            enterElement.innerText=chat.message;
+            enterElement.setAttribute("class","enter");
+            contentList.appendChild(enterElement);
         }
+        else if (chat.type === 'TALK') {
+            let spanElement=document.createElement("span");
+            let nameElement = document.createElement("p");
+            nameElement.innerText = chat.writer
+            let dateElement=document.createElement("p");
+            dateElement.innerText=chat.messageDate;
+            let brElement=document.createElement("br")
+            let messageElement = document.createElement("p");
+            messageElement.innerText = chat.message
+            if (chat.writer != writer) {
+                nameElement.setAttribute("class", "name-them")
+                dateElement.setAttribute("class","name-them");
+                messageElement.setAttribute("class", "from-them")
+
+            }else{
+                nameElement.setAttribute("class","name-me");
+                dateElement.setAttribute("class","name-me");
+                messageElement.setAttribute("class","from-me");
+            }
+            spanElement.appendChild(nameElement);
+            spanElement.appendChild(dateElement);
+            spanElement.appendChild(brElement)
+            spanElement.appendChild(messageElement);
+            contentList.appendChild(spanElement);
+        }
+
+        contentList.scrollTop=contentList.scrollHeight;
 
     }
 
@@ -93,6 +259,39 @@
             showMessage;
         }
     }
+
+    function showInvite() {
+        if(inviteDiv.style.visibility=="visible")
+            inviteDiv.setAttribute("style","visibility:hidden");
+        else
+            inviteDiv.setAttribute("style", "visibility: visible");
+    }
+
+    function sendInvite() {
+        var url = "/chat/invite";
+        var params = 'roomId=' + encodeURIComponent(roomId);
+        var params2="username="+encodeURIComponent(document.getElementById("inviteElement").value);
+        console.log(inviteElement)
+        fetch(url + '?' + params +'&'+params2, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
+            .then(response => response.text())
+            .then(data => {
+                if (data == "성공") {
+                    alert("초대 완료");
+                } else {
+                    alert("사용자를 찾을 수 없습니다.");
+                }
+            })
+            .catch(error => {
+                // Handle the error case here if needed
+            });
+    }
+
+
 </script>
 
 </body>
