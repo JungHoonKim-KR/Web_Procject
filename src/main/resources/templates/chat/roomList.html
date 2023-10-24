@@ -5,10 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-<a th:href="@{/room/create}">개설하기</a><br>
+<a th:href="@{/chat/create}">개설하기</a><br>
 
   <span th:unless="${roomList==null}" th:each="r :${roomList}">
-    <span th:text="${r.getRoomName()}" th:onclick="|location.href='@{/room(roomId=${r.getRoomId()})}'|"></span>
+    <span th:text="${r.getRoomName()}" th:onclick="|location.href='@{/chat(roomId=${r.getRoomId()})}'|"></span>
   </span>
+    <br>
+<a th:href="@{/chat/invitationList}">초대장 리스트</a>
 </body>
 </html>
