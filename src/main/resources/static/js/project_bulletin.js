@@ -136,7 +136,6 @@ heart.forEach(function (item, index) {
                     }
                 })
                 .catch(error => {
-                    // Handle the error case here if needed
                 });
         }
     })
