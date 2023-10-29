@@ -1,17 +1,15 @@
 package post.study.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import post.study.dto.MemberDto;
 import post.study.entity.*;
 import post.study.repository.FieldMemberRepository;
 import post.study.repository.LanguageMemberRepository;
 import post.study.repository.MemberRepository;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,7 +20,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final LanguageMemberRepository languageMemberRepository;
     private final FieldMemberRepository fieldMemberRepository;
-    private final ProjectService projectService;
+//    private final PasswordEncoder passwordEncoder;
 
     public MemberDto memberToDto(Member member) {
         return MemberDto.builder()
@@ -92,6 +90,7 @@ public class MemberService {
         Member member = new Member();
         member.setEmailId(memberDto.getEmailId());
         member.setUsername(memberDto.getUsername());
+//        member.setPassword(passwordEncoder.encode(memberDto.getPassword()));
         member.setPassword(memberDto.getPassword());
         member.setPhoneNumber(memberDto.getPhoneNumber());
         List<String> fieldList = fieldLanguageService.getFieldList(field);
