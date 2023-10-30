@@ -24,25 +24,26 @@ public class BookmarkProjectService {
     private final BookmarkProjectRepository bookmarkProjectRepository;
     private final MemberService memberService;
 
-    public Boolean updateBookmarkProject(MemberDto memberDto, ProjectDto projectDto) {
-        Member member = memberService.findMember(memberDto.getEmailId());
+    public Boolean updateBookmarkProject(Member member, ProjectDto projectDto) {
+        MemberDto memberDto = memberService.memberToDto(member);
+        Member findMember = memberService.findMember(memberDto);
         Project project = projectService.findProject(projectDto.getProjectName());
         //북마크 되어 있는지 조회
-        BookmarkProject findProject = bookmarkProjectRepository.updateBookmarkProject(member.getId(), project.getId());
+        BookmarkProject findProject = bookmarkProjectRepository.updateBookmarkProject(findMember.getId(), project.getId());
         if (findProject == null) {
             BookmarkProject bookmarkProject = new BookmarkProject();
-            bookmarkProject.setBookmarkProject(member, project);
+            bookmarkProject.setBookmarkProject(findMember, project);
             bookmarkProjectRepository.save(bookmarkProject);
             return true;
         } else {
-            bookmarkProjectRepository.deleteBookmarkProject(member.getId(), project.getId());
+            bookmarkProjectRepository.deleteBookmarkProject(findMember.getId(), project.getId());
             return false;
         }
 
     }
 
 
-    public List<String> bookmarkImg(MemberDto memberDto, Page<Project> projectList) {
+    public List<String> bookmarkImg(Member memberDto, Page<Project> projectList) {
 
         List<String> bookmarkImg = new ArrayList<>();
         List<Long> bookmarkProject = bookmarkProjectRepository.findBookmarkProject(memberDto.getId(), projectList.getContent());
