@@ -39,7 +39,7 @@
 <body class="text-center">
 
 <main class="form-signin">
-    <form action="/mypage-project" method="post">
+    <form action="/mypage/project" method="post">
         <img class="mb-4" src="css/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
         <h1 class="h3 mb-3 fw-normal">프로젝트 설정</h1>
 
@@ -76,17 +76,17 @@
 
 
     </form>
-    <form action="/mypage-project/apply" method="Get">
+    <form action="/mypage/project/apply" method="Get">
         <input type="hidden" name="id" th:value="${project.getId()}">
-        <button type="submit" th:onclick="|location.href='@{/mypage-project/apply}'|">가입 신청자 관리</button>
+        <button type="submit" th:onclick="|location.href='@{/mypage/project/apply}'|">가입 신청자 관리</button>
     </form>
 
 </main>
 
 <div class="list-group">
-    <a th:href="@{/mypage-profile}" class="list-group-item list-group-item-action ">프로필 설정</a>
-    <a th:href="@{/mypage-project}" class="list-group-item list-group-item-action active">프로젝트 설정</a>
-    <a th:href="@{/mypage-bookmarkProjectList}" class="list-group-item list-group-item-action">북마크 설정</a>
+    <a th:href="@{/mypage/profile}" class="list-group-item list-group-item-action ">프로필 설정</a>
+    <a th:href="@{/mypage/project}" class="list-group-item list-group-item-action active">프로젝트 설정</a>
+    <a th:href="@{/mypage/bookmarkProjectList}" class="list-group-item list-group-item-action">북마크 설정</a>
 </div>
 <a class="btn btn-primary" href="javascript:history.back()">뒤로가기</a>
 
