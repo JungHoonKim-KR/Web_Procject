@@ -7,7 +7,7 @@ var trashcan=document.querySelectorAll('.trashcan');
 trashcan.forEach(function(item,index){
     trashcan[index].addEventListener('click',function(){
         edit_my_bookmarks[index].remove();
-        var url = "/project-bookmark";
+        var url = "/project/bookmark";
         var params = 'projectId=' + encodeURIComponent(this.id);
 
         fetch(url + '?' + params, {

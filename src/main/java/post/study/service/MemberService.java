@@ -20,14 +20,14 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final LanguageMemberRepository languageMemberRepository;
     private final FieldMemberRepository fieldMemberRepository;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public MemberDto memberToDto(Member member) {
         return MemberDto.builder()
                 .id(member.getId())
                 .emailId(member.getEmailId())
                 .username(member.getUsername())
-                .password(member.getPassword())
+                .password(passwordEncoder.encode(member.getPassword()))
                 .phoneNumber(member.getPhoneNumber())
                 .profileImg(member.getProfileImg())
                 .build();
@@ -44,16 +44,16 @@ public class MemberService {
                 .build();
     }
 
-    public Boolean loginValidate(MemberDto memberDto) {
+    public Member loginValidate(MemberDto memberDto) {
 
         Member findMember = memberRepository.findByemailId(memberDto.getEmailId());
         if (findMember == null)
-            return false;
-        if (!findMember.getPassword().equals(memberDto.getPassword())) {
-            return false;
+            return null;
+        if (!passwordEncoder.matches(memberDto.getPassword(),findMember.getPassword())) {
+            return null;
         }
 
-        return true;
+        return findMember;
     }
 
     //회원의 아이디를 이용해 패스워드가 알맞는지 판단
@@ -67,10 +67,10 @@ public class MemberService {
     /**
      * 회원가입
      */
-    public Member join(MemberDto memberDto, String language, String field) {
-        if (joinValidate(memberDto.getEmailId(),memberDto.getUsername()) == false)
+    public Member join(Member member, String language, String field) {
+        if (joinValidate(member.getEmailId(),member.getUsername()) == false)
             return null;
-        else return save(memberDto, language, field);
+        else return save(member, language, field);
     }
 
     public Boolean joinValidate(String emailId, String username) {
@@ -80,19 +80,21 @@ public class MemberService {
         else return false;
     }
 
-    public Member findMember(String emailId) {
-        Member member = memberRepository.findByemailId(emailId);
+
+    public Member findMember(MemberDto memberDto) {
+        Member member = memberRepository.findByemailId(memberDto.getEmailId());
+       if(!passwordEncoder.matches(memberDto.getPassword(),member.getPassword()))
+           return null;
+
         return member;
     }
 
-    public Member save(MemberDto memberDto, String language, String field) {
+    public Member save(Member member, String language, String field) {
 
-        Member member = new Member();
-        member.setEmailId(memberDto.getEmailId());
-        member.setUsername(memberDto.getUsername());
-//        member.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-        member.setPassword(memberDto.getPassword());
-        member.setPhoneNumber(memberDto.getPhoneNumber());
+        member.setEmailId(member.getEmailId());
+        member.setUsername(member.getUsername());
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
+        member.setPhoneNumber(member.getPhoneNumber());
         List<String> fieldList = fieldLanguageService.getFieldList(field);
         List<String> languageList = fieldLanguageService.getLanguageList(language);
 
@@ -158,12 +160,12 @@ public class MemberService {
 
     //회원의 언어, 분야 찾기
 
-    public List<String> findMyLanguageString(MemberDto member) {
+    public List<String> findMyLanguageString(Member member) {
         List<String> allById = memberRepository.findLanguageByIdVerString(member.getId());
         return allById;
     }
 
-    public List<String> findMyFieldString(MemberDto member) {
+    public List<String> findMyFieldString(Member member) {
         List<String > allById = memberRepository.findFieldByIdVerString(member.getId());
         return allById;
     }

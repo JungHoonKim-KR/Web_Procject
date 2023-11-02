@@ -3,7 +3,6 @@
 
 //프로젝트 개수를 누르면 프로젝트 관리페이지로 이동
 
-
 //수정하기 버튼
 var edit=document.querySelector(".edit");
 //원래 내 개인정보

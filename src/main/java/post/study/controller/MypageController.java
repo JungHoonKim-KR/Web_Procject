@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/mypage")
 public class MypageController {
     private final FieldLanguageService fieldLanguageService;
     private final MemberService memberService;
@@ -27,27 +29,21 @@ public class MypageController {
     private final ProjectService projectService;
     private final BookmarkProjectService bookmarkProjectService;
 
-    @GetMapping("/mypage-profile")
+    @GetMapping("/profile")
     public String profile(HttpSession session, Model model) {
-        MemberDto memberDto = (MemberDto) session.getAttribute("member");
-        if (memberDto == null) {
+        Member member = (Member) session.getAttribute("member");
+        MemberDto memberDto = memberService.memberToDto(member);
+        if (member == null) {
             model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
             model.addAttribute("url", "back");
             return "popup";
         }
-        List<String> myLanguage = memberService.findMyLanguageString(memberDto);
-        List<String> myField = memberService.findMyFieldString(memberDto);
+        List<String> myLanguage = memberService.findMyLanguageString(member);
+        List<String> myField = memberService.findMyFieldString(member);
 
         List<String> fieldList = fieldLanguageService.fieldList();
         List<String> languageList = fieldLanguageService.languageList();
 
-        for(String s: myField){
-            System.out.println("Dwad: "+s);
-        }
-
-        for(String s:myLanguage){
-            System.out.println("wwww: "+s);
-        }
 
         model.addAttribute("member",memberDto);
         model.addAttribute("myFList",myField);
@@ -55,18 +51,15 @@ public class MypageController {
         model.addAttribute("fList",fieldList);
         model.addAttribute("lList",languageList);
 
-//        model.addAttribute("fList", String.join(",",myField));
-//        model.addAttribute("lList", String.join(",",myLanguage));
-
         return "mypage/profile";
     }
 
-    @PostMapping("/mypage-profile")
+    @PostMapping("/profile")
     public String profileUpdate(HttpSession session,MemberDto memberDto, String language, String field, MultipartFile imgFile,  Model model) throws IOException {
         if(imgFile.getOriginalFilename()!="") {
             String mainImg = projectService.createMainImg(imgFile);
             memberService.profileUpdate(memberDto, language, field, mainImg);
-            MemberDto member = (MemberDto) session.getAttribute("member");
+            Member member = (Member) session.getAttribute("member");
             member.setProfileImg(mainImg);
             session.setAttribute("member", member);
         }
@@ -74,24 +67,22 @@ public class MypageController {
             memberService.profileUpdate(memberDto,language,field,null);
         }
 
-
         model.addAttribute("msg", "변경되었습니다.");
         model.addAttribute("url", "/");
         return "popup";
     }
 
-    @GetMapping("/mypage-projectList")
+    @GetMapping("/projectList")
     public String projectList(HttpSession session, Model model) {
-        MemberDto memberDto = (MemberDto) session.getAttribute("member");
-        Member member = memberService.memberToEntity(memberDto);
+        Member member = (Member) session.getAttribute("member");
         List<ProjectMember> myProjectList = projectMemberService.findMyProjectList(member);
-        model.addAttribute("member",memberDto);
+        model.addAttribute("member",member);
         model.addAttribute("pList", myProjectList);
         return "mypage/projectList";
 
     }
 
-    @GetMapping("/mypage-project")
+    @GetMapping("/project")
     public String project(String projectName, Model model) {
         Project project = projectService.findProject(projectName);
         List<ProjectFile_Img> projectImg = projectService.findProjectImg(project.getId());
@@ -108,7 +99,7 @@ public class MypageController {
 
     }
 
-    @PostMapping("/mypage-project")
+    @PostMapping("/project")
     public String project(ProjectDto projectDto, String language, String field, Model model) {
         Project project = projectService.update(projectDto, language, field);
 
@@ -117,12 +108,12 @@ public class MypageController {
             model.addAttribute("url", "back");
         } else {
             model.addAttribute("msg", "변경이 완료되었씁니다.");
-            model.addAttribute("url", "/mypage-projectList");
+            model.addAttribute("url", "/mypage/projectList");
         }
         return "popup";
     }
 
-    @GetMapping("/mypage-bookmarkProjectList")
+    @GetMapping("/bookmarkProjectList")
     public String bookmarProjectkList(HttpSession session, Model model) {
         MemberDto memberDto = (MemberDto) session.getAttribute("member");
         List<BookmarkProject> bookmarkList = bookmarkProjectService.findBookmarkList(memberDto);
@@ -131,7 +122,7 @@ public class MypageController {
         return "mypage/bookmarkProjectList";
     }
 
-    @GetMapping("/mypage-project/apply")
+    @GetMapping("/project/apply")
     public String applicant(ProjectDto projectDto, Model model) {
         List<Applicant> applicant = projectMemberService.findApplicant(projectDto);
         model.addAttribute("projectDto", projectDto);
@@ -139,7 +130,7 @@ public class MypageController {
         return "mypage/applicant";
     }
 
-    @GetMapping("/mypage-project/approve")
+    @GetMapping("/project/approve")
     @ResponseBody
     public String approving(String value, ProjectDto projectDto, MemberDto memberDto, Model model) {
         if (value.equals("승인")) {
