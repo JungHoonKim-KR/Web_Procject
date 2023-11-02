@@ -1,4 +1,4 @@
-// 광고 배너 파트 안에 배너 슬라이드 작업 
+// 광고 배너 파트 안에 배너 슬라이드 작업
 
 var slide_circles = document.querySelectorAll(".circle");
 var project_pic = document.querySelector("#project_pic");
@@ -116,7 +116,7 @@ heart.forEach(function (item, index) {
 
     heart[index].addEventListener('click', function () {
         if (username) {
-            var url = "/project-bookmark";
+            var url = "/project/bookmark";
             var params = 'projectId=' + encodeURIComponent(this.id);
 
             fetch(url + '?' + params, {
@@ -128,10 +128,10 @@ heart.forEach(function (item, index) {
                 .then(response => response.text())
                 .then(data => {
                     if (data === "true") {
-                        heart[index].src = "./images/하트모양(빨강).jpg";
+                        heart[index].src = "/images/하트모양(빨강).jpg";
                         alert("북마크가 추가되었습니다.")
                     } else {
-                        heart[index].src = "./images/하트모양(회색).jpg";
+                        heart[index].src = "/images/하트모양(회색).jpg";
                         alert("북마크가 해제되었습니다.")
                     }
                 })

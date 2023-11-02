@@ -23,7 +23,7 @@
             <li><a th:href="@{/question}">문의게시판</a></li>
             <li><a href="/">랭킹</a></li>
         </ul>
-        <a th:href="@{/mypage-profile}">
+        <a th:href="@{/mypage/profile}">
             <img th:if="${member==null}" src="/images/my_img.png" width="40" height="30"
                  style="margin-left:30px;border-radius:50%;border:none">
             <img th:unless="${member==null}" th:src="${member.getProfileImg()}" width="40" height="30"
@@ -50,15 +50,15 @@
     ">
     <button class="my_option" type="button"
             style="width:80px;height:30px;margin-top:20px;background-color:white;border-radius:20px;background-color:#13161c;color:white;font-weight:bold"
-            th:onclick="|location.href='@{/mypage-profile}'|">프로필
+            th:onclick="|location.href='@{/mypage/profile}'|">프로필
     </button>
     <button class="my_option" type="button"
             style="width:110px;height:30px;margin-left:10px;margin-top:20px;background-color:white;border-radius:20px;font-weight:bold"
-            th:onclick="|location.href='@{/mypage-projectList}'|">프로젝트 관리
+            th:onclick="|location.href='@{/mypage/projectList}'|">프로젝트 관리
     </button>
     <button class="my_option" type="button"
             style="width:80px;height:30px;;margin-left:10px;margin-top:20px;background-color:white;border-radius:20px;font-weight:bold"
-            th:onclick="|location.href='@{/mypage-bookmarkProjectList}'|">북마크
+            th:onclick="|location.href='@{/mypage/bookmarkProjectList}'|">북마크
     </button>
 
 </div>
@@ -87,7 +87,7 @@
 
             <br>
             <span th:text="${member.getUsername()}" style="font-weight:bold;margin-left:60px;"></span> 님 반갑습니다.<br>
-            <span class="counting" th:onclick="|location.href='@{/mypage-projectList}'|"
+            <span class="counting" th:onclick="|location.href='@{/mypage/projectList}'|"
                   style="margin-left:120px;font-size:0.8em;color:gray;font-weight:bold"><span
                     style="font-size:1.2em;font-weight:bold"></span>MyProjects</span>
         </div>
@@ -116,7 +116,7 @@
                         </span>
                     <hr style="margin-top:13.5px;margin-bottom:10px">
                     <span style="margin-left:20px"> 비밀번호 <span style="margin-left:30px">:</span>
-                        <span style="margin-left:50px" th:text="${member.getPassword()}">*********</span>
+                        <span type="password" style="margin-left:50px" >*********</span>
                         </span>
                     <hr style="margin-top:13.5px;margin-bottom:10px">
                 </div>
@@ -149,7 +149,7 @@
         </div>
         <!--        수정 태그-->
         <div class="edit_inform_container">
-            <form action="/mypage-profile" method="POST" enctype="multipart/form-data">
+            <form action="/mypage/profile" method="POST" enctype="multipart/form-data">
                 <div class="changing_profile" style="visibility:hidden">
                     <label for="file" style="margin-left:500px;margin-top:0px">
                         <div class="btn-upload">프로필 사진 변경</div>
@@ -215,7 +215,7 @@
                 <br><br>
                 <hr style="width:650px">
                 <button class="edit_save" style="margin-left:250px;margin-top:20px;width:90px;height:40px">저장</button>
-                <button class="edit_cancle" type="button" th:onclick="|location.href='@{/mypage-profile}'|"
+                <button class="edit_cancle" type="button" th:onclick="|location.href='@{/mypage/profile}'|"
                         style="margin-top:20px;width:90px;height:40px">취소
                 </button>
 

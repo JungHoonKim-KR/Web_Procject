@@ -91,7 +91,7 @@
             <li><a href="/">이용안내</a></li>
             <li><a href="/">공지사항</a></li>
             <li><a th:href="@{/question?page=0}">문의게시판</a></li>
-            <li><a th:href="@{/mypage-profile}">마이페이지</a></li>
+            <li><a th:href="@{/mypage/profile}">마이페이지</a></li>
         </ul>
     </div>
 
@@ -136,7 +136,7 @@
 
         </div>
     </section>
-    <a th:href="@{/project-create}">프로젝트 생성</a>
+    <a th:href="@{/project/create}">프로젝트 생성</a>
     <div class="album py-5 bg-light">
         <div class="container">
             <form action="/project-introduce" method="get>">
@@ -199,7 +199,7 @@
         <ul class="pagination justify-content-center">
 
             <li class="page-item ">
-                <a th:href="@{/projectSearch(page=0)}"><span class="page-link">처음</span></a>
+                <a th:href="@{/project/Search(page=0)}"><span class="page-link">처음</span></a>
 
             </li>
             <li class="page-item ">
@@ -224,25 +224,25 @@
         <ul class="pagination justify-content-center">
 
                 <li class="page-item ">
-                    <a th:href="@{/projectSearch(page=0)}"><span class="page-link">처음</span></a>
+                    <a th:href="@{/project/Search(page=0)}"><span class="page-link">처음</span></a>
 
                 </li>
                 <li class="page-item ">
-                    <a th:if="${pageLine}>0" th:href="@{/projectSearch(page=${prePage})}"><span
+                    <a th:if="${pageLine}>0" th:href="@{/project/Search(page=${prePage})}"><span
                             class="page-link">이전</span></a>
                 </li>
 
                 <span class="page-item" th:id="currentPage+${page}"
                       th:each="page: ${#numbers.sequence(startPage, endPage)}">
-                <a class="page-link" th:text="${page+1}" th:href="@{/projectSearch(page=${page})}"></a>
+                <a class="page-link" th:text="${page+1}" th:href="@{/project/Search(page=${page})}"></a>
                 </span>
 
                 <li class="page-item">
-                    <a th:if="${pageLine}<${totalPageLine}" th:href="@{/projectSearch(page=${nextPage})}"><span
+                    <a th:if="${pageLine}<${totalPageLine}" th:href="@{/project/Search(page=${nextPage})}"><span
                             class="page-link">다음</span></a>
                 </li>
                 <li class="page-item">
-                    <a th:href="@{/projectSearch(page=${totalPage})}"><span class="page-link">마지막</span></a>
+                    <a th:href="@{/project/Search(page=${totalPage})}"><span class="page-link">마지막</span></a>
                 </li>
         </ul>
             </span>
@@ -331,7 +331,7 @@
                         type: "GET",
                         async: true,
                         dataType: "text",
-                        url: "/project-bookmark",
+                        url: "/project/bookmark",
                         data: {'projectId': this.id},
                         success: function (data) {
                             if (data == "true") {
@@ -362,7 +362,7 @@
         let data = $('.bodypost').find("#title")
         let link = $('.bodypost').find("#projectLink")
         for (let i = 0; i < data.length; i++) {
-            $(link[i]).attr('href', "/project-introduce?projectName=" + $(data[i]).text())
+            $(link[i]).attr('href', "/project/introduce?projectName=" + $(data[i]).text())
         }
 
         // $('#projectLink').attr('href','/project-introduce?projectName='+data)

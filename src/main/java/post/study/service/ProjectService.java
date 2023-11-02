@@ -139,7 +139,7 @@ public class ProjectService {
 
 
 
-    public Project create(ProjectDto projectDto,String language,String field, MemberDto memberDto) {
+    public Project create(ProjectDto projectDto,String language,String field, Member memberDto) {
         if (search(projectDto) == false) {
             Project project = new Project();
             project.setProjectLeader(memberDto.getUsername());

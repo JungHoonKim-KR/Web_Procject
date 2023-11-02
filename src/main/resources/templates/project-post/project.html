@@ -14,7 +14,7 @@
 <body class="wrapper2" style="background-color:#13161c">
 <header id="contents_box" >
 
-  <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
+  <a th:href="@{/main_post}"><img src="/images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
                                   width="200" height="45"></a>
   <div class="nav_items" style="margin-left:150px;">
     <ul>
@@ -23,7 +23,7 @@
       <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
       <li><a href="/"><span style="color:white">랭킹</span></a></li>
     </ul>
-    <a th:href="@{/mypage-profile}">
+    <a th:href="@{/mypage/profile}">
       <img th:if="${member==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
       <img th:unless="${member==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
 
@@ -64,12 +64,12 @@
         <input type="hidden" name="createTime" th:value="${project.getCreationTime()}">
 
         <div style="width:800px ">
-          <img src="./images/왼쪽사진.jpg" id="left_direction" class="direction"alt="이미지 불러오기 실패" style="margin:16px;margin-bottom:180px" width="40" height="40"  >
+          <img src="/images/왼쪽사진.jpg" id="left_direction" class="direction"alt="이미지 불러오기 실패" style="margin:16px;margin-bottom:180px" width="40" height="40"  >
 
 
           <img src="" class="donga big_pic" style="border-radius:5%"alt="이미지 불러오기 실패"  width="550" height="370"  >
 
-          <img src="./images/오른쪽사진.jpg" id="right_direction"  class="direction" alt="이미지 불러오기 실패" style="margin:16px;margin-bottom:180px;margin-left:14px;" width="40" height="40"  >
+          <img src="/images/오른쪽사진.jpg" id="right_direction"  class="direction" alt="이미지 불러오기 실패" style="margin:16px;margin-bottom:180px;margin-left:14px;" width="40" height="40"  >
         </div>
 
         <div style="width:800px;margin-left:150px">
@@ -116,7 +116,7 @@
 
           <button class="apply_btn" type="submit"
                   th:unless="${member==null} or ${project.getCurHeadcount()==project.getTotalHeadcount()}"
-                  th:onclick="|location.href='@{/project-apply}'|">
+                  th:onclick="|location.href='@{/project/apply}'|">
             프로젝트 신청하기
           </button>
 
@@ -139,7 +139,7 @@
         <div>
           <span type="hidden" th:unless="${member==null}">
           <button th:if="${member.getUsername()==project.getProjectLeader()}" id ="add_pic"
-                  th:onclick="|location.href='@{/mypage-project(projectName=${project.getProjectName()})}'|">+</button>
+                  th:onclick="|location.href='@{/mypage/project(projectName=${project.getProjectName()})}'|">+</button>
           </span>
         </div>
         <div>
@@ -147,7 +147,7 @@
           <div class="box" style="height:500px;width:500px;padding:30px">
             <span style="font-weight:bold;font-size:30px;color:white;margin-left:60px">리더가 남긴 말</span><br><br>
             <div style="height:500px;width:670px">
-              <img src="./images/my_img.png" class="donga"alt="이미지 불러오기 실패" width="30" height="30" style="margin-left:60px;border-radius:50%;border:none" >
+              <img src="/images/my_img.png" class="donga"alt="이미지 불러오기 실패" width="30" height="30" style="margin-left:60px;border-radius:50%;border:none" >
               <span style="color:white;font-size:25px;margin-left:10px" th:text="${project.getProjectLeader()}">리더</span>
               <div class="pull" >
                 <text th:text="${project.getComment()}"></text>
@@ -173,7 +173,7 @@
 
 
 
-<script src="js/project.js?ver=0"></script>
+<script src="/js/project.js"></script>
 </body>
 <!--사진출처 해커 뒷모습:https://kr.freepik.com/premium-photo/hacker-working-behind-computer-monitors-illustration-generative-ai_39743109.htm#page=2&query=%ED%95%B4%EC%BB%A4%20%EB%92%B7%EB%AA%A8%EC%8A%B5&position=39&from_view=search&track=ais-->
 </html>
