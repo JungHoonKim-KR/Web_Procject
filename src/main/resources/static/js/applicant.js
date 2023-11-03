@@ -4,7 +4,7 @@ var userEmail=document.querySelectorAll("#userEmail");
 var projectId=document.querySelector("#projectId").value;
 approve_btn.forEach(function (item,index){
     item.addEventListener("click",function (){
-        var url = "/mypage-project/approve";
+        var url = "/mypage/project/approve";
         var param1 ="value="+encodeURIComponent(this.value);
         var param2="id="+encodeURIComponent(projectId);
         var param3="emailId="+encodeURIComponent(userEmail[index].value);
@@ -35,7 +35,7 @@ approve_btn.forEach(function (item,index){
 
 refuse_btn.forEach(function (item,index){
     item.addEventListener("click",function (){
-        var url = "/mypage-project/approve";
+        var url = "/mypage/project/approve";
         var param1 ="value="+encodeURIComponent(this.value);
         var param2="id="+encodeURIComponent(projectId);
         var param3="emailId="+encodeURIComponent(userEmail[index].value);
