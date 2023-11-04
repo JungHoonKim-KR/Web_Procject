@@ -27,8 +27,14 @@ public class LoginController {
     private final JwtService jwtService;
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login2(){
-        return ResponseEntity.ok().body(jwtService.login("김정훈","1234"));
+    public ResponseEntity<TokenDto> login2(MemberDto memberDto, HttpSession session){
+        Member findMember= memberService.loginValidate(memberDto);
+        if(findMember != null) {
+            System.out.println("member: "+findMember);
+            session.setAttribute("member", findMember);
+        }
+
+            return ResponseEntity.ok().body(jwtService.login(findMember.getEmailId(),findMember.getPassword()));
     }
 
     @PostMapping("/review")
@@ -42,25 +48,25 @@ public class LoginController {
         return "sign-in/login";
     }
 
-    @PostMapping("/judge")
-    public String judge(HttpSession session, MemberDto memberDto, Model model) {
-        Member findMember= memberService.loginValidate(memberDto);
-
-        if (findMember.equals(null)) {
-            model.addAttribute("msg", "존재하지 않는 회원입니다.");
-            model.addAttribute("url", "back");
-        } else {
-            //토큰 발행
-            jwtService.login(findMember.getEmailId(),findMember.getPassword());
-
-
-            session.setAttribute("member",findMember);
-            model.addAttribute("msg", "로그인 되었습니다.");
-            model.addAttribute("url", "/");
-
-        }
-        return "popup";
-    }
+//    @PostMapping("/judge")
+//    public String judge(HttpSession session, MemberDto memberDto, Model model) {
+//        Member findMember= memberService.loginValidate(memberDto);
+//
+//        if (findMember.equals(null)) {
+//            model.addAttribute("msg", "존재하지 않는 회원입니다.");
+//            model.addAttribute("url", "back");
+//        } else {
+//            //토큰 발행
+//            jwtService.login(findMember.getEmailId(),findMember.getPassword());
+//
+//
+//            session.setAttribute("member",findMember);
+//            model.addAttribute("msg", "로그인 되었습니다.");
+//            model.addAttribute("url", "/");
+//
+//        }
+//        return "popup";
+//    }
 
 
 
