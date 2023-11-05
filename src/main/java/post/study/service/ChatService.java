@@ -103,7 +103,7 @@ public class ChatService {
         return chatInvitation;
     }
 
-    public List<ChatInvitation> findAllChatInvitation(MemberDto member){
+    public List<ChatInvitation> findAllChatInvitation(Member member){
         return chatInvitationRepository.findChatInvitation(member.getId());
     }
 
