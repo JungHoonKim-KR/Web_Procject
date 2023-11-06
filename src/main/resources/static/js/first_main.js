@@ -4,7 +4,7 @@ homepage.addEventListener('mouseover',function(){
 })
 
 homepage.addEventListener('click',function(){
-    location.href='main_post.html';
+    location.href='tutorial.html';
 })
 
 
