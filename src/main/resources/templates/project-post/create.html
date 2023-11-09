@@ -1,65 +1,51 @@
-<!doctype html>
-<html lang="en" xmlns:th xmlns="http://www.w3.org/1999/html">
+<!DOCTYPE html>
+<html lang="en" th:xmlns>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <title>Signin Template · Bootstrap v5.1</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
-
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-
-
-    </style>
-
-
-    <!-- Custom styles for this template -->
-    <link href="css/signin.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/projectCreate.css">
 </head>
-<body class="text-center">
 
-<main class="form-signin">
+<body class="wrapper2" style="background-color:#13161c;height:1000px">
+<div class="container"style="padding-left:350px;height:2000px;margin-bottom:10px">
     <form action="/project/create" method="post" enctype="multipart/form-data">
-        <img class="mb-4" src="css/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-        <h1 class="h3 mb-3 fw-normal">프로젝트 생성</h1>
+    <fieldset class="creating_container"style="text-align:center;border-color:#9B51E0;margin-top:50px;color: black;
+        width:600px;height:850px;border-radius:5%">><br>
+        <span style="color:white;font-size:25px;font-weight:bold">프로젝트 생성</span>
+        <br> <br> <br>
+        <div class="pro_name">
+            <span style="color:white;font-size:14px;font-weight:bold">프로젝트 명</span><br>
+            <input class="text_box"type="text" name="projectName">
 
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput"
-                   name="projectName" th:value="${projectName}">
-            <label for="floatingInput">프로젝트명</label>
         </div>
+        <br>
+<!--        <div class="pro_leader">-->
+<!--            <span style="color:white;font-size:14px;font-weight:bold">프로젝트 리더</span><br>-->
+<!--            <input class="text_box"type="text" name="">-->
+<!--        </div> <br>-->
+<!--        <div class="pro_field">-->
+<!--            <span style="color:white;font-size:14px;font-weight:bold">프로젝트 종류</span><br>-->
+<!--            <input class="text_box"type="text">-->
+<!--        </div>-->
+        <br> <br>
+        <hr style="width:500px">
+        <br>
+        <div class="number_of_people">
+            <span style="color:white;font-size:14px;font-weight:bold">모집인원</span><br>
+            <br>
+            <select name="totalHeadcount"class="howmany1" style="margin-left:20px">
 
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingName"
-                   name="scale" th:value="${scale}">
-            프로젝트 규모
+                <option value="2" selected>2명</option>
+                <option value="3">3명</option>
+                <option value="4">4명</option>
+                <option value="5">5명</option>
+                <option value="6">6명</option>
+            </select>
         </div>
-
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingName"
-                   name="totalHeadcount" th:value="${totalHeadcount}">
-            프로젝트 인원수
-        </div>
+        <br>
 
         <select name="field" multiple>
             <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>
@@ -69,31 +55,126 @@
             <option th:each="l:${lList}" th:value="${l}" th:text="${l}"></option>
         </select> 언어
 
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingIntroduce"
-                   name="introduction" th:value="${introduction}">
-            프로젝트 소개글
-        </div>
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingIntroduce"
-                   name="comment" th:value="${comment}">
-            하고 싶은 말
-        </div>
-        <div class="form-floating">
-
-            대표 이미지 <input type="file" id="ff" multiple="multiple" name="mainFile" ><br>
-            프로젝트 소개 이미지 <input type="file" multiple="multiple" name="files"><br>
-            프로젝트 소개 이미지 <input type="file" multiple="multiple" name="files"><br>
+        <br><br>
+        <div class="pro_">
+            <span style="color:white;font-size:14px;font-weight:bold">프로젝트 규모</span><br>
+            <br>
+            <input type="radio" class="check_box" style="margin-left:0"id="low" name="scale" value="하"><label style="color:white"for>하</label>
+            <input type="radio" class="check_box"id="middle" name="scale" value="중"><label style="color:white"for>중</label>
+            <input type="radio" class="check_box"id="high" name="scale" value="상"><label style="color:white"for>상</label>
 
         </div>
-        <p>
-        <p>
-        <p>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">생성</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+        <br>
+        <hr style="width:500px">
+        <br><br>
+
+        <br>
+        <div id="bar" style="margin-top:30px">
+            <button style="width:160px;height:4px;border-radius:20px;background-color:#9B51E0;;border:none"></button>
+            <button style="width:160px;height:4px;border-radius:20px;background-color:white;border:none"></button>
+            <button style="width:160px;height:4px;border-radius:20px;background-color:white;border:none"></button>
+        </div>
+    </fieldset>
+
+
+    <fieldset class="creating_container"style="text-align:center;border-color:#9B51E0;margin-top:50px;color: black;
+    width:600px;height:850px;border-radius:5%">><br>
+        <span style="color:white;font-size:25px;font-weight:bold">프로젝트 생성</span>
+        <br> <br> <br>
+        <span style="color:white;font-size:15px;font-weight:bold">소개글 작성하기</span><br>
+        <span style="color:white;font-size:12px">프로젝트에 대한 소개글을 적어주세요!</span>
+        <br><br>
+        <textarea class ="memo"cols="50" rows="17" name="introduction">
+
+        </textarea>
+        <br><br> <br><br>
+        <span style="color:white;font-size:15px;font-weight:bold">할 말</span><br>
+        <span style="color:white;font-size:12px">신청자에게 하고 싶은 말</span>
+        <br><br>
+        <textarea class ="memo"cols="50" rows="17" name="comment">
+
+        </textarea>
+        <br><br> <br>
+
+        <br>
+        <div id="bar" style="margin-top:30px">
+            <button style="width:160px;height:4px;border-radius:20px;background-color:white;border:none"></button>
+            <button style="width:160px;height:4px;border-radius:20px;background-color:#9B51E0;border:none"></button>
+            <button style="width:160px;height:4px;border-radius:20px;background-color:white;border:none"></button>
+        </div>
+
+    </fieldset>
+    <fieldset class="container3 creating_container"style="text-align:center;border-color:#9B51E0;margin-top:50px;color: black;
+    width:600px;height:800px;border-radius:5%">><br>
+        <span style="color:white;font-size:25px;font-weight:bold">프로젝트 생성</span>
+        <br> <br> <br>
+
+        <span style="color:white;font-size:17px;font-weight:bold">프로젝트 사진 업로드하기!</span><br>
+        <br> <br>
+        <span style="color:white;font-size:15px">프로젝트 대표사진을 선택해주세요</span>
+        <br>
+        <span style="color:gray;font-size:12px">대표 사진은 프로젝트 게시판에 첫 이미지로 게시됩니다</span>
+
+
+        <div class="changing_profile" >
+            <br>
+            <input class="upload-name" value="파일선택" disabled="disabled">
+
+            <label for="ex_filename0">업로드</label>
+            <input type="file" id="ex_filename0" class="upload-hidden" multiple="multiple" name="mainFile">
+        </div>
+        <br>
+        <hr style="width:500px">
+        <br>
+
+        <span style="color:white;font-size:15px">프로젝트 일반 사진 업로드 하기</span>
+        <br>
+        <span style="color:gray;font-size:12px">최대 5개까지 업로드 가능합니다</span>
+
+        <div class="upload_profile changing_profile" >
+            <br>
+            <input class="upload-name" value="파일선택" disabled="disabled">
+
+            <label class="upload"for="ex_filename1">업로드</label>
+            <input type="file" id="ex_filename1" class="upload-hidden" multiple="multiple" name="files">
+        </div>
+<!--        <div class="upload_profile changing_profile" >-->
+<!--            <br>-->
+<!--            <input class="upload-name" value="파일선택" disabled="disabled">-->
+
+<!--            <label class="upload"for="ex_filename2">업로드</label>-->
+<!--            <input type="file" id="ex_filename2" class="upload-hidden">-->
+<!--        </div>-->
+<!--        <div class="upload_profile changing_profile" >-->
+<!--            <br>-->
+<!--            <input class="upload-name" value="파일선택" disabled="disabled">-->
+
+<!--            <label class="upload"for="ex_filename3">업로드</label>-->
+<!--            <input type="file" id="ex_filename3" class="upload-hidden">-->
+<!--        </div>-->
+
+        <input type="button" value="사진 추가" class="add_pic"></input>
+
+        <br><br> <br>
+        <div style="margin-top:10px">
+
+            <button type="submit" class="next_page" onClick="location.href='project_bulletin.html'">
+                완료
+            </button>
+        </div>
+        <br>
+        <div id="bar" style="margin-top:30px">
+            <button style="width:170px;height:4px;border-radius:20px;background-color:white;border:none"></button>
+            <button style="width:170px;height:4px;border-radius:20px;background-color:white;border:none"></button>
+            <button style="width:170px;height:4px;border-radius:20px;background-color:#9B51E0;;border:none"></button>
+        </div>
+    </fieldset>
     </form>
-</main>
+</div>
 
 
+
+<script src="/js/projectCreate.js"></script>
 </body>
+<!--사진출처 해커 뒷모습:https://kr.freepik.com/premium-photo/hacker-working-behind-computer-monitors-illustration-generative-ai_39743109.htm#page=2&query=%ED%95%B4%EC%BB%A4%20%EB%92%B7%EB%AA%A8%EC%8A%B5&position=39&from_view=search&track=ais-->
 </html>
