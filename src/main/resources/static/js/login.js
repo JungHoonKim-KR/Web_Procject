@@ -5,5 +5,5 @@ donga.addEventListener('mouseover',function(){
 })
 
 donga.addEventListener('click',function(){
-    location.href='main_post.html';
+    location.href='tutorial.html';
 })
