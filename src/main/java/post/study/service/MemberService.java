@@ -47,9 +47,14 @@ public class MemberService {
     public Member loginValidate(MemberDto memberDto) {
 
         Member findMember = memberRepository.findByemailId(memberDto.getEmailId());
-        if (findMember == null)
+        if (findMember == null){
+            System.out.println("아이디 불일치");
             return null;
+
+        }
         if (!passwordEncoder.matches(memberDto.getPassword(),findMember.getPassword())) {
+            System.out.println(findMember.getPassword());
+            System.out.println("비밀번호 불일치");
             return null;
         }
 
@@ -81,10 +86,8 @@ public class MemberService {
     }
 
 
-    public Member findMember(MemberDto memberDto) {
+    public Member findMember(Member memberDto) {
         Member member = memberRepository.findByemailId(memberDto.getEmailId());
-       if(!passwordEncoder.matches(memberDto.getPassword(),member.getPassword()))
-           return null;
 
         return member;
     }

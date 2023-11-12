@@ -1,16 +1,16 @@
 package post.study.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Builder
+@AllArgsConstructor
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,19 +44,7 @@ public class Member {
     private List<ChatInvitation> chatInviteeList=new ArrayList<>();
 
 
-    public Member() {
 
-    }
-
-    @Builder
-    public Member(Long id,String emailId, String username, String password,String phoneNumber,String profileImg) {
-        this.id=id;
-        this.emailId = emailId;
-        this.username = username;
-        this.password = password;
-        this.phoneNumber=phoneNumber;
-        this.profileImg=profileImg;
-    }
 
     public void addBookmarkProjectList(BookmarkProject bookmarkProject) {
         bookmarkProjectList.add(bookmarkProject);
