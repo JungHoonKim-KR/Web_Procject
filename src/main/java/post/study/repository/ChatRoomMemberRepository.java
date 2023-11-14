@@ -16,4 +16,6 @@ public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember,L
     List<ChatMember> findChatMemberByRoomId(@Param("roomId") String roomId);
     @Query("select m.chatRoom from ChatRoomMember m where m.chatMember.memberId=:memberId")
     List<ChatRoom> findChatRoomByMemberId(@Param("memberId")Long memberId);
+
+
 }
