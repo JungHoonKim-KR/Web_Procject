@@ -1,97 +1,160 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <title>Signin Template · Bootstrap v5.1</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
-
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
-
-
-    <!-- Custom styles for this template -->
-    <link href="css/signin.css" rel="stylesheet">
-    <script src="/js/main_post.js"></script>
+    <link rel="stylesheet" href="/css/new_my_page.css?ver=3">
 </head>
-<body class="text-center">
 
-<main class="form-signin">
-    <form action="/mypage/project" method="post">
-        <img class="mb-4" src="css/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
-        <h1 class="h3 mb-3 fw-normal">프로젝트 설정</h1>
+<body class="wrapper1" style="background-color:Linen;height:1200px">
 
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInput"
-                   name="projectName" th:value="${project.getProjectName()}">
-            <label for="floatingInput">프로젝트명</label>
+<div></div>
+<div></div>
+
+<div class="wrap">
+
+    <fieldset style="margin-top:20px;width:700px;height:900px;background-color:white;border:none;border-radius:20px">
+
+        <br> <br>
+
+        <div style="margin-left:200px" >
+            프로젝트 관리
         </div>
-        <div class="form-floating">
-            <input type="text" class="form-control" id="floatingPassword" placeholder="Password"
-                   name="projectLeader" th:value="${project.getProjectLeader()}">
-            <label for="floatingPassword">프로젝트 리더</label>
+        <hr style="width:650px">
+        <br><br>
+        <div class="inform_container">
+            <fieldset style="border-radius:20px;margin-left:30px;width:600px;height:225px">
+                <span style="font-size:15px;font-weight:bold;margin-bottom:5px">프로젝트 정보</span>
+                <div style="margin-top:30px ;font-size:14px">
+                    <hr style="margin-top:10px;margin-bottom:10px">
+                    <span style="margin-left:20px">
+                            프로젝트명 <span style="margin-left:44px">:</span>
+                            <span style="margin-left:50px" th:text="${project.getProjectName()}">프로젝트명</span>
+                        </span>
+                    <hr style="margin-top:13.5px;margin-bottom:10px">
+
+                    <span style="margin-left:20px">
+                            리더 <span style="margin-left:46px">:</span>
+                            <span style="margin-left:50px" th:text="${project.getProjectLeader()}">리더</span>
+                        </span>
+                    <hr style="margin-top:13.5px;margin-bottom:10px">
+
+                    <span style="margin-left:20px">
+                            할 말 <span style="margin-left:30px">:</span>
+                            <span style="margin-left:50px" th:text="${project.getComment()}">01028129123</span>
+                        </span>
+                    <hr style="margin-top:13.5px;margin-bottom:10px">
+                    <span style="margin-left:20px">
+                            소개 <span style="margin-left:30px">:</span>
+                            <span style="margin-left:50px" th:text="${project.getIntroduction()}">01028129123</span>
+                        </span>
+                    <hr style="margin-top:13.5px;margin-bottom:10px">
+                </div>
+            </fieldset>
+            <br><br>
+            <fieldset style="border-radius:20px;margin-left:30px;width:600px;height:135px">
+                <span style="font-size:15px;font-weight:bold;margin-bottom:5px">전공</span>
+                <div style="margin-top:30px ;font-size:14px">
+                    <hr>
+                    <span style="margin-left:20px">
+                            분야 <span style="margin-left:30px">:</span>
+                            <span style="margin-left:50px" th:text="${projectField}"></span>
+                        </span>
+                    <hr style="margin-top:13.3px;margin-bottom:10px">
+
+                    <span style="margin-left:20px">
+                            언어 <span style="margin-left:30px">:</span>
+                            <span style="margin-left:50px" th:text="${projectLanguage}"></span>
+                        </span>
+                    <hr style="margin-top:13.3px;margin-bottom:10px">
+                </div>
+            </fieldset>
+            <br><br>
+            <hr style="width:650px">
+
+            <button class="edit" style="margin-left:300px;margin-top:20px;width:90px;height:40px">수정하기</button>
+            <button  style="margin-left:300px;margin-top:20px;width:90px;height:40px" th:onclick="|location.href='@{/mypage/project/applyList(id=${project.getId()})}'|">수정하기</button>
+
+            <!--            <button class="remove_account" style="margin-left:180px">계정 탈퇴</button>-->
+
         </div>
+        <!--        수정 태그-->
+        <div class="edit_inform_container">
+            <form action="/mypage/project" method="POST" enctype="multipart/form-data">
 
-        <select name="field" multiple>
-            <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>
-        </select> 분야
+                <fieldset style="border-radius:20px;margin-left:30px;width:600px;height:225px">
+                    <span style="font-size:15px;font-weight:bold;margin-bottom:5px">프로젝트 정보</span>
+                    <div style="margin-top:30px ;font-size:14px">
+                        <hr style="margin-top:10px;margin-bottom:10px">
+                        <span style="margin-left:20px">
+                        프로젝트명 <span style="margin-left:44px">:</span>
+                            <input type="text" style="margin-left:50px" name="username" th:value="${project.getProjectName()}">
 
-        <select name="language" multiple>
-            <option th:each="l:${lList}" th:value="${l}" th:text="${l}"></option>
-        </select> 언어
+                    </span>
+                        <hr style="margin-top:10px;margin-bottom:10px">
 
-        대표 이미지 <button type="button">수정하기</button> <br>
-        <text th:text="${project.getImg()}"></text><br>
-        소개 이미지 <br>
-        <span type="hidden" th:each="i:${imgList}">
-              <span type="hidden" th:value="${imgList.indexOf(i)}"></span>
-            <text th:text="${i.getFileOriginName()}"></text><br>
-          </span>
-        <p>
-        <p>
-        <p>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">변경</button>
+                        <span style="margin-left:20px">
+                        리더 <span style="margin-left:46px">:</span>
+                        <input type="text" style="margin-left:50px" name="emailId" th:value="${project.getProjectLeader()}">
+                    </span>
+                        <hr style="margin-top:10px;margin-bottom:10px">
 
+                        <span style="margin-left:20px">
+                        할 말 <span style="margin-left:30px">:</span>
+                        <input type="text" style="margin-left:50px" name="phoneNumber"
+                               th:value="${project.getComment()}">
+                    </span>
+                        <hr style="margin-top:10px;margin-bottom:10px">
+                        <span style="margin-left:20px">
+                        소개 <span style="margin-left:30px">:</span>
+                        <input type="text" style="margin-left:50px" name="phoneNumber"
+                               th:value="${project.getIntroduction()}">
+                    </span>
+                    </div>
+                </fieldset>
+                <br><br>
+                <fieldset style="border-radius:20px;margin-left:30px;width:600px;height:135px">
+                    <span style="font-size:15px;font-weight:bold;margin-bottom:5px">전공</span>
+                    <div style="margin-top:30px ;font-size:14px">
+                        <hr>
+                        <span style="margin-left:20px">
+                        모집 분야 <span style="margin-left:30px">:</span>
 
-    </form>
-    <form action="/mypage/project/apply" method="Get">
-        <input type="hidden" name="id" th:value="${project.getId()}">
-        <button type="submit" th:onclick="|location.href='@{/mypage/project/apply}'|">가입 신청자 관리</button>
-    </form>
+                        <select th:each="mf:${projectField}" name="field" style="margin-left:40px;width:100px">
+                            <option th:value="${mf}" th:text="${mf}" selected></option>
+                            <option value="null">없음</option>
+                            <option th:each="f:${fList}" th:value="${f}" th:text="${f}"></option>
+                        </select>
+                    </span>
+                        <hr style="margin-top:10px;margin-bottom:10px">
 
-</main>
+                        <span style="margin-left:20px">
+                        언어 <span style="margin-left:30px">:</span>
+                        <select th:each="ml:${projectLanguage}" name="language" style="margin-left:40px;width:100px">
+                            <option th:value="${ml}" th:text="${ml}" selected></option>
+                            <option value="null">없음</option>
+                            <option th:each="l:${lList}" th:value="${l}" th:text="${l}"></option>
+                        </select>
+                    </span>
+                        <hr style="margin-top:10px;margin-bottom:10px">
+                    </div>
+                </fieldset>
+                <br><br>
+                <hr style="width:650px">
+                <button class="edit_save" style="margin-left:250px;margin-top:20px;width:90px;height:40px">저장</button>
+                <button class="edit_cancle" type="button" th:onclick="|location.href='@{/mypage/projectList}'|"
+                        style="margin-top:20px;width:90px;height:40px">취소
+                </button>
 
-<div class="list-group">
-    <a th:href="@{/mypage/profile}" class="list-group-item list-group-item-action ">프로필 설정</a>
-    <a th:href="@{/mypage/project}" class="list-group-item list-group-item-action active">프로젝트 설정</a>
-    <a th:href="@{/mypage/bookmarkProjectList}" class="list-group-item list-group-item-action">북마크 설정</a>
+            </form>
+x
+        </div>
+    </fieldset>
+
 </div>
-<a class="btn btn-primary" href="javascript:history.back()">뒤로가기</a>
-
+<script src="/js/new_my_page.js?ver=3"></script>
 </body>
-<script th:inline="javascript">
-
-</script>
-</html>
