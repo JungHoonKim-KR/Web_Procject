@@ -79,24 +79,3 @@ donga.addEventListener('mouseover',function(){
     donga.style.cursor= "pointer";
 })
 
-//
-// new Chart(document.getElementById("bar-chart"), {
-//     type: 'bar',
-//     data: {
-//         labels: ["JAVASCRIPT", "HTML", "CSS", "JQUERY"],
-//         datasets: [
-//             {
-//                 label: "languages",
-//                 backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
-//                 data: [40,20,30,10,0]
-//             }
-//         ]
-//     },
-//     options: {
-//         legend: { display: true },
-//         title: {
-//             display: true,
-//             text: 'Frequency of languages'
-//         }
-//     }
-// });
