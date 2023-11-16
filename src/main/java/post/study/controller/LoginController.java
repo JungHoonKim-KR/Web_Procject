@@ -52,12 +52,10 @@ public class LoginController {
     public String judge(HttpSession session, MemberDto memberDto, Model model) {
         Member findMember= memberService.loginValidate(memberDto);
 
-        if (findMember.equals(null)) {
+        if (findMember==null) {
             model.addAttribute("msg", "존재하지 않는 회원입니다.");
             model.addAttribute("url", "back");
         } else {
-            //토큰 발행
-//            jwtService.login(findMember.getEmailId(),findMember.getPassword());
 
 
             session.setAttribute("member",findMember);
