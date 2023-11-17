@@ -83,34 +83,26 @@ public class MypageController {
     }
 
     @GetMapping("/project")
-    public String project(String projectName, Model model) {
+    public String projectupdate(String projectName, Model model){
         Project project = projectService.findProject(projectName);
-        List<ProjectFile_Img> projectImg = projectService.findProjectImg(project.getId());
-        ProjectDto projectDto = projectService.projectToDto(project);
-        List<Applicant> applicantList = projectMemberService.findApplicant(projectDto);
+        List<String> allField = projectService.findAllFieldString(project);
+        List<String> allLanguage= projectService.findAllLanguageString(project);
         List<String> fieldList = fieldLanguageService.fieldList();
         List<String> languageList = fieldLanguageService.languageList();
-        model.addAttribute("project", projectDto);
-        model.addAttribute("fList", fieldList);
-        model.addAttribute("lList", languageList);
-        model.addAttribute("imgList", projectImg);
 
+        model.addAttribute("project",project);
+        model.addAttribute("projectField",allField);
+        model.addAttribute("projectLanguage",allLanguage);
+        model.addAttribute("fList",fieldList);
+        model.addAttribute("lList",languageList);
         return "mypage/project";
-
     }
+    @PostMapping("/update")
+    public String projectUpdate(ProjectDto projectDto,String language, String field, Model model){
+        projectService.update(projectDto,language,field);
 
-    @PostMapping("/project")
-    public String project(ProjectDto projectDto, String language, String field, Model model) {
-        Project project = projectService.update(projectDto, language, field);
+        return "mypage/projectList";
 
-        if (project == null) {
-            model.addAttribute("msg", "프로젝트 명이 중복됩니다.");
-            model.addAttribute("url", "back");
-        } else {
-            model.addAttribute("msg", "변경이 완료되었씁니다.");
-            model.addAttribute("url", "/mypage/projectList");
-        }
-        return "popup";
     }
 
     @GetMapping("/bookmarkProjectList")
@@ -122,7 +114,7 @@ public class MypageController {
         return "mypage/bookmarkProjectList";
     }
 
-    @GetMapping("/project/apply")
+    @GetMapping("/project/applyList")
     public String applicant(ProjectDto projectDto, Model model) {
         List<Applicant> applicant = projectMemberService.findApplicant(projectDto);
         model.addAttribute("projectDto", projectDto);
@@ -133,10 +125,11 @@ public class MypageController {
     @GetMapping("/project/approve")
     @ResponseBody
     public String approving(String value, ProjectDto projectDto, MemberDto memberDto, Model model) {
+        Member member = memberService.memberToEntity(memberDto);
         if (value.equals("승인")) {
-            projectMemberService.joinProjectMember(projectDto, memberDto);
+            projectMemberService.joinProjectMember(projectDto, member);
         }
-        projectMemberService.deleteApplicant(projectDto, memberDto);
+        projectMemberService.deleteApplicant(projectDto, member);
         return value;
 
     }
