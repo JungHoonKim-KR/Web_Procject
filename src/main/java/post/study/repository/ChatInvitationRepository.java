@@ -17,6 +17,6 @@ public interface ChatInvitationRepository extends JpaRepository<ChatInvitation,L
 
     @Modifying
     @Transactional
-    @Query("delete from ChatInvitation i where i.chatRoom.id=:chatId and i.member.id=:memberId")
+    @Query("delete from ChatInvitation i where i.chatRoom.roomId=:chatId and i.member.id=:memberId")
     void deleteChatInvitation(@Param("chatId") String chatId ,@Param("memberId") Long memberId);
 }
