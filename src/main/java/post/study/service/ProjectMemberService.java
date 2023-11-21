@@ -29,8 +29,8 @@ public class ProjectMemberService {
     private final MemberRepository memberRepository;
 
 
-    public void joinProjectMember(ProjectDto projectDto, MemberDto memberDto) {
-        Member member = memberService.findMember(memberDto.getEmailId());
+    public void joinProjectMember(ProjectDto projectDto, Member memberDto) {
+        Member member = memberService.findMember(memberDto);
         Project project = projectService.findProject(projectDto.getId());
         if (project.getCurHeadcount() == null)
             project.setCurHeadcount(1);
@@ -42,16 +42,17 @@ public class ProjectMemberService {
         projectMemberRepository.save(projectMember);
     }
 
-    public void deleteApplicant(ProjectDto projectDto, MemberDto memberDto) {
-        Member member = memberService.findMember(memberDto.getEmailId());
+    public void deleteApplicant(ProjectDto projectDto, Member memberDto) {
+        Member member = memberService.findMember(memberDto);
         applicationRepository.deleteApplicant(projectDto.getId(), member.getId());
     }
 
-    public Boolean applyMemberToProject(ProjectDto projectDto, MemberDto memberDto) {
+    public Boolean applyMemberToProject(ProjectDto projectDto, Member memberDto) {
         Member member = memberRepository.findByemailId(memberDto.getEmailId());
         Project project = projectService.projectToEntity(projectDto);
 
-        if (projectMemberRepository.findProjectByMember_id(project.getId(), member.getId()) == null) {
+        if (applicationRepository.findApplicantByProjectId(project.getId(), member.getId())==null
+                || projectMemberRepository.findProjectByMember_id(project.getId(), member.getId()) == null) {
             Applicant applicant = new Applicant();
             applicant.setApplicant(member, project);
             applicationRepository.save(applicant);
