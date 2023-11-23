@@ -24,9 +24,9 @@
             <li><a href="/">랭킹</a></li>
         </ul>
         <a th:href="@{/mypage/profile}">
-            <img th:if="${member==null}" src="/images/my_img.png" width="40" height="30"
+            <img th:if="${member.getProfileImg()==null}" src="/images/my_img.png" width="40" height="30"
                  style="margin-left:30px;border-radius:50%;border:none">
-            <img th:unless="${member==null}" th:src="${member.getProfileImg()}" width="40" height="30"
+            <img th:unless="${member.getProfileImg()==null}" th:src="${member.getProfileImg()}" width="40" height="30"
                  style="margin-left:30px;border-radius:50%;border:none">
 
         </a>
@@ -80,9 +80,9 @@
         <div style="margin-left:200px">
             <!--        <img src="./images/my_img.png" class="donga" alt="이미지 불러오기 실패" width="100" height="100"-->
             <!--             style="margin-bottom:15px;margin-left:100px;border-radius:50%;border:none">-->
-            <img th:if="${member==null}" src="/images/my_img.png" width="100" height="100"
+            <img th:if="${member.getProfileImg()==null}" src="/images/my_img.png" width="100" height="100"
                  style="margin-bottom:15px;margin-left:100px;border-radius:50%;border:none">
-            <img th:unless="${member==null}" th:src="${member.getProfileImg()}" width="100" height="100"
+            <img th:unless="${member.getProfileImg()==null}" th:src="${member.getProfileImg()}" width="100" height="100"
                  style="margin-bottom:15px;margin-left:100px;border-radius:50%;border:none">
 
             <br>
