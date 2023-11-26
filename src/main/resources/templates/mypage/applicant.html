@@ -1,26 +1,101 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th>-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">-->
+<!--    <link href="css/css/bootstrap.min.css" rel="stylesheet">-->
+<!--</head>-->
+<!--<body>-->
+<!--    <input type="hidden" id="projectId" th:value="${projectDto.getId()}">-->
+<!--    <ul class="list-group" th:each="a:${applicantList}">-->
+<!--        <li class="list-group-item">-->
+<!--            <input type="hidden" id="userEmail" th:value="${a.getMember().getEmailId()}">-->
+<!--            <img src="/images/my_img.png" width="40" height="40"><br>-->
+<!--            <text th:text="${a.getMember().getUsername()}"></text> &nbsp;-->
+
+<!--            <button class="approve_btn" value="승인">승인</button> &nbsp;-->
+<!--            <button class="refuse_btn" value="거절">거절</button>-->
+<!--        </li>-->
+
+<!--    </ul>-->
+
+<!--</span>-->
+<!--<script src="/js/applicant.js?ver=1"></script>-->
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
-    <link href="css/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/css/new_my_page.css">
+    <link rel="stylesheet" href="/css/css/applicant.css">
 </head>
-<body>
+<body class="wrapper1" style="background-color:Linen;height:1200px">
+<div></div>
+<div></div>
+<div class="wrap">
     <input type="hidden" id="projectId" th:value="${projectDto.getId()}">
-    <ul class="list-group" th:each="a:${applicantList}">
-        <li class="list-group-item">
-            <input type="hidden" id="userEmail" th:value="${a.getMember().getEmailId()}">
-            <img src="/images/my_img.png" width="40" height="40"><br>
-            <text th:text="${a.getMember().getUsername()}"></text> &nbsp;
+    <fieldset style="margin-top:-380px;width:700px;height:800px;background-color:white;border:none;border-radius:20px">
+        <br>
+        <span style="font-weight:bold;font-size:20px;margin-left:40px">신청자 관리</span><br>
+        <span style="margin-left:40px;color:gray ;font-size:0.7em">최대 10명까지 나타낼 수 있습니다.</span>
 
-            <button class="approve_btn" value="승인">승인</button> &nbsp;
-            <button class="refuse_btn" value="거절">거절</button>
-        </li>
+        <hr style="margin-top:20px">
+        <table>
+            <br>
+            <caption style="margin-bottom:15px">신청자 목록</caption>
 
-    </ul>
+            <thead>
+            <tr>
+                <th>profile</th>
+                <th>닉네임</th>
+                <th>분야</th>
+                <th>언어</th>
+                <th>승인 여부</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="applicant" th:each="a:${applicantList}">
+                <input type="hidden" id="userEmail" th:value="${a.getMember().getEmailId()}">
+                <td>
+                    <img th:if="${a.getMember().getProfileImg()==null}" src="/images/my_img.png">
+                    <img th:unless="${a.getMember().getProfileImg()==null}" th:src="${a.getMember().getProfileImg()}"
+                         alt="사진없음"></td>
 
-</span>
-<script src="/js/applicant.js?ver=1"></script>
+                <td th:text="${a.getMember().getUsername()}">ronnie</td>
+                <td>
+                    <span th:each="f:${a.getMember().getFieldMemberList()}">
+                        <text th:text="${f.getField()}"></text>
+                    </span>
+                </td>
+                <td>
+                    <span th:each="l:${a.getMember().getLanguageList()}">
+                        <text th:text="${l.getLanguage()}"></text>
+                    </span>
+                </td>
+                <td>
+                    <button class="accepted" value="승인">승인</button>
+                    <button class="delete" value="거절">거부</button>
+                </td>
+            </tr>
+
+            </tbody>
+            <tfoot>
+            <td colspan="5" class="tablefoot"></td>
+            </tfoot>
+
+        </table>
+
+        <button th:onclick="|location.href='@{/mypage/projectList}'|" style="margin-left:325px;margin-top:20px">뒤로가기</button>
+    </fieldset>
+
+</div>
+<!--휴지통사진 출처 : https://ko.silhouette-ac.com/silhouette/129134/%ED%9C%B4%EC%A7%80%ED%86%B5-->
+<script src="/js/applicant.js"></script>
 </body>
-</html>
