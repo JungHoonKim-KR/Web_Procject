@@ -1,5 +1,5 @@
-var approve_btn=document.querySelectorAll(".approve_btn");
-var refuse_btn=document.querySelectorAll(".refuse_btn");
+var approve_btn=document.querySelectorAll(".accepted");
+var refuse_btn=document.querySelectorAll(".delete");
 var userEmail=document.querySelectorAll("#userEmail");
 var projectId=document.querySelector("#projectId").value;
 approve_btn.forEach(function (item,index){
