@@ -25,8 +25,7 @@ public class BookmarkProjectService {
     private final MemberService memberService;
 
     public Boolean updateBookmarkProject(Member member, ProjectDto projectDto) {
-        MemberDto memberDto = memberService.memberToDto(member);
-        Member findMember = memberService.findMember(memberDto);
+        Member findMember = memberService.findMember(member);
         Project project = projectService.findProject(projectDto.getProjectName());
         //북마크 되어 있는지 조회
         BookmarkProject findProject = bookmarkProjectRepository.updateBookmarkProject(findMember.getId(), project.getId());
@@ -52,13 +51,13 @@ public class BookmarkProjectService {
             int bookmarkIndex = 0;
             for (Project p : projectList) {
                 if (p.getId() .equals(bookmarkProject.get(bookmarkIndex))) {
-                    bookmarkImg.add("./images/하트모양(빨강).jpg");
+                    bookmarkImg.add("/images/하트모양(빨강).jpg");
                     bookmarkIndex++;
                     if(bookmarkIndex == bookmarkProject.size())
                         break;
 
                 } else {
-                    bookmarkImg.add("./images/하트모양(회색).jpg");
+                    bookmarkImg.add("/images/하트모양(회색).jpg");
 
                 }
             }
@@ -68,8 +67,8 @@ public class BookmarkProjectService {
 
     }
 
-    public List<BookmarkProject> findBookmarkList(MemberDto memberDto) {
-        List<BookmarkProject> bookmarkProjectByMemberId = bookmarkProjectRepository.findBookmarkProjectByMemberIdOrderByProjectCreateTime(memberDto.getId());
+    public List<BookmarkProject> findBookmarkList(Member member) {
+        List<BookmarkProject> bookmarkProjectByMemberId = bookmarkProjectRepository.findBookmarkProjectByMemberIdOrderByProjectCreateTime(member.getId());
         return bookmarkProjectByMemberId;
     }
 }
