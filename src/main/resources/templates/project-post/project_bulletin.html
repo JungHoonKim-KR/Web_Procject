@@ -6,9 +6,9 @@
     <title>Document</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/53a8c415f1.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./css/main_post.css">
-    <link rel="stylesheet" href="./css/project_bulletin.css">
-    <link rel="stylesheet" href="./css/pagination.css">
+    <link rel="stylesheet" href="/css/tutorial.css">
+    <link rel="stylesheet" href="/css/project_bulletin.css">
+    <link rel="stylesheet" href="/css/pagination.css">
 </head>
 
 <body class="wrapper2" style="background-color:#13161c">
@@ -19,14 +19,13 @@
 <input type="hidden" id="cur_pageLine" th:value="${paging.getPageLine()}">
 <header id="contents_box" >
 
-    <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
+    <a th:href="@{/tutorial}"><img src="/images/프로젝트용병모집.jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
                                     width="200" height="45"></a>
     <div class="nav_items" style="margin-left:150px;">
         <ul>
-            <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
-            <li><a href="/"><span style="color:white">공지사항</span></a></li>
-            <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
-            <li><a href="/"><span style="color:white">랭킹</span></a></li>
+            <li><a th:href="@{/tutorial}" style="color:white">튜토리얼</a></li>
+            <li><a th:href="@{/question}" style="color:white">문의게시판</a></li>
+            <li><a th:href="@{/chat/roomList}" style="color:white">채팅</a></li>
         </ul>
         <a th:href="@{/mypage/profile}">
             <img th:if="${member==null} or ${member.getProfileImg()==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
@@ -57,7 +56,7 @@
         <span style="color:white;font-size:20px;margin-left:570px">원하는 카테고리의 프로젝트만 검색하기</span><br><br>
         <span style="font-size:15px;color:white;;margin-left:640px">카테고리 선택 후 검색버튼 클릭!</span><br><br><br>
 
-        <form th:action="@{/projectSearch(urlParam=${urlParam})}" method="get">
+        <form th:action="@{/project/Search(urlParam=${urlParam})}" method="get">
             <!--히든-->
             <input type="hidden" id="bookmarkImg" th:value="${bList}">
             <input th:if="${member==null}" type="hidden" id="username" th:value="null">
@@ -109,13 +108,12 @@
 
             </div>
         </form>
-        <a th:href="@{/project-create}">프로젝트 생성</a>
 
         <span th:if="${pList==null}" style="color:white; align-content: center">검색 결과가 없습니다</span>
         <div th:unless="${pList==null}" style="height:670px">
             <ul style="margin-left:70px; margin-top: -100px">
                 <li style="margin-top:150px" th:each="p:${paging.getProjectList()}">
-                    <img src="./images/하트모양(회색).jpg" th:id="${p.id}" class="bookmark heart1" width="20" height="20"
+                    <img src="/images/하트모양(회색).jpg" th:id="${p.id}" class="bookmark heart1" width="20" height="20"
                          alt=""
                          style="margin-left:180px">
                     <a th:href=" '/project/introduce?projectName=' +${p.projectName}" class="proj"><span
@@ -138,6 +136,9 @@
 
             </ul>
         </div>
+
+<!--        프로젝트 생성 버튼-->
+        <button id ="creating_newPro"  th:onclick="|location.href='@{/project/create}'|"style="margin-top:30px;width:200px;height:60px;font-size:15px;margin-left:1050px;background-color:#13161c;border-color:cyan;cursor:pointer;color:white;border-radius:20px">프로젝트 생성하기</button>
 
         <div th:unless="${pList==null}" style="border-bottom:1px solid white">
             <div class="pagination-container" style="color:white;margin-top: 100px">
@@ -172,7 +173,7 @@
                         style="color:white;margin-left:100px;"><span>처음</span></button>
 
                 <button class="prev-button" th:if="${paging.getPageLine()}>0" style="color:white; margin-left: 20px"
-                        th:onclick="|location.href='@{/projectSearch(page=${paging.getPrevPage()}, language=${searchLanguage})}'|"><span>이전</span></button>
+                        th:onclick="|location.href='@{/project/Search(page=${paging.getPrevPage()}, language=${searchLanguage})}'|"><span>이전</span></button>
                 <span class="currentPage" th:unless="${page}==-1"
                       th:each="page: ${#numbers.sequence(paging.getStartPage(), paging.getEndPage())}">
          <button class=" number-button" th:text="${page+1}" style="color:white;margin-left:20px;"
@@ -238,7 +239,6 @@
 
         </div>
     </div>
-
     <div id="advertisement" style=" background-color:#13161c;height:1000px">
         <div id="banner_comments">
             <br><br><br>
@@ -246,7 +246,7 @@
 
         </div>
         <div id="banner" style="text-align:center">
-            <img src="./images/프로젝트사진1.jpg" id="project_pic" alt="이미지 불러오기 실패" width="650" height="300"
+            <img src="/images/프로젝트사진1.jpg" id="project_pic" alt="이미지 불러오기 실패" width="650" height="300"
                  style="margin-top:10px ;margin-left:30px;margin-bottom:10px"><br>
             <div id="circle_btn ">
                 <button class="circle"></button>
@@ -260,7 +260,7 @@
 </div>
 
 
-<script th:inline="javascript" type="text/javascript" src="/js/project_bulletin.js">
+<script th:inline="javascript" type="text/javascript" src="/js/project_bulletin.js/ver=1">
 </script>
 </body>
 </html>

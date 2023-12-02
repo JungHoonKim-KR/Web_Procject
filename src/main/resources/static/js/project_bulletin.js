@@ -15,17 +15,17 @@ slide_circles.forEach(function (item, index) {
 });
 
 slide_circles[0].addEventListener("click", function (e) {
-    project_pic.src = "./images/프로젝트사진1.jpg"
+    project_pic.src = "/images/프로젝트사진1.jpg"
     slide_circles[0].style.backgroundColor = "black"
 
 });
 slide_circles[1].addEventListener("click", function (e) {
-    project_pic.src = "./images/프로젝트사진2.png"
+    project_pic.src = "/images/프로젝트사진2.png"
     slide_circles[1].style.backgroundColor = "black"
 
 });
 slide_circles[2].addEventListener("click", function (e) {
-    project_pic.src = "./images/프로젝트사진3.png"
+    project_pic.src = "/images/프로젝트사진3.png"
 
 
 });
@@ -64,7 +64,7 @@ donga.addEventListener('mouseover', function () {
 })
 
 donga.addEventListener('click', function () {
-    location.href = 'main_post.html';
+    location.href = 'tutorial.html';
 })
 //북마크 이벤트연결
 var username = document.querySelector('#username').value
