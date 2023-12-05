@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import post.study.dto.MemberDto;
+import post.study.entity.Member;
 import post.study.service.FieldLanguageService;
 import post.study.service.PagingService;
 import post.study.dto.QuestionDto;
@@ -32,7 +33,7 @@ public class QuestionController {
         PagingService paging = new PagingService(fieldLanguageService,projectRepository,questionRepository,projectService);
         paging.setQuestionPaging(page);
         if(session.getAttribute("member")!=null){
-            MemberDto memberDto = (MemberDto) session.getAttribute("member");
+            Member memberDto = (Member) session.getAttribute("member");
             model.addAttribute("username", memberDto.getUsername());
         }
         else{
@@ -57,9 +58,9 @@ public class QuestionController {
         return "question/post";
     }
 
-    @GetMapping("/question-write")
+    @GetMapping("/question/write")
     public String write(HttpSession session, Model model) {
-        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        Member memberDto = (Member) session.getAttribute("member");
         if(memberDto==null){
             model.addAttribute("msg","로그인이 필요한 서비스입니다.");
             model.addAttribute("url","back");
@@ -69,25 +70,25 @@ public class QuestionController {
         return "question/write";
     }
 
-    @PostMapping("/question-write")
+    @PostMapping("/question/write")
     public String save(HttpSession session, String title, String content,Model model) {
         //question은 dto로 받지 않았음 : 1. 여러가지 방식, 2. 멤버 변수가 적어서
         MemberDto memberDto = (MemberDto) session.getAttribute("member");
         if (title== null || content== null) {
             model.addAttribute("msg", "빈칸을 채워주세요");
-            model.addAttribute("url", "/question-write");
+            model.addAttribute("url", "/question/write");
         } else {
             questionService.create(memberDto.getId(), title,content);
             model.addAttribute("msg", "작성 완료");
             model.addAttribute("url", "/question");
         }
-
+////
         return "popup";
     }
 
-    @GetMapping("/question-content")
+    @GetMapping("/question/content")
     public String content(HttpSession session, Long id, Model model) {
-        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        Member memberDto = (Member) session.getAttribute("member");
         if(memberDto!=null){
             model.addAttribute("userId", memberDto.getId());
 
@@ -99,9 +100,9 @@ public class QuestionController {
         return "question/content";
     }
 
-    @GetMapping("/question-update")
+    @GetMapping("/question/update")
     public String update(HttpSession session,Long id, Model model) {
-        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        Member memberDto = (Member) session.getAttribute("member");
         if(memberDto==null){
             model.addAttribute("msg","접근 권한이 없습니다.");
             model.addAttribute("url","back");
@@ -114,7 +115,7 @@ public class QuestionController {
         return "question/update";
     }
 
-    @PostMapping("/question-update")
+    @PostMapping("/question/update")
     public String update2(Long id,String title, String content, Model model) {
         Question question = questionService.findQuestion(id);
         QuestionDto questionDto = new QuestionDto(question.getId(), title, content);
@@ -126,7 +127,7 @@ public class QuestionController {
 
     }
 
-    @GetMapping("/question-delete")
+    @GetMapping("/question/delete")
     public String delete(HttpSession session, Model model) {
         questionService.delete((Long) session.getAttribute("questionId"));
         model.addAttribute("msg", "글이 삭제되었습니다.");
