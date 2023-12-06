@@ -14,6 +14,9 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Applicant,Long> {
     List<Applicant> findAllByProjectId(Long projectId);
 
+    @Query("select a.member from Applicant a where a.project.id=:projectId and a.member.id=:memberId")
+    Boolean findApplicantByProjectId(@Param("projectId") Long projectId ,@Param("memberId") Long memberId);
+
     @Modifying
     @Transactional
     @Query("delete from Applicant a where a.project.id=:projectId and a.member.id=:memberId")
