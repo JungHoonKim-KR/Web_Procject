@@ -13,28 +13,24 @@
 
 <header id="contents_box" >
 
-    <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집(메인).jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
+    <a th:href="@{/main_post}"><img src="/images/프로젝트용병모집(메인).jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
                                     width="200" height="45"></a>
     <div class="nav_items" style="margin-left:150px;">
         <ul>
-            <li><a href="/">프로젝트 모집</a></li>
-            <li><a href="/">공지사항</a></li>
-            <li><a th:href="@{/question}">문의게시판</a></li>
-            <li><a href="/">랭킹</a></li>
+            <li><a th:href="@{/tutorial}">튜토리얼</a></li>
+            <li><a th:href="@{/question}" >문의게시판</a></li>
+            <li><a th:href="@{/chat/roomList}">채팅</a></li>
+
         </ul>
         <a th:href="@{/mypage-profile}">
-            <img th:if="${member==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
-            <img th:unless="${member==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+            <img th:if="${member.getProfileImg()==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+            <img th:unless="${member.getProfileImg()==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
 
         </a>
         &nbsp;
 
     </div>
 
-<!--    <span th:if="${member==null}">-->
-<!--            <button type="button" id="login" th:onclick="|location.href='@{/login}'|"-->
-<!--                    style="margin-right:50px; width:150px ;height:30px">로그인</button>-->
-<!--        </span>-->
     <span th:unless="${member==null}">
                   <span th:text="${member.getUsername()}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
             <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
@@ -47,15 +43,15 @@
     ">
     <button class="my_option" type="button"
             style="width:80px;height:30px;margin-top:20px;background-color:white;border-radius:20px;background-color:white;font-weight:bold"
-            th:onclick="|location.href='@{/mypage-profile}'|">프로필
+            th:onclick="|location.href='@{/mypage/profile}'|">프로필
     </button>
     <button class="my_option" type="button"
             style="width:110px;height:30px;margin-left:10px;margin-top:20px;background-color:white;border-radius:20px;font-weight:bold"
-            th:onclick="|location.href='@{/mypage-projectList}'|">프로젝트 관리
+            th:onclick="|location.href='@{/mypage/projectList}'|">프로젝트 관리
     </button>
     <button class="my_option" type="button"
             style="width:80px;height:30px;;margin-left:10px;margin-top:20px;background-color:#13161c;color:white;border-radius:20px;font-weight:bold"
-            th:onclick="|location.href='@{/mypage-bookmarkProjectList}'|">북마크
+            th:onclick="|location.href='@{/mypage/bookmarkProjectList}'|">북마크
     </button>
 
 </div>
@@ -69,7 +65,6 @@
         <br>
         <span class="counting" style="margin-left:40px;font-size:0.8em;color:gray;font-weight:bold"><span
                 style="font-size:1.2em;font-weight:bold">5</span> projects</span>
-<!--        <span style="font-size:12px;color:gray;margin-left:370px">북마크는 최대 10개까지 가능합니다.</span>-->
 
 
         <hr>
@@ -87,12 +82,12 @@
                         </span>
                     <hr>
                     <div class="edit_my_bookmarks" th:each="b:${bList}">
-                            <img th:if="${b.getProject().getImg()==null}" src="/images/개발자사진.jpg"
-                                 style="float:left;border-radius:50%;margin-left:150px" width="20" height="20">
+                        <img th:if="${b.getProject().getImg()==null}" src="/images/개발자사진.jpg"
+                             style="float:left;border-radius:50%;margin-left:150px" width="20" height="20">
                         <img th:unless="${b.getProject().getImg()==null}" th:src="${b.getProject().getImg()}"
                              style="float:left;border-radius:50%;margin-left:150px" alt="이미지 불러오기 실패" width="20"
                              height="20">
-                        <span th:text="${b.getProject().getProjectName()}"  th:onclick="|location.href='@{/project-introduce(projectName=${b.getProject().getProjectName()})}'|" style="float:left;margin-left:15px">개발자 구인 사이트</span>
+                        <span th:text="${b.getProject().getProjectName()}"  th:onclick="|location.href='@{/project/introduce(projectName=${b.getProject().getProjectName()})}'|" style="float:left;margin-left:15px">개발자 구인 사이트</span>
                         <img src="/images/휴지통사진.jpeg" class="trashcan" th:id="${b.getProject().getId()}"  style="border-radius:50%;margin-left:153px" alt="이미지 불러오기 실패" width="20" height="20">
 
                         <br><br>
@@ -108,6 +103,5 @@
     </fieldset>
 
 </div>
-<!--휴지통사진 출처 : https://ko.silhouette-ac.com/silhouette/129134/%ED%9C%B4%EC%A7%80%ED%86%B5-->
 <script src="/js/new_my_page_bookmark.js?ver=1"></script>
 </body>
