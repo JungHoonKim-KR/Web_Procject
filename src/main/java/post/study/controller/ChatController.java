@@ -31,6 +31,12 @@ public class ChatController {
     //발신자가 pub/chat/message로 메시지를 보냄
     @GetMapping("/roomList")
     public String roomList(HttpSession session,Model model){
+        if(session.getAttribute("member")==null){
+            model.addAttribute("msg","로그인 필요");
+            model.addAttribute("url","back");
+            return "popup";
+
+        }
         Member member = (Member) session.getAttribute("member");
         List<ChatRoom> allRoom = chatService.findAllChatRoom(member.getId());
         model.addAttribute("roomList",allRoom);
