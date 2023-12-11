@@ -32,7 +32,6 @@ public class MypageController {
     @GetMapping("/profile")
     public String profile(HttpSession session, Model model) {
         Member member = (Member) session.getAttribute("member");
-        MemberDto memberDto = memberService.memberToDto(member);
         if (member == null) {
             model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
             model.addAttribute("url", "back");
@@ -45,7 +44,7 @@ public class MypageController {
         List<String> languageList = fieldLanguageService.languageList();
 
 
-        model.addAttribute("member",memberDto);
+        model.addAttribute("member",member);
         model.addAttribute("myFList",myField);
         model.addAttribute("myLList",myLanguage);
         model.addAttribute("fList",fieldList);
@@ -107,7 +106,7 @@ public class MypageController {
 
     @GetMapping("/bookmarkProjectList")
     public String bookmarProjectkList(HttpSession session, Model model) {
-        MemberDto memberDto = (MemberDto) session.getAttribute("member");
+        Member memberDto = (Member) session.getAttribute("member");
         List<BookmarkProject> bookmarkList = bookmarkProjectService.findBookmarkList(memberDto);
         model.addAttribute("member",memberDto);
         model.addAttribute("bList", bookmarkList);
