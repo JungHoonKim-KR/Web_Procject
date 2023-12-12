@@ -2,9 +2,7 @@
 var small_pic=document.querySelectorAll('.small_pic');
 var big_pic=document.querySelector('.big_pic');
 var idx=0;
-
 big_pic.src=small_pic[0].src;
-
 
 small_pic[0].style.border="3px solid red";
 
