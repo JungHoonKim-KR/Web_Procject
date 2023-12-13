@@ -18,14 +18,13 @@
                                   width="200" height="45"></a>
   <div class="nav_items" style="margin-left:150px;">
     <ul>
-      <li><a href="/"><span style="color:white">프로젝트 모집</span></a></li>
-      <li><a href="/"><span style="color:white">공지사항</span></a></li>
-      <li><a th:href="@{/question}"><span style="color:white">문의게시판</span></a></li>
-      <li><a href="/"><span style="color:white">랭킹</span></a></li>
+      <li><a th:href="@{/tutorial}" style="color:white">튜토리얼</a></li>
+      <li><a th:href="@{/question}" style="color:white">문의게시판</a></li>
+      <li><a th:href="@{/chat/roomList}" style="color:white">채팅</a></li>
     </ul>
     <a th:href="@{/mypage/profile}">
-      <img th:if="${member.getProfileImg()==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
-      <img th:unless="${member.getProfileImg()==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+      <img th:if="${member==null} or ${member.getProfileImg()==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+      <img th:unless="${member==null} or ${member.getProfileImg()==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
 
     </a>
     &nbsp;
@@ -92,22 +91,7 @@
             <br><br>
             &lt소개글&gt<br><br>
             <span style="font-weight:bold" th:text="${project.getIntroduction()}"></span>
-            <!--          <span>-->
-            <!--                            프로젝트를 시작하려는 개발자를 모집하고, 프로젝트를 할 수 있도록 지원하는 사이트입니다<br>-->
-            <!--                            <br>-->
-            <!--                            * 서든어택 용병시스템과 유사 <br>-->
-            <!--                            * 자기소개서를 등록하는 게시판이라고 생각하면 됨 <br>-->
-            <!--                            <br>-->
-            <!--                            <span style="font-weight:bold;">기능 구현</span>-->
-            <!--                            <br>-->
-            <!--                            * 매칭 시스템 : 인원을 모집하는데 있어서 소통하는 매체를 1대1 쪽지로 선택<br>-->
-            <!--                            * 랭킹 : 현재 개발자 기여 점수를 통한 랭킹 표시!<br>-->
-            <!--                            * 프로젝트 생성 : 나만의 프로젝트를 생성하여 자신만의 프로젝트 실행<br>-->
-            <!--                            * 프로필 생성 : 프로필을 통해 주요언어 , 분야 표시 가능 <br>-->
-            <!--                            <br>-->
 
-
-            <!--                        </span>-->
             <br><br><br>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
             <canvas id="bar-chart" width="200" height="100"></canvas>
@@ -125,8 +109,6 @@
           <div style="white-space:nowrap; overflow:auto;  width:570px; height:120px;">
           <span type="hidden" th:each="i:${imgList}">
               <span type="hidden" th:value="${imgList.indexOf(i)}"></span>
-            <!--              로컬 버전-->
-            <!--            <img th:src="@{|/project_img/${i.getFilename()}${i.getFileExtension()}|}" class="small_pic" style="margin-top:20px" width="50" height="50">-->
             <img th:src="${i.getFileUrl()}" class="small_pic" style="margin-top:20px" width="50" height="50">
 
           </span>
