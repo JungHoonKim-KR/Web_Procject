@@ -13,28 +13,23 @@
 
 <header id="contents_box" >
 
-    <a th:href="@{/main_post}"><img src="./images/프로젝트용병모집(메인).jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
-                                    width="200" height="45"></a>
+    <a th:href="@{/tutorial}"><img src="/images/프로젝트용병모집(메인).jpg" id="donga" alt="이미지 불러오기 실패" style="margin-left:50px"
+                                   width="200" height="45"></a>
     <div class="nav_items" style="margin-left:150px;">
         <ul>
-            <li><a href="/">프로젝트 모집</a></li>
-            <li><a href="/">공지사항</a></li>
-            <li><a th:href="@{/question}">문의게시판</a></li>
-            <li><a href="/">랭킹</a></li>
+            <li><a th:href="@{/tutorial}">튜토리얼</a></li>
+            <li><a th:href="@{/question}" >문의게시판</a></li>
+            <li><a th:href="@{/chat/roomList}">채팅</a></li>
         </ul>
-        <a th:href="@{/mypage-profile}">
-            <img th:if="${member==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
-            <img th:unless="${member==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+        <a th:href="@{/mypage/profile}">
+            <img th:if="${member.getProfileImg()==null}" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+            <img th:unless="${member.getProfileImg()==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
 
         </a>
         &nbsp;
 
     </div>
 
-<!--    <span th:if="${member==null}">-->
-<!--            <button type="button" id="login" th:onclick="|location.href='@{/login}'|"-->
-<!--                    style="margin-right:50px; width:150px ;height:30px">로그인</button>-->
-<!--        </span>-->
     <span th:unless="${member==null}">
                   <span th:text="${member.getUsername()}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
             <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
@@ -47,15 +42,15 @@
     ">
     <button class="my_option"
             style="width:80px;height:30px;margin-top:20px;background-color:white;border-radius:20px;background-color:white;font-weight:bold"
-            th:onclick="|location.href='@{/mypage-profile}'|">프로필
+            th:onclick="|location.href='@{/mypage/profile}'|">프로필
     </button>
     <button class="my_option" type="button"
             style="width:110px;height:30px;margin-left:10px;margin-top:20px;background-color:#13161c;color: white; border-radius:20px;font-weight:bold"
-            th:onclick="|location.href='@{/mypage-projectList}'|">프로젝트 관리
+            th:onclick="|location.href='@{/mypage/projectList}'|">프로젝트 관리
     </button>
     <button class="my_option" type="button"
             style="width:80px;height:30px;;margin-left:10px;margin-top:20px;background-color:white;border-radius:20px;font-weight:bold"
-            th:onclick="|location.href='@{/mypage-bookmarkProjectList}'|">북마크
+            th:onclick="|location.href='@{/mypage/bookmarkProjectList}'|">북마크
     </button>
 
 </div>
@@ -68,7 +63,6 @@
             </span>
         <br>
         <span class="counting" style="margin-left:40px;font-size:0.8em;color:gray;font-weight:bold"><span style="font-size:1.2em;font-weight:bold">5</span> projects</span>
-<!--        <span style="font-size:12px;color:gray;margin-left:370px">프로젝트는 최대 10개까지 가능합니다.</span>-->
 
         <hr><br><br>
         <fieldset  style="border-radius:20px;margin-left:100px;width:450px;height:350px">
@@ -88,14 +82,14 @@
 
                 <hr>
                 <div class="my_projects" th:each="p:${pList}" >
-<!--                        <span style="width:600px" th:each="p:${pList}">-->
-                        <span th:if="${member.getUsername()==p.getProject().getProjectLeader()}" style="margin-bottom:20px;margin-left:100px" >리더</span>
-                        <span th:unless="${member.getUsername()==p.getProject().getProjectLeader()}" style="margin-bottom:20px;margin-left:100px" >회원</span>
-                        <span th:if="${member.getUsername()==p.getProject().getProjectLeader()}" th:text="${p.getProject().getProjectName()}"  th:onclick="|location.href='@{/mypage-project(projectName=${p.getProject().getProjectName()})}'|" style="margin-left:130px"></span>
-                        <span th:unless="${member.getUsername()==p.getProject().getProjectLeader()}" th:text="${p.getProject().getProjectName()}"  th:onclick="|location.href='@{/project-introduce(projectName=${p.getProject().getProjectName()})}'|" style="margin-left:130px"></span>
+                    <!--                        <span style="width:600px" th:each="p:${pList}">-->
+                    <span th:if="${member.getUsername()==p.getProject().getProjectLeader()}" style="margin-bottom:20px;margin-left:100px" >리더</span>
+                    <span th:unless="${member.getUsername()==p.getProject().getProjectLeader()}" style="margin-bottom:20px;margin-left:100px" >회원</span>
+                    <span th:if="${member.getUsername()==p.getProject().getProjectLeader()}" th:text="${p.getProject().getProjectName()}"  th:onclick="|location.href='@{/mypage/project(projectName=${p.getProject().getProjectName()})}'|" style="margin-left:130px"></span>
+                    <span th:unless="${member.getUsername()==p.getProject().getProjectLeader()}" th:text="${p.getProject().getProjectName()}"  th:onclick="|location.href='@{/project/introduce(projectName=${p.getProject().getProjectName()})}'|" style="margin-left:130px"></span>
 
-                        <br>
-<!--                        </span>-->
+                    <br>
+                    <!--                        </span>-->
                     <br><br>
 
                 </div>
