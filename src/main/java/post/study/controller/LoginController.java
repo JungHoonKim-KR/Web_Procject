@@ -21,27 +21,6 @@ import post.study.service.MemberService;
 @RequestMapping("/login")
 public class LoginController {
     private final MemberService memberService;
-//    private final JwtService jwtService;
-
-//    @PostMapping("/login")
-//    public ResponseEntity<TokenDto> login2(@RequestBody MemberDto memberDto, HttpSession session){
-//        System.out.println(memberDto.getEmailId());
-//        System.out.println(memberDto.getPassword());
-//        Member findMember= memberService.loginValidate(memberDto);
-//        if(findMember != null) {
-//
-//            System.out.println("member: "+findMember);
-//            session.setAttribute("member", findMember);
-//        }
-//
-//            return ResponseEntity.ok().body(jwtService.login(findMember.getEmailId(),findMember.getPassword()));
-//    }
-//
-//    @PostMapping("/review")
-//    public ResponseEntity<String>review(Authentication authentication){
-//        return ResponseEntity.ok().body(authentication.getName() + " 리뷰 등록 완료 "+ authentication);
-//    }
-//
 
     @GetMapping("")
     public String login() {
@@ -56,8 +35,6 @@ public class LoginController {
             model.addAttribute("msg", "존재하지 않는 회원입니다.");
             model.addAttribute("url", "back");
         } else {
-
-
             session.setAttribute("member",findMember);
             model.addAttribute("msg", "로그인 되었습니다.");
             model.addAttribute("url", "/");
