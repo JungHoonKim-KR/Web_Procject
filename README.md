@@ -19,7 +19,7 @@
 
 4. 채팅
 <img width="254" alt="image" src="https://github.com/JungHoonKim-KR/Web_Procject/assets/100742423/d0ba2c37-610a-4586-91fb-5197ad9d9f69">
-<img width="495" alt="image" src="https://github.com/JungHoonKim-KR/Web_Procject/assets/100742423/d9868d38-cc5c-45fc-b802-1fc578f4eb79">
+<img width="495" alt="image" src="https://github.com/JungHoonKim-KR/Web_Procject/assets/100742423/d9868d38-cc5c-45fc-b802-1fc578f4eb79"> <br>
 가입 전에 프로젝트 리더와 상담하는 소통 창구로 이용할 수 있습니다.
 
 
