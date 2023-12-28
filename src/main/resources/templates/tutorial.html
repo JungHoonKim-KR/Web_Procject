@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" th:xmlns>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.js"></script>
+    <link rel="stylesheet" href="/css/tutorial.css">
+
+</head>
+<body class="wrapper" style="background-color:#13161c">
+<!--배너 위에 메인,마이페이지 등 버튼 만들기-->
+<header id="contents_box" style="border-bottom: solid 2px white;">
+
+    <a th:href="@{/tutorial}">
+        <img src="/images/프로젝트용병모집.jpg" class="donga"alt="이미지 불러오기 실패" style="margin-left:50px" width="200" height="45">
+    </a>
+    <div class="nav_items" style="margin-left:150px;">
+        <ul>
+            <li><a th:href="@{/tutorial}" style="color:white">튜토리얼</a></li>
+            <li><a th:href="@{/question}" style="color:white">문의게시판</a></li>
+            <li><a th:href="@{/chat/roomList}"><span style="color:white">채팅</span></a></li>
+
+        </ul>
+        <a th:href="@{/mypage/profile}">
+            <img th:if="${member==null} or ${member.getProfileImg()}==null" src="/images/my_img.png" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+            <img th:unless="${member==null} or ${member.getProfileImg()==null}" th:src="${member.getProfileImg()}" width="40" height="30" style="margin-left:30px;border-radius:50%;border:none">
+        </a>
+        &nbsp;
+    </div>
+    <span th:if="${member==null}">
+            <button type="button" id="login" th:onclick="|location.href='@{/login}'|"
+                    style="margin-right:50px; width:150px ;height:30px">로그인</button>
+        </span>
+    <span th:unless="${member==null}">
+                  <span th:text="${member.getUsername()}+님" style="font-size:0.7em; color:gray; width:100px">회원명</span>
+            <button type="button" id="logout" th:onclick="|location.href='@{/logout}'|"
+                    style="margin-right:50px; width:150px ;height:30px">로그아웃</button>
+                </span>
+</header>
+
+<main style="width:1500px;height:100%">
+    <!-- / -->
+    <div id="welcome" style="border-bottom: solid 1px white;background: #13161c ">
+
+        <div id="welcome_rightpart" style="color:white;margin-top:140px">
+            <br>
+            <div style="margin-left:500px">
+
+                <br>  <br>
+                <span style="margin-left:350px; font-size:50px; font-weight:bold;">프로젝트를 찾으시나요?</span>
+                <br>
+                <strong id="no_hard2"style="margin-left:355px;color:greenyellow">어렵지 않게 step 별로 준비해뒀어요!</strong>
+                <br><br><br>
+                <ul style="margin-left:330px;font-weight:bold">
+                    <li class="li_m">프로젝트 난이도별 지원가능!</li><br>
+                    <li class="li_m">자신의 프로필로 내 역량을 보여주자!</li><br>
+                    <li class="li_m">프로젝트 종료시 내 명예포인트 획득!</li><br>
+                </ul>
+
+                <button th:onclick="|location.href='@{/project(page=0)}'|"  class="w-btn-neon2" type="button">프로젝트 찾기</button>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div a_container style="background-color:#13161c">
+        <!--프로젝트 커리큘럼 만들기---------------------------------------------------------------->
+
+
+        <div style="border-bottom: solid 2px white;text-align:center ;background-color:#13161c">
+            <br>
+            <img src="/images/위쪽화살표.jpg" class="up_direction direction" alt="이미지 불러오기 실패" style="margin:16px;" width="57" height="37"  >
+            <br> <br> <br> <br>
+
+            <p><Strong style="text-align:center  ;font-size:35px;color:white">개발자 모집 위한 단계별 step!</Strong></p>
+            <br>
+            <strong style="margin:190px ;font-size:20px;color:white" >step1</strong>
+            <strong style="margin:190px;font-size:20px;color:white" >step2</strong>
+            <strong style="margin:190px;font-size:20px;color:white">step3</strong>
+
+            <div id="step_box1" style="width:1500px">
+
+                <button class="step"style="font-weight:bold">회원가입 하기</button>
+                <button class="step" style="font-weight:bold">프로젝트 생성하기</button>
+                <button class="step" style="font-weight:bold">신청자 가입 승인</button>
+                <br>
+            </div>
+            <strong style="font-size:20px;color:white">여러분의 능력을 마음 껏 뽑낼 수 있는 기회!</strong><br>
+            <br>
+            <br> <br> <br>
+            <img src="/images/아래쪽화살표.jpg" class="down_direction direction"alt="이미지 불러오기 실패" style="margin:16px;" width="57" height="37"  >
+
+        </div>
+
+        <!--step 1 꾸미기 ------------------------------------------------------->
+        <div style="border-bottom: solid 2px white"><br>
+            <img src="/images/위쪽화살표.jpg" class="up_direction direction"alt="이미지 불러오기 실패" style="margin-left:722px;" width="57" height="37"  >
+
+            <br><br>
+            <div style="float:right">
+
+                <img src="/images/회원가입사진.jpg" alt="이미지 불러오기 실패" style="margin-right:70px;border-radius:20px" width="600" height="580"  >
+
+            </div>
+
+            <div style="margin-left:200px;height:680px;color:white">
+                <br>
+                <h1 style=" font-size:80px;margin-left:25px ">Step1</h1>
+
+                <h1 style="font-size:35px;margin-left:30px;">회원가입 하기</h1>
+                <hr style="width:250px;margin-left:30px">
+
+                <br>
+                <ul style="font-size:17px;font-weight:bold">
+                    프로젝트 시작하기 첫단추!<br>
+                    어렵지 않은 가입과정!<br><br>
+                    (관심분야 입력 시 , 추후 다양한 기능 이용가능!)<br>
+
+                </ul><br>
+                <img src="/images/아래쪽화살표.jpg" class="down_direction direction"alt="이미지 불러오기 실패" style="margin-left:530px;margin-top:120px" width="57" height="37"  >
+
+                <br><br>
+
+            </div>
+
+        </div>
+
+        <!--step 2 꾸미기 ----------------------------------------------------------->
+        <div style="border-bottom: solid 2px white;color:white"><br>
+            <img src="/images/위쪽화살표.jpg" class="up_direction direction" alt="이미지 불러오기 실패" style="margin-left:732px;" width="57" height="37"  >
+
+            <div style="float:left;margin-left:80px">
+                <br>
+                <img src="/images/프로젝트생성.png" alt="이미지 불러오기 실패" style="margin-right:260px" width="600" height="580"  >
+
+            </div><br><br><br><br>
+            <h1 style=" font-size:80px;margin-left:900px ">Step2</h1>
+            <div style="margin-left:200px;height:410px;">
+
+                <h1 style="font-size:40px;margin-left:30px;">프로젝트 생성하기</h1>
+                <hr style="width:330px;margin-left:30px">
+                <br>
+                <ul style="font-size:17px;font-weight:bold">
+                    진행할 프로젝트를 만들어보세요!<br>
+                    이름, 내용, 모집 직무등을 기록<br><br>
+
+                </ul>
+
+                <br><br>
+                <img src="/images/아래쪽화살표.jpg" class="down_direction direction" alt="이미지 불러오기 실패" style="margin-left:530px;margin-top:20px" width="57" height="37"  >
+
+            </div>
+
+        </div>
+
+
+        <!--step 3 꾸미기 ------------------------------------------------------->
+        <div style="border-bottom: solid 2px white;color:white"><br>
+            <img src="/images/위쪽화살표.jpg" class="up_direction direction"alt="이미지 불러오기 실패" style="margin-left:730px;" width="57" height="37"  >
+
+            <br><br>
+            <div style="float:right">
+
+                <img src="/images/신청자관리.png" alt="이미지 불러오기 실패" style="border-radius:20px;margin-right:70px" width="600" height="580"  >
+
+            </div>
+
+            <div style="margin-left:200px;height:680px;">
+                <br>
+                <h1 style=" font-size:80px;margin-left:25px ">Step3</h1>
+
+                <h1 style="font-size:35px;margin-left:30px;">신청자 가입 승인</h1>
+                <hr style="width:250px;margin-left:30px">
+
+                <br>
+                <ul style="font-size:17px;font-weight:bold">
+                    여러 개발자들의 지원서 열람<br>
+                    원하는 개발자 승인가능</li><br><br>
+                    당신의 최강의 팀을 꾸려보세요!</li><br>
+
+                </ul><br>
+
+                <br><br>
+
+            </div>
+
+        </div>
+    </div>
+</main>
+
+
+
+</body>
+
+<script src="/js/tutorial.js"></script>
+</html>
