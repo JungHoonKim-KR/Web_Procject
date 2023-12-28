@@ -28,6 +28,8 @@ public class QProject extends EntityPathBase<Project> {
 
     public final DateTimePath<java.time.LocalDateTime> createTime = createDateTime("createTime", java.time.LocalDateTime.class);
 
+    public final NumberPath<Integer> curHeadcount = createNumber("curHeadcount", Integer.class);
+
     public final ListPath<Field_Project, QField_Project> fieldList = this.<Field_Project, QField_Project>createList("fieldList", Field_Project.class, QField_Project.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -45,6 +47,8 @@ public class QProject extends EntityPathBase<Project> {
     public final StringPath projectName = createString("projectName");
 
     public final StringPath scale = createString("scale");
+
+    public final NumberPath<Integer> totalHeadcount = createNumber("totalHeadcount", Integer.class);
 
     public QProject(String variable) {
         super(Project.class, forVariable(variable));

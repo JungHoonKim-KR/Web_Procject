@@ -24,6 +24,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final ListPath<BookmarkProject, QBookmarkProject> bookmarkProjectList = this.<BookmarkProject, QBookmarkProject>createList("bookmarkProjectList", BookmarkProject.class, QBookmarkProject.class, PathInits.DIRECT2);
 
+    public final ListPath<ChatInvitation, QChatInvitation> chatInviteeList = this.<ChatInvitation, QChatInvitation>createList("chatInviteeList", ChatInvitation.class, QChatInvitation.class, PathInits.DIRECT2);
+
     public final StringPath emailId = createString("emailId");
 
     public final ListPath<Field_Member, QField_Member> fieldMemberList = this.<Field_Member, QField_Member>createList("fieldMemberList", Field_Member.class, QField_Member.class, PathInits.DIRECT2);
@@ -33,6 +35,10 @@ public class QMember extends EntityPathBase<Member> {
     public final ListPath<Language_Member, QLanguage_Member> languageList = this.<Language_Member, QLanguage_Member>createList("languageList", Language_Member.class, QLanguage_Member.class, PathInits.DIRECT2);
 
     public final StringPath password = createString("password");
+
+    public final StringPath phoneNumber = createString("phoneNumber");
+
+    public final StringPath profileImg = createString("profileImg");
 
     public final ListPath<ProjectMember, QProjectMember> projectMemberList = this.<ProjectMember, QProjectMember>createList("projectMemberList", ProjectMember.class, QProjectMember.class, PathInits.DIRECT2);
 
