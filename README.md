@@ -18,7 +18,7 @@ thyemleaf를 메인으로 개발했으며 개발에 대한 감을 잡고자 구�
 <img width="1042" alt="image" src="https://github.com/JungHoonKim-KR/Web_Procject/assets/100742423/a78760c1-2d53-4492-a901-a9513c533b53">
 나의 프로필, 프로젝트, 북마크 프로젝트들을 관리할 수 있습니다.<br>
 <br>
-4. 채팅
+4. 채팅<br>
 <img width="254" alt="image" src="https://github.com/JungHoonKim-KR/Web_Procject/assets/100742423/d0ba2c37-610a-4586-91fb-5197ad9d9f69">
 <img width="495" alt="image" src="https://github.com/JungHoonKim-KR/Web_Procject/assets/100742423/d9868d38-cc5c-45fc-b802-1fc578f4eb79"> <br>
 가입 전에 프로젝트 리더와 상담하는 소통 창구로 이용할 수 있습니다.<br>
