@@ -1,6 +1,7 @@
 # ProjectMember Matching Project
 프로젝트 구인 게시판입니다. 개인 개발자가 게시되어 있는 프로젝트를 탐색하며 원하는 프로젝트에 가입 신청을 하고 상담 후에 가입이 완료되는 방식입니다.
-thyemleaf를 메인으로 개발했으며 개발에 대한 감을 잡고자 구현에 목적을 둔 프로젝트이기 때문에 완성도 및 전문성이 많이 부족합니다.
+thyemleaf를 메인으로 개발했으며 개발에 대한 감을 잡고자 구현에 목적을 둔 프로젝트이기 때문에 완성도 및 전문성이 많이 부족합니다. 
+Springboot, MySQL, Websocket, AWS,EC2가 사용됐습니다.
 <br>
 1. 소개 화면
 <img width="1240" alt="image" src="https://github.com/JungHoonKim-KR/Web_Procject/assets/100742423/f63ca701-92d5-4afc-919f-5df5322a51cd">
